@@ -8,14 +8,16 @@ The repo is initialized with an initial commit. To publish to GitHub:
 2. Create repo and push:
 
 ```bash
-gh repo create sqrdao/sqrDES --source=. --remote=origin --push
+gh repo create sqrdao/sqrDES --public --source=. --remote=origin --push
 ```
 
 Or for a different org/name:
 
 ```bash
-gh repo create <org>/sqrDES --source=. --remote=origin --push
+gh repo create <org>/sqrDES --public --source=. --remote=origin --push
 ```
+
+Use `--private` or `--internal` instead of `--public` if needed.
 
 ## Option 2: Manual
 
