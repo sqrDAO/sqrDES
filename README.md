@@ -28,6 +28,7 @@ Central design guideline for the sqrDAO ecosystem. Use this repo as the single s
 | [BRAND-KIT.md](BRAND-KIT.md) | Brand assets, logo usage, sub-brands, Do/Don't guidelines |
 | [DESIGN.md](DESIGN.md) | sqrDAO full design reference: colors, typography, layout, components, animations |
 | [danang-hub/DESIGN.md](danang-hub/DESIGN.md) | Da Nang Blockchain Hub design system |
+| [summit/DESIGN.md](summit/DESIGN.md) | Web3 Builders' Summit (LFBUIDL) design system |
 
 ---
 
