@@ -76,26 +76,29 @@ Design principles, aesthetics, and guidelines for the Da Nang Blockchain Hub lan
 
 ### Font Stack
 
-| Context | Font | Weights | Usage |
-|---------|------|---------|-------|
-| Primary (EN) | Outfit | 300, 400, 600, 700 | Body, headings, UI |
-| Vietnamese | Be Vietnam Pro | 300, 400, 600, 700 | All content when `lang="vi"` |
+| Role | Font | Weights | Usage |
+|------|------|---------|-------|
+| Display / Headings | Holgen | 700, 900 | Hero titles, section headings, brand wordmark |
+| Body / UI | Helvetica Neue | 300, 400, 700 | Body text, captions, labels, UI elements |
 
-> **Note**: The `Be Vietnam Pro` font has a larger visual footprint. When active (`lang="vi"`), the base font size is reduced to `80%` on the `html` element to maintain visual consistency with the English version.
+> **Source**: Holgen and Helvetica Neue are the official brand typefaces per the Da Nang Blockchain Hub Brand Kit.
+>
+> **Web font note**: Holgen is a commercial font — self-host as a web font (`@font-face`) or use a licensed web font CDN. For fallback, use `"Holgen", "Arial Black", "Impact", sans-serif`. Helvetica Neue fallback: `"Helvetica Neue", Helvetica, Arial, sans-serif`.
 
 ### Scale
 
-- **Hero title**: `4rem` (responsive: `clamp(1.8rem, 7vw, 2.3rem)` on mobile)
-- **Section title**: `2.5rem` (1.75rem on mobile)
-- **Card title**: `1.5rem`
-- **Body**: `1rem`–`1.1rem`
-- **Small / captions**: `0.85rem`–`0.95rem`
+- **Hero title**: `4rem` (responsive: `clamp(1.8rem, 7vw, 2.3rem)` on mobile) — Holgen
+- **Section title**: `2.5rem` (1.75rem on mobile) — Holgen
+- **Card title**: `1.5rem` — Holgen or Helvetica Neue Bold
+- **Body**: `1rem`–`1.1rem` — Helvetica Neue Regular
+- **Small / captions**: `0.85rem`–`0.95rem` — Helvetica Neue Light
 
 ### Guidelines
 
-- Use `letter-spacing: -0.03em` for large headings.
+- Use Holgen exclusively for display/heading text; never for body paragraphs.
+- Use `letter-spacing: -0.02em` for Holgen headings (tighter tracking suits the geometric style).
 - Line height: `1.6` for body, `1.1` for hero titles.
-- Gradient text: apply `.gradient-text` (amber → warm peach) to key phrases only (e.g., "Builders-First" in hero).
+- Gradient text: apply `.gradient-text` (amber → warm peach) to key Holgen phrases only (e.g., "Builders-First" in hero).
 
 ---
 
@@ -168,6 +171,17 @@ Hover: slight `translateY(-2px)` and warm amber glow shadow.
 
 ---
 
+## Brand Pattern
+
+The brand kit includes a repeating logo icon pattern for use as a background texture:
+
+- **Dark variant**: Logo icons at ~15% opacity on `#231F20` background
+- **Light variant**: Logo icons at ~15% opacity on `#FFF2DD` background
+
+Use as a subtle full-bleed background on hero sections or section dividers. Avoid on content-heavy areas where it competes with text.
+
+---
+
 ## Motion & Interaction
 
 ### Transitions
@@ -216,12 +230,12 @@ Hover: slight `translateY(-2px)` and warm amber glow shadow.
 
 ### Brand Kit
 
-- Logo cards: Preview area (light/dark/amber) + metadata + download.
-- Use three canonical background combinations from the brand kit:
-  - **Light**: Cream (`#FFF2DD`) background — for dark logo variants
-  - **Dark**: Near-black (`#231F20`) background — for light/amber logo variants
-  - **Amber**: Gold (`#FFA406`) background — for dark logo variants
-- Use amber gradient for dark preview backgrounds.
+- Logo cards: Preview area + metadata + download.
+- Use four canonical logo variants from the brand kit:
+  - **Cream bg** (`#FFF2DD`) + amber/dark logo
+  - **White bg** (`#FFFFFF`) + dark logo
+  - **Dark bg** (`#231F20`) + amber/white logo
+  - **Amber bg** (`#FFA406`) + cream/white logo
 
 ---
 
@@ -252,7 +266,7 @@ Hover: slight `translateY(-2px)` and warm amber glow shadow.
 - Apply `.glass` for elevated surfaces.
 - Keep gradient usage intentional and sparse (amber → warm peach only).
 - Maintain consistent section structure (title → subtitle → content).
-- Test in both EN and VI for typography and layout (check that the 20% font-size reduction for VI maintains design balance).
+- Test in both EN and VI for typography and layout.
 - Use the three canonical background combos from the brand kit: cream, dark near-black, amber.
 
 ### Don't
@@ -261,7 +275,7 @@ Hover: slight `translateY(-2px)` and warm amber glow shadow.
 - Add new accent colors without design review.
 - Use heavy borders; prefer subtle amber-tinted glass edges.
 - Overuse gradient text.
-- Introduce new font families.
+- Use any font other than Holgen (headings) and Helvetica Neue (body). The brand kit defines exactly two typefaces.
 - Break the dark warm theme (e.g., pure `#000000` or pure cool-gray backgrounds) without clear rationale.
 
 ---
