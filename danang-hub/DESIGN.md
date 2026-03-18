@@ -78,27 +78,27 @@ Design principles, aesthetics, and guidelines for the Da Nang Blockchain Hub lan
 
 | Role | Font | Weights | Usage |
 |------|------|---------|-------|
-| Display / Headings | Holgen | 700, 900 | Hero titles, section headings, brand wordmark |
+| Display / Headings | Wolgen | 700, 900 | Hero titles, section headings, brand wordmark |
 | Body / UI | Helvetica Neue | 300, 400, 700 | Body text, captions, labels, UI elements |
 
-> **Source**: Holgen and Helvetica Neue are the official brand typefaces per the Da Nang Blockchain Hub Brand Kit.
+> **Source**: Wolgen and Helvetica Neue are the official brand typefaces per the Da Nang Blockchain Hub Brand Kit.
 >
-> **Web font note**: Holgen is a commercial font — self-host as a web font (`@font-face`) or use a licensed web font CDN. For fallback, use `"Holgen", "Arial Black", "Impact", sans-serif`. Helvetica Neue fallback: `"Helvetica Neue", Helvetica, Arial, sans-serif`.
+> **Web font note**: Wolgen is a commercial font — self-host as a web font (`@font-face`) or use a licensed web font CDN. For fallback, use `"Wolgen", "Arial Black", "Impact", sans-serif`. Helvetica Neue fallback: `"Helvetica Neue", Helvetica, Arial, sans-serif`.
 
 ### Scale
 
-- **Hero title**: `4rem` (responsive: `clamp(1.8rem, 7vw, 2.3rem)` on mobile) — Holgen
-- **Section title**: `2.5rem` (1.75rem on mobile) — Holgen
-- **Card title**: `1.5rem` — Holgen or Helvetica Neue Bold
+- **Hero title**: `4rem` (responsive: `clamp(1.8rem, 7vw, 2.3rem)` on mobile) — Wolgen
+- **Section title**: `2.5rem` (1.75rem on mobile) — Wolgen
+- **Card title**: `1.5rem` — Wolgen or Helvetica Neue Bold
 - **Body**: `1rem`–`1.1rem` — Helvetica Neue Regular
 - **Small / captions**: `0.85rem`–`0.95rem` — Helvetica Neue Light
 
 ### Guidelines
 
-- Use Holgen exclusively for display/heading text; never for body paragraphs.
-- Use `letter-spacing: -0.02em` for Holgen headings (tighter tracking suits the geometric style).
+- Use Wolgen exclusively for display/heading text; never for body paragraphs.
+- Use `letter-spacing: -0.02em` for Wolgen headings (tighter tracking suits the geometric style).
 - Line height: `1.6` for body, `1.1` for hero titles.
-- Gradient text: apply `.gradient-text` (amber → warm peach) to key Holgen phrases only (e.g., "Builders-First" in hero).
+- Gradient text: apply `.gradient-text` (amber → warm peach) to key Wolgen phrases only (e.g., "Builders-First" in hero).
 
 ---
 
@@ -210,7 +210,7 @@ Use as a subtle full-bleed background on hero sections or section dividers. Avoi
 - **Contrast**: Primary text on dark background meets WCAG AA. Secondary text may need review for AAA.
 - **Labels**: Use `.visually-hidden` for form labels when design uses placeholders; never omit labels.
 - **ARIA**: Modals use `role="dialog"`, `aria-modal="true"`, `aria-labelledby`. Buttons have `aria-label` where icon-only.
-- **Language**: For Vietnamese (`[lang="vi"]`) content, Holgen and Helvetica Neue remain the brand typefaces; ensure the web font files include the necessary Latin Extended and Vietnamese glyph ranges.
+- **Language**: For Vietnamese (`[lang="vi"]`) content, Wolgen and Helvetica Neue remain the brand typefaces; ensure the web font files include the necessary Latin Extended and Vietnamese glyph ranges.
 
 ---
 
@@ -275,7 +275,7 @@ Use as a subtle full-bleed background on hero sections or section dividers. Avoi
 - Add new accent colors without design review.
 - Use heavy borders; prefer subtle amber-tinted glass edges.
 - Overuse gradient text.
-- Use any font other than Holgen (headings) and Helvetica Neue (body). The brand kit defines exactly two typefaces.
+- Use any font other than Wolgen (headings) and Helvetica Neue (body). The brand kit defines exactly two typefaces.
 - Break the dark warm theme (e.g., pure `#000000` or pure cool-gray backgrounds) without clear rationale.
 
 ---
