@@ -25,7 +25,7 @@ Design principles, aesthetics, and guidelines for the Da Nang Blockchain Hub lan
 
 ## Color Palette
 
-> Source of truth: **Da Nang Blockchain Hub Brand Kit** (`Da Nang Blockchain Hub Brank Kit.svg`).
+> Source of truth: **Da Nang Blockchain Hub Brand Kit** (`assets/Da Nang Blockchain Hub Brand Kit.svg`).
 
 ### Official Brand Colors (from Brand Kit)
 
@@ -67,7 +67,7 @@ Design principles, aesthetics, and guidelines for the Da Nang Blockchain Hub lan
 - Use `--accent-primary` (amber `#FFA406`) for interactive elements and links — it reads as "clickable" and is the brand's signature color.
 - `--accent-secondary` (warm peach `#FFE6BB`) is for softer highlights; never use it as a primary action color.
 - Reserve the full amber gradient for hero highlights and primary CTAs only.
-- Avoid cool-toned accents (blue, cyan, violet) — they conflict with the warm brand palette.
+- Avoid cool-toned accents (blue, cyan, violet) — they conflict with the warm brand palette. **Exception**: semantic/status colors (e.g., success green `#4ade80`, error red `#f87171`) are allowed for form feedback states.
 - Avoid introducing new accent colors; extend the palette only when semantically necessary.
 
 ---
@@ -210,7 +210,7 @@ Use as a subtle full-bleed background on hero sections or section dividers. Avoi
 - **Contrast**: Primary text on dark background meets WCAG AA. Secondary text may need review for AAA.
 - **Labels**: Use `.visually-hidden` for form labels when design uses placeholders; never omit labels.
 - **ARIA**: Modals use `role="dialog"`, `aria-modal="true"`, `aria-labelledby`. Buttons have `aria-label` where icon-only.
-- **Language**: `[lang="vi"]` switches to Be Vietnam Pro for Vietnamese content.
+- **Language**: For Vietnamese (`[lang="vi"]`) content, Holgen and Helvetica Neue remain the brand typefaces; ensure the web font files include the necessary Latin Extended and Vietnamese glyph ranges.
 
 ---
 
@@ -267,7 +267,7 @@ Use as a subtle full-bleed background on hero sections or section dividers. Avoi
 - Keep gradient usage intentional and sparse (amber → warm peach only).
 - Maintain consistent section structure (title → subtitle → content).
 - Test in both EN and VI for typography and layout.
-- Use the three canonical background combos from the brand kit: cream, dark near-black, amber.
+- Use the four canonical background combos from the brand kit: cream, white, dark near-black, amber.
 
 ### Don't
 
