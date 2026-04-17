@@ -70,17 +70,20 @@ Design principles, aesthetics, and guidelines for the Web3 Builders' Summit land
 
 ### Font Stack
 
-| Context | Font | Weights | Usage |
-|---------|------|---------|-------|
-| Primary | NeueHaas Display | 100, 300, 400, 500, 700, 900 | Body, headings, UI |
-| Secondary | Fraktion Sans | 400, 500, 700, 900 | Alternate display |
-| Secondary | SP Pro (SF Pro) | 100, 400, 500, 700, 900 | Alternate display |
+| Context | Font | Source | Weights | Usage |
+|---------|------|---------|---------|-------|
+| Display / Headers / Nav | Anton | Google Fonts | 400 | All headings (`h1`–`h4`), nav links, section titles |
+| Body / UI | System SF Pro / sans-serif | System | 300–700 | Body text, paragraphs, captions |
 
-**Default body font:** `'NeueHaas Display', sans-serif`
+**Default body font:** `system-ui, -apple-system, 'SF Pro Text', sans-serif`
+
+**Display font:** `'Anton', sans-serif` — loaded via `<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap">`
+
+> Previously used NeueHaas Display, Fraktion Sans, and SP Pro. All custom font files have been removed; Anton (Google Fonts) replaced them for display use.
 
 ### Scale
 
-- **Hero title**: `4.5rem` (responsive: `3.5rem` @ 992px, `2rem` @ 768px, `1.75rem` @ 576px)
+- **Hero title**: responsive clamp with vh constraint (fits full viewport at all sizes, including 1280×580)
 - **Section title large**: `3.5rem` (`2rem` on mobile, `1.75rem` @ 576px)
 - **Section title**: `1.5rem`–`2rem`
 - **Impact numbers**: `4rem`
@@ -137,6 +140,27 @@ Base: `text-transform: uppercase`, `letter-spacing: 1px`, `font-size: 14px`, `pa
 
 Hover: `translateY(-3px)`, `box-shadow: var(--box-shadow)`.
 
+### Pill Badges
+
+`.pill-badge` — small rounded capsule label used in the hero and as section dividers.
+
+- Default: gold border, uppercase text, small font
+- Large variant (`.pill-badge--lg`): larger padding, used in hero meta row
+- Used in `.hero-badge-corner` for the "LFBUIDL" label, and in `.subsection-pill` as partner tier dividers
+
+### Subsection Pills
+
+`.subsection-pill` — section divider row combining a pill badge and gradient text label.
+
+```html
+<div class="subsection-pill">
+  <span class="pill-badge">Ecosystem</span>
+  <span class="subsection-pill-gradient">Partners</span>
+</div>
+```
+
+Used to introduce Co-host / Strategic / Ecosystem / Community partner tiers.
+
 ### Impact Cards
 
 - Apply `.impact-card` with `.dog-ear-top-right` or `.dog-ear-bottom-left`.
@@ -171,6 +195,29 @@ Hover: `translateY(-3px)`, `box-shadow: var(--box-shadow)`.
 - Event-type borders: `.w3bs-event`, `.davas-event`, `.main-event` (distinct border colors).
 - Badges: `.event-status` with `.free-badge`, `.invite-only-badge`, `.approval-badge`.
 
+### Agenda
+
+The agenda section uses a phase-based layout (Morning / Afternoon / Evening):
+
+- **`.agenda-phase`** — wraps each time block
+- **`.agenda-phase-header`** — phase title + tag label (e.g. "Strategic Foundations & Policy")
+- **`.agenda-rows`** — container for session rows
+- **`.agenda-row`** — single session: time | badge | content
+- **`.agenda-row-break`** — break row variant (dimmed styling)
+- **`.agenda-dinner-grid`** — 2×2 card grid for the evening dinner activities
+- **`.agenda-dinner-card`** — individual dinner activity card
+
+Agenda badge classes:
+
+| Class | Label | Usage |
+|-------|-------|-------|
+| `.badge-keynote` | Keynote | Opening/closing keynotes |
+| `.badge-panel` | Panel N | Discussion panels |
+| `.badge-debate` | Debate | Lightning debates |
+| `.badge-showcase` | Showcase | Builder demo batches |
+| `.badge-break` | Break | Networking/coffee breaks |
+| `.badge-dinner` | varies | Evening dinner activities |
+
 ### Badges
 
 | Class | Color | Usage |
@@ -195,6 +242,53 @@ Hover: `translateY(-3px)`, `box-shadow: var(--box-shadow)`.
 
 - Backdrop: `backdrop-filter: blur(10px)`.
 - Background: `var(--secondary-color)`.
+
+---
+
+## Hero Section
+
+### Structure
+
+The hero uses two layered KV background images + centered content overlay:
+
+```html
+<section class="hero">
+  <div class="hero-kv" aria-hidden="true">
+    <!-- kv-bg-1.webp + kv-bg-2.webp stacked -->
+  </div>
+  <div class="hero-content">
+    <div class="hero-title-row">        <!-- title + LFBUIDL badge -->
+    <div class="hero-collab">           <!-- "In Collaboration with" + DAVAS logo -->
+    <div class="hero-year-row">         <!-- large "2026" display -->
+    <div class="hero-meta-row">         <!-- date pill | location | CTA button -->
+  </div>
+</section>
+```
+
+### KV Images
+
+- `img/kv-bg-1.webp` and `img/kv-bg-2.webp` — WebP format (90%+ size reduction vs PNG originals).
+- Both preloaded with `fetchpriority="high"` for LCP.
+- CSS uses vh-constrained sizing to prevent overflow at small viewports (tested at 1280×580).
+
+### Collaboration Branding
+
+`.hero-collab` displays "In Collaboration with" + the DAVAS logo beneath the title row. This reflects the co-host partnership.
+
+---
+
+## Partners Section Structure
+
+The Overview section (`#our-partners`) groups partners into four tiers, each preceded by a `.subsection-pill` divider:
+
+| Tier | Partners |
+|------|---------|
+| Co-host | sqrDAO, DAVAS |
+| Strategic | DISSC, Lisk |
+| Ecosystem | Swiss EP, Aptos, Avalanche, Laguna Network |
+| Community | Team1 (+ "To be updated...") |
+
+Logos use `.strategic-partner-logo` class; the ecosystem/community rows add `.ecosystem-partners-logos` for a wider multi-column layout.
 
 ---
 
@@ -233,10 +327,11 @@ Hover: `translateY(-3px)`, `box-shadow: var(--box-shadow)`.
 
 ### Landing Page
 
-- Hero: Full viewport height, centered content, 3D header image.
-- Section order: Hero → Timeline (At a Glance) → Impact → Previous Summits (Gallery) → Speakers → Partners → Contact.
-- Strategic partners: Logos in a row, note "To be updated...".
+- Hero: Full viewport height, centered content, dual KV background images (kv-bg-1 + kv-bg-2).
+- Section order: Hero → Overview (Partners/Co-hosts) → Timeline → Impact → Agenda → Previous Summits (Gallery) → Speakers → Past Partners → Contact.
+- Strategic partners: Tiered by role (Co-host → Strategic → Ecosystem → Community).
 - Timeline: Horizontal scroll on desktop, event cards with date, type, description, CTA or status badge.
+- Agenda: Phase-based table layout (Morning / Afternoon / Evening).
 
 ### Gallery
 
@@ -264,12 +359,13 @@ Hover: `translateY(-3px)`, `box-shadow: var(--box-shadow)`.
 
 - Gallery: Real photos from past summits.
 - Partner logos: Consistent sizing, grayscale or color as designed.
-- Hero: 3D/illustrative header image.
+- Hero: Dual KV illustrative backgrounds (not a single 3D header image).
 
 ### External Resources
 
-- Font Awesome 6.5.1 for icons.
-- Preload: hero image, primary fonts (NeueHaas Roman, Bold).
+- Font Awesome 6.5.1 for icons (loaded async with `media="print"` trick).
+- Google Fonts: Anton (display).
+- Preload: kv-bg-1.webp, kv-bg-2.webp, logo.svg.
 
 ---
 
@@ -281,15 +377,17 @@ Hover: `translateY(-3px)`, `box-shadow: var(--box-shadow)`.
 - Apply dog-ear clip-path to impact cards for brand consistency.
 - Keep primary (gold) usage intentional for CTAs and highlights.
 - Maintain consistent section structure (section-title → section-title-large → content).
-- Preload critical fonts and hero image for LCP.
+- Preload critical WebP images and logo for LCP.
+- Use Anton for all display/heading text; system sans-serif for body.
 
 ### Don't
 
 - Add new accent colors without design review.
 - Use heavy borders; prefer `2px solid var(--primary-color)` for emphasis.
 - Overuse uppercase; reserve for section labels and buttons.
-- Introduce new font families.
+- Introduce new font families (custom font files have been intentionally removed).
 - Break the dark theme (e.g., white content blocks) without clear rationale.
+- Use PNG for hero KV images — WebP only.
 
 ---
 
@@ -299,9 +397,10 @@ Hover: `translateY(-3px)`, `box-shadow: var(--box-shadow)`.
 
 | File | Purpose |
 |------|---------|
-| `styles.css` | All styles, CSS variables, component classes, font-face |
+| `styles.css` | All styles, CSS variables, component classes |
 | `index.html` | Main page structure and content |
 | `scripts.js` | Menu, tabs, smooth scroll, forms |
-| `fonts/` | NeueHaas Display, Fraktion Sans, SP Pro |
+| `img/kv-bg-1.webp` | Hero KV background 1 (WebP, preloaded) |
+| `img/kv-bg-2.webp` | Hero KV background 2 (WebP, preloaded) |
 | `img/` | Logos, favicons, partners, speakers, gallery, header |
 | `vercel.json` | Deployment config |
