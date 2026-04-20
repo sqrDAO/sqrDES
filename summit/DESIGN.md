@@ -184,9 +184,26 @@ Used to introduce Co-host / Strategic / Ecosystem / Community partner tiers.
 
 ### Speaker Info Cards
 
-- Background: `rgba(255, 255, 255, 0.05)`.
-- Border radius: `8px`.
+The `#speakers` section appears **above** the Partners section.
+
+- Grid: `repeat(auto-fill, minmax(250px, 1fr))`, gap `30px`.
+- Card background: `rgba(255, 255, 255, 0.05)`, border-radius `8px`, padding `24px`.
+- Avatar: `120px × 120px`, `border-radius: 50%`, `object-fit: cover`.
+- `.speaker-socials` — flex row of X / LinkedIn icon links; color `var(--text-light)`, hover `var(--primary-color)`.
+- Cards carry `data-organization` and `data-role` attributes for potential JS filtering.
+- Section background: `var(--secondary-color)`.
 - Hover: `translateY(-5px)`, `box-shadow`.
+
+### Venue Section
+
+The `#venue` section (after Benefits) shows the event venue.
+
+- Background: `var(--dark-color)`.
+- Two-column grid: `1fr 1fr`, gap `4rem`.
+- Venue name: **Risemount Premier Resort Da Nang**, 120 Nguyen Van Thoai Street, Da Nang.
+- `.venue-features` — icon + text feature list (WiFi, restaurant, parking, pool).
+- Right column: Google Maps embed `iframe`.
+- Section padding: `100px 0`.
 
 ### Timeline Events
 
@@ -249,46 +266,79 @@ Agenda badge classes:
 
 ### Structure
 
-The hero uses two layered KV background images + centered content overlay:
+The hero uses a two-column layout: title content on the left, KV images on the right.
 
 ```html
 <section class="hero">
-  <div class="hero-kv" aria-hidden="true">
-    <!-- kv-bg-1.webp + kv-bg-2.webp stacked -->
-  </div>
-  <div class="hero-content">
-    <div class="hero-title-row">        <!-- title + LFBUIDL badge -->
-    <div class="hero-collab">           <!-- "In Collaboration with" + DAVAS logo -->
-    <div class="hero-year-row">         <!-- large "2026" display -->
-    <div class="hero-meta-row">         <!-- date pill | location | CTA button -->
+  <div class="hero-body">
+    <div class="hero-left">
+      <div class="hero-title-block">
+        <div class="hero-line hero-line-1">
+          <!-- WEB3 | BUILDERS' | snip badge LFBUIDL -->
+        </div>
+        <div class="hero-line hero-line-2">
+          <!-- SUMMIT | hero-loc-label (DANANG // VIETNAM) | 2026 -->
+        </div>
+        <div class="hero-date-row">
+          <!-- snip badge MAY 25 | hero-date-year 2026 -->
+        </div>
+        <div class="hero-collab">
+          <!-- "In Collaboration with" + DAVAS logo -->
+        </div>
+      </div>
+    </div>
+    <div class="hero-right" aria-hidden="true">
+      <!-- kv-bg-1 picture + kv-bg-2 picture + hero-kv-logo -->
+    </div>
   </div>
 </section>
 ```
 
+### Snip Badges
+
+`.snip-badge` — gold chamfered capsule label. Used in the hero for "LFBUIDL" and "MAY 25".
+
+- `.snip-badge--corner-bl` — bottom-left corner snip via `clip-path`
+- `.snip-badge--sm` — small size, inline next to BUILDERS' title word
+- `.snip-badge--md` — medium size, used in date row for "MAY 25"
+- Background `#ffc800`, color `#000`, font `Anton`, uppercase
+
+> These replaced the `.pill-badge--corner` and `.hero-meta-row` pill from the previous hero design.
+
+### Hero Text Classes
+
+- `.hero-word` — large Anton display word
+- `.hero-word-white` — `color: #ffffff`
+- `.hero-word-yellow` — `color: #ffc800`
+- `.hero-loc-label` — inline two-line "DANANG // VIETNAM" label on title line 2; small Anton, muted white
+- `.hero-date-row` — flex row containing MAY 25 snip badge + `.hero-date-year`
+- `.hero-date-year` — "2026" year in muted white, Anton
+
 ### KV Images
 
-- `img/kv-bg-1.webp` and `img/kv-bg-2.webp` — WebP format (90%+ size reduction vs PNG originals).
-- Both preloaded with `fetchpriority="high"` for LCP.
-- CSS uses vh-constrained sizing to prevent overflow at small viewports (tested at 1280×580).
+- `img/kv-bg-1.webp` / `img/kv-bg-2.webp` — WebP with PNG fallback via `<picture>` element.
+- `kv-bg-1` has `fetchpriority="high"` for LCP; `kv-bg-2` uses `loading="eager"`.
+- `img/logo.svg` overlaid on KV as `.hero-kv-logo`.
 
 ### Collaboration Branding
 
-`.hero-collab` displays "In Collaboration with" + the DAVAS logo beneath the title row. This reflects the co-host partnership.
+`.hero-collab` displays "In Collaboration with" + the DAVAS logo below the date row.
 
 ---
 
 ## Partners Section Structure
 
-The Overview section (`#our-partners`) groups partners into four tiers, each preceded by a `.subsection-pill` divider:
+The `#partners` section groups partners into five tiers, each preceded by a `.subsection-pill` divider:
 
 | Tier | Partners |
 |------|---------|
 | Co-host | sqrDAO, DAVAS |
 | Strategic | DISSC, Lisk |
+| Premium | NEBULUS |
 | Ecosystem | Swiss EP, Aptos, Avalanche, Laguna Network |
-| Community | Team1 (+ "To be updated...") |
+| Community | Team1, Spores Network, Da Nang Blockchain Hub (+ "To be updated...") |
 
-Logos use `.strategic-partner-logo` class; the ecosystem/community rows add `.ecosystem-partners-logos` for a wider multi-column layout.
+All logos are wrapped in anchor links. Logos use `.strategic-partner-logo`; Premium/Ecosystem/Community rows add `.ecosystem-partners-logos` for wider multi-column layout. NEBULUS has an additional `.nebulus-logo` class for custom sizing.
 
 ---
 
@@ -327,11 +377,13 @@ Logos use `.strategic-partner-logo` class; the ecosystem/community rows add `.ec
 
 ### Landing Page
 
-- Hero: Full viewport height, centered content, dual KV background images (kv-bg-1 + kv-bg-2).
-- Section order: Hero → Overview (Partners/Co-hosts) → Timeline → Impact → Agenda → Previous Summits (Gallery) → Speakers → Past Partners → Contact.
-- Strategic partners: Tiered by role (Co-host → Strategic → Ecosystem → Community).
+- Hero: Two-column layout — title/badges on left, KV images on right.
+- Section order: Hero → Overview (#our-partners) → Timeline → Agenda → **Speakers** → **Partners** → Benefits → **Venue** → Gallery → Contact.
+- Partners: Five tiers (Co-host → Strategic → Premium → Ecosystem → Community).
+- Speakers section now appears above Partners.
 - Timeline: Horizontal scroll on desktop, event cards with date, type, description, CTA or status badge.
 - Agenda: Phase-based table layout (Morning / Afternoon / Evening).
+- Venue: Risemount Premier Resort Da Nang, two-column info + map layout.
 
 ### Gallery
 
@@ -387,7 +439,7 @@ Logos use `.strategic-partner-logo` class; the ecosystem/community rows add `.ec
 - Overuse uppercase; reserve for section labels and buttons.
 - Introduce new font families (custom font files have been intentionally removed).
 - Break the dark theme (e.g., white content blocks) without clear rationale.
-- Use PNG for hero KV images — WebP only.
+- Use WebP-only hero KV images without a PNG fallback — always wrap in `<picture>` with both formats.
 
 ---
 
@@ -399,8 +451,13 @@ Logos use `.strategic-partner-logo` class; the ecosystem/community rows add `.ec
 |------|---------|
 | `styles.css` | All styles, CSS variables, component classes |
 | `index.html` | Main page structure and content |
+| `legal.html` | Terms & Conditions legal page |
 | `scripts.js` | Menu, tabs, smooth scroll, forms |
-| `img/kv-bg-1.webp` | Hero KV background 1 (WebP, preloaded) |
-| `img/kv-bg-2.webp` | Hero KV background 2 (WebP, preloaded) |
-| `img/` | Logos, favicons, partners, speakers, gallery, header |
+| `img/kv-bg-1.webp` | Hero KV background 1 (WebP, `fetchpriority="high"`) |
+| `img/kv-bg-1.png` | Hero KV background 1 fallback PNG |
+| `img/kv-bg-2.webp` | Hero KV background 2 (WebP) |
+| `img/kv-bg-2.png` | Hero KV background 2 fallback PNG |
+| `img/speakers/` | Speaker portrait images |
+| `img/partners/` | Partner logos (PNG/SVG) |
+| `img/` | Logos, favicons, gallery, media coverage |
 | `vercel.json` | Deployment config |
