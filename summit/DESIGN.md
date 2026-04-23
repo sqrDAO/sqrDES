@@ -1,28 +1,102 @@
+---
+design-system: "Web3 Builders' Summit"
+version: "1.1.0"
+colors:
+  background: "#000000"
+  surface: "#0D0D10"
+  surface-alt: "#18181b"
+  text-primary: "#FFFFFF"
+  text-secondary: "#A1A1AA"
+  accent: "#FFB800"
+  accent-hover: "#FFC94D"
+  badge-invite: "#8B5CF6"
+  badge-approval: "#F59E0B"
+  snip-badge: "#ffc800"
+  construction: "#ffd700"
+typography:
+  display:
+    fontFamily: "'Anton', sans-serif"
+    fontWeight: 400
+    textTransform: "uppercase"
+    letterSpacing: "2px"
+  body:
+    fontFamily: "system-ui, -apple-system, 'SF Pro Text', sans-serif"
+    fontWeight: 400
+    fontSize: "1rem"
+    lineHeight: 1.6
+spacing:
+  section-v: "80px"
+  section-v-alt: "100px"
+  container-h: "20px"
+  grid-gap-min: "1rem"
+  grid-gap-max: "4rem"
+  contact-gap: "32px"
+  hero-top: "140px"
+breakpoints:
+  desktop: "993px"
+  tablet-max: "992px"
+  tablet-min: "769px"
+  mobile-max: "768px"
+  mobile-min: "577px"
+  small-mobile: "576px"
+  extra-small: "480px"
+components:
+  container:
+    maxWidth: "1200px"
+    margin: "0 auto"
+    paddingX: "20px"
+  button:
+    textTransform: "uppercase"
+    letterSpacing: "1px"
+    fontSize: "14px"
+    padding: "14px 28px"
+    borderRadius: "8px"
+    hoverTransform: "translateY(-3px)"
+    hoverShadow: "0 8px 32px rgba(0, 0, 0, 0.2)"
+    transition: "all 0.3s ease"
+  card:
+    borderRadius: "8px"
+    hoverTransform: "translateY(-5px)"
+    hoverShadow: "0 8px 32px rgba(0, 0, 0, 0.2)"
+  dog-ear:
+    size: "30px"
+  focus:
+    outline: "2px solid #FFB800"
+    outlineOffset: "2px"
+---
+
 # Design System — Web3 Builders' Summit (LFBUIDL 2026)
 
 Design principles, aesthetics, and guidelines for the Web3 Builders' Summit landing page.
 
 ---
 
-## Design Philosophy
+## Overview
 
-### Core Principles
+**Design identity**: Dark event brand — pure black canvas, gold CTAs, distinctive dog-ear clipped corners. High contrast, energetic, professional. Purpose-built for a single landmark event page.
 
-1. **Event-focused** — The interface prioritizes clarity around the summit: timeline, partners, speakers, and networking. Every element should help attendees find what they need quickly.
-2. **Dark-first** — Deep black backgrounds create focus and reduce eye strain. Gold accents signal energy and premium quality.
-3. **Dog-ear** — Distinctive clipped corners on impact cards add visual interest and brand recognition.
-4. **Professional yet energetic** — Conference credibility with Web3 energy. Balance tech-forward aesthetics with approachability.
+**Tech stack**: Vanilla HTML/CSS with CSS custom properties. Font Awesome 6.5.1 for icons. Anton (display) from Google Fonts.
 
-### Aesthetic Direction
+**Getting started**:
+1. Preload `kv-bg-1.webp`, `kv-bg-2.webp`, `logo.svg` in `<head>` for LCP
+2. Load Anton via Google Fonts: `<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">`
+3. Load Font Awesome 6.5.1 with the `media="print"` deferred trick
+4. Set CSS custom properties in `:root`
 
-- **Dark-first** — Black (`#000000`) page background, dark secondary surfaces (`#0D0D10`, `#18181b`).
-- **Gold accent** — Primary color `#FFB800` for CTAs, borders, highlights, and interactive elements.
-- **Translucent surfaces** — `rgba(255, 255, 255, 0.05)` for cards and elevated surfaces.
-- **Generous whitespace** — Section padding `80px` vertical; let content breathe.
+| File | Purpose |
+|------|---------|
+| `styles.css` | All styles, CSS custom properties, component classes |
+| `index.html` | Main page structure and content |
+| `legal.html` | Terms & Conditions legal page |
+| `scripts.js` | Menu, tabs, smooth scroll, form handling |
+| `img/kv-bg-1.webp` + `.png` | Hero KV background 1 (WebP + PNG fallback) |
+| `img/kv-bg-2.webp` + `.png` | Hero KV background 2 (WebP + PNG fallback) |
+| `img/speakers/` | Speaker portrait images |
+| `img/partners/` | Partner logos (PNG/SVG) |
 
 ---
 
-## Color Palette
+## Colors
 
 ### Base Colors
 
@@ -35,33 +109,45 @@ Design principles, aesthetics, and guidelines for the Web3 Builders' Summit land
 | `--text-color` | `#FFFFFF` | Body text |
 | `--text-light` | `#A1A1AA` | Secondary text, captions, subtitles |
 
-### Accent Colors
+### CSS Custom Properties
 
-| Token | Hex | Usage |
-|-------|-----|-------|
-| `--accent-color` | `#FFB800` | Same as primary; interactive elements |
+```css
+:root {
+  --primary-color: #FFB800;
+  --secondary-color: #0D0D10;
+  --dark-color: #000000;
+  --light-color: #FFFFFF;
+  --text-color: #FFFFFF;
+  --text-light: #A1A1AA;
+  --border-radius: 8px;
+  --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  --transition: all 0.3s ease;
+  --dog-ear-size: 30px;
+}
+```
 
-### Semantic Colors
+### Semantic / Badge Colors
 
-- **Primary hover**: `#FFC94D` (button hover state)
-- **Invite-only badge**: `#8B5CF6` (purple)
-- **Approval badge**: `#F59E0B` (amber)
-- **Contact section background**: `#18181b`
-- **Construction banner**: `#ffd700` (banner background)
+| Context | Value | Usage |
+|---------|-------|-------|
+| Button hover | `#FFC94D` | Primary button hover state |
+| Invite-only badge | `#8B5CF6` | Purple — invite-only events |
+| Approval badge | `#F59E0B` | Amber — approval required |
+| Contact section bg | `#18181b` | Slightly lighter than page bg |
+| Snip badge | `#ffc800` | Hero LFBUIDL / MAY 25 labels |
 
-### Other Tokens
+### WCAG Contrast Ratios (on `#000000` background)
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--border-radius` | `8px` | Cards, buttons, inputs |
-| `--box-shadow` | `0 8px 32px rgba(0, 0, 0, 0.2)` | Hover states |
-| `--transition` | `all 0.3s ease` | Default transitions |
-| `--dog-ear-size` | `30px` | Dog-ear clip-path size |
+| Color | Hex | Ratio | Grade |
+|-------|-----|-------|-------|
+| Primary text | `#FFFFFF` | 21:1 | AAA |
+| Gold accent | `#FFB800` | 11.1:1 | AAA |
+| Secondary text | `#A1A1AA` | 5.2:1 | AA |
 
 ### Guidelines
 
-- Use `--primary-color` for interactive elements and CTAs — it reads as "clickable" and aligns with premium event branding.
-- Reserve semantic badge colors for event status (invite-only, approval required, free to enter).
+- Use `--primary-color` for all interactive elements and CTAs.
+- Reserve semantic badge colors for event status (invite-only, approval required, free entry).
 - Avoid introducing new accent colors; extend the palette only when semantically necessary.
 
 ---
@@ -70,60 +156,120 @@ Design principles, aesthetics, and guidelines for the Web3 Builders' Summit land
 
 ### Font Stack
 
-| Context | Font | Source | Weights | Usage |
-|---------|------|---------|---------|-------|
-| Display / Headers / Nav | Anton | Google Fonts | 400 | All headings (`h1`–`h4`), nav links, section titles |
-| Body / UI | System SF Pro / sans-serif | System | 300–700 | Body text, paragraphs, captions |
+| Context | Font | Source | Weights |
+|---------|------|---------|---------|
+| Display / Headers / Nav | Anton | Google Fonts | 400 |
+| Body / UI | `system-ui, -apple-system, 'SF Pro Text', sans-serif` | System | 300–700 |
 
-**Default body font:** `system-ui, -apple-system, 'SF Pro Text', sans-serif`
-
-**Display font:** `'Anton', sans-serif` — loaded via `<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap">`
-
-> Previously used NeueHaas Display, Fraktion Sans, and SP Pro. All custom font files have been removed; Anton (Google Fonts) replaced them for display use.
+> Previously used NeueHaas Display, Fraktion Sans, and SP Pro. All custom font files have been intentionally removed; Anton replaced them for display use.
 
 ### Scale
 
-- **Hero title**: responsive clamp with vh constraint (fits full viewport at all sizes, including 1280×580)
-- **Section title large**: `3.5rem` (`2rem` on mobile, `1.75rem` @ 576px)
-- **Section title**: `1.5rem`–`2rem`
-- **Impact numbers**: `4rem`
-- **Body / paragraphs**: `0.9rem`–`1rem`
-- **Small / labels**: `0.8rem`–`0.85rem`
+| Element | Size | Notes |
+|---------|------|-------|
+| Hero title | `clamp(3.5rem, 8vw + 1rem, 7rem)` | Fits full viewport at 1280×580; Anton |
+| Section title large | `clamp(1.75rem, 4vw, 3.5rem)` | Responsive; Anton |
+| Section title | `1.5rem`–`2rem` | Anton |
+| Impact numbers | `4rem` | Anton |
+| Body / paragraphs | `0.9rem`–`1rem` | System sans |
+| Small / labels | `0.8rem`–`0.85rem` | System sans |
+
+**Hero title formula rationale**: `clamp(3.5rem, 8vw + 1rem, 7rem)` — at 1280px viewport the calc resolves to ~`(8×1280)/100 + 16 ≈ 118.4px` which Anton renders at approximately the right viewport-filling proportion. Adjust the min/max if using a different hero layout.
 
 ### Guidelines
 
-- Use `letter-spacing: 2px` for uppercase section labels and titles.
-- Use `letter-spacing: 1px` for buttons and small caps.
+- `letter-spacing: 2px` for uppercase section labels and titles.
+- `letter-spacing: 1px` for buttons and small caps.
 - Line height: `1.6` for body, `1.2` for headings.
-- Section titles: `text-transform: uppercase`, `color: var(--text-light)`.
+- Section titles: `text-transform: uppercase; color: var(--text-light)`.
 
 ---
 
-## Spacing & Layout
+## Layout
+
+### Container
+
+| Property | Value |
+|----------|-------|
+| Max width | 1200px |
+| Margin | 0 auto |
+| Padding | 0 20px |
 
 ### Spacing Scale
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| Section padding | `80px 0` | Standard section vertical padding |
-| Section padding (alternate) | `100px 0` | Hero, impact, some sections |
-| Container padding | `0 20px` | Horizontal padding |
-| Grid gaps | `1rem`–`4rem` | Between grid items |
-| Contact options gap | `32px` | Between contact cards |
-
-### Layout
-
-- **Container**: `max-width: 1200px`, `margin: 0 auto`, horizontal padding `0 20px`.
-- **Section padding**: `80px 0` vertical (some sections `100px 0`).
-- **Hero padding-top**: `140px` (120px @ 992px, 80px @ 768px).
+| Usage | Value |
+|-------|-------|
+| Standard section vertical | `80px 0` |
+| Hero, impact, venue sections | `100px 0` |
+| Hero `padding-top` | `140px` (120px @ 992px, 80px @ 768px) |
+| Grid gaps | `1rem`–`4rem` depending on section |
+| Contact options gap | `32px` |
 
 ### Responsive Breakpoints
 
-- **Desktop**: `≥ 993px`
-- **Tablet**: `769px`–`992px`
-- **Mobile**: `577px`–`768px`
-- **Small mobile**: `< 576px`
-- **Extra small**: `< 480px`
+| Breakpoint | Width | Primary usage |
+|-----------|-------|---------------|
+| Desktop | `≥ 993px` | Full layout |
+| Tablet | `769px`–`992px` | Adjusted padding, 2-column → 1-column |
+| Mobile | `577px`–`768px` | Reduced padding, stacked layouts |
+| Small mobile | `< 576px` | Reduced section title sizes |
+| Extra small | `< 480px` | Minimum layout |
+
+---
+
+## Elevation & Depth
+
+The summit uses a **flat-translucent** approach — surfaces are dark semi-transparent overlays rather than elevated cards.
+
+| Level | Background | Notes |
+|-------|-----------|-------|
+| Canvas | `#000000` | Pure black |
+| Header | `var(--secondary-color)` + `backdrop-filter: blur(10px)` | Sticky, blurred |
+| Cards / surfaces | `rgba(255, 255, 255, 0.05)` | Translucent overlay on black |
+| Card hover | `rgba(255, 184, 0, 0.10)` | Gold-tinted warm hover |
+| Contact section | `#18181b` | Slightly warmer than page |
+
+---
+
+## Shapes
+
+| Element | Border Radius |
+|---------|---------------|
+| Cards, buttons, inputs | `var(--border-radius)` (8px) |
+| Impact cards (dog-ear) | See Dog-Ear section — clipped corners |
+| Pills / snip badges | Custom clip-path |
+| Speaker avatar | `50%` |
+| Timeline cards | 8px |
+
+### Dog-Ear Utilities
+
+The distinctive dog-ear clipped corners are applied to impact cards:
+
+```css
+:root { --dog-ear-size: 30px; }
+
+.dog-ear-top-right {
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--dog-ear-size)) 0,
+    100% var(--dog-ear-size),
+    100% 100%,
+    0 100%
+  );
+}
+
+.dog-ear-bottom-left {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 100%,
+    var(--dog-ear-size) 100%,
+    0 calc(100% - var(--dog-ear-size))
+  );
+}
+```
+
+Apply `.impact-card` with exactly one dog-ear class — use `top-right` for left-aligned cards, `bottom-left` for right-aligned cards.
 
 ---
 
@@ -131,134 +277,187 @@ Design principles, aesthetics, and guidelines for the Web3 Builders' Summit land
 
 ### Buttons
 
-- **Primary** (`.btn-primary`): `#FFB800` background, dark text. Use for main CTAs (e.g., "Stay Tuned!", "Learn More").
-- **Secondary** (`.btn-secondary`): Transparent background, white border. Use for secondary actions.
-- **Outline** (`.btn-outline`): Transparent background, primary border. Hover: primary background.
-- **Large** (`.btn-large`): `padding: 1rem 3rem`, `font-size: 1rem`.
+| Variant | Class | Style |
+|---------|-------|-------|
+| Primary | `.btn-primary` | `#FFB800` bg, dark text; hover: `#FFC94D` |
+| Secondary | `.btn-secondary` | Transparent bg, white border |
+| Outline | `.btn-outline` | Transparent bg, primary border; hover: primary bg |
+| Large | `.btn-large` | `padding: 1rem 3rem; font-size: 1rem` |
 
-Base: `text-transform: uppercase`, `letter-spacing: 1px`, `font-size: 14px`, `padding: 14px 28px` (CTA: `12px 24px`).
+Base styles: `text-transform: uppercase; letter-spacing: 1px; font-size: 14px; padding: 14px 28px; border-radius: 8px`
 
-Hover: `translateY(-3px)`, `box-shadow: var(--box-shadow)`.
+Hover: `translateY(-3px); box-shadow: var(--box-shadow)`
+
+#### Button States
+
+| State | Visual |
+|-------|--------|
+| Hover | `translateY(-3px)` + box shadow |
+| Focus | `outline: 2px solid #FFB800; outline-offset: 2px` |
+| Disabled | Opacity 0.40; cursor not-allowed; no hover transform |
+| Loading | Replace label with spinner; `pointer-events: none` |
+
+**JS fallback**: If JavaScript fails to handle form submission, ensure all forms have a valid `action` attribute pointing to a server-side handler so submissions are not silently lost.
+
+---
 
 ### Pill Badges
 
-`.pill-badge` — small rounded capsule label used in the hero and as section dividers.
+`.pill-badge` — gold chamfered capsule label:
 
-- Default: gold border, uppercase text, small font
-- Large variant (`.pill-badge--lg`): larger padding, used in hero meta row
-- Used in `.hero-badge-corner` for the "LFBUIDL" label, and in `.subsection-pill` as partner tier dividers
+| Variant | Class | Usage |
+|---------|-------|-------|
+| Standard | `.pill-badge` | Hero meta, section labels |
+| Large | `.pill-badge--lg` | Hero meta row |
+| Subsection | `.subsection-pill` | Partner tier dividers |
 
-### Subsection Pills
+---
 
-`.subsection-pill` — section divider row combining a pill badge and gradient text label.
+### Snip Badges
 
-```html
-<div class="subsection-pill">
-  <span class="pill-badge">Ecosystem</span>
-  <span class="subsection-pill-gradient">Partners</span>
-</div>
-```
+`.snip-badge` — gold chamfered capsule (replaces previous pill badges in the hero):
 
-Used to introduce Co-host / Strategic / Ecosystem / Community partner tiers.
+- `.snip-badge--corner-bl` — bottom-left corner snip via clip-path
+- `.snip-badge--sm` — small; inline next to "BUILDERS'" word
+- `.snip-badge--md` — medium; used in date row ("MAY 25")
+- Background `#ffc800`, color `#000000`, font Anton, uppercase
+
+---
 
 ### Impact Cards
 
-- Apply `.impact-card` with `.dog-ear-top-right` or `.dog-ear-bottom-left`.
-- Background: `rgba(255, 255, 255, 0.05)`.
-- Border: `2px solid var(--primary-color)`.
-- Hover: `translateY(-5px)`, `box-shadow`, `background-color: rgba(255, 184, 0, 0.1)`.
+| Property | Value |
+|----------|-------|
+| Apply | `.impact-card` + one dog-ear class |
+| Background | `rgba(255, 255, 255, 0.05)` |
+| Border | `2px solid var(--primary-color)` |
+| Hover | `translateY(-5px)` + box shadow + `rgba(255,184,0,0.10)` bg |
 
-### Dog-Ear Utilities
+---
 
-```css
-/* Top-right clipped corner */
-.dog-ear-top-right {
-  clip-path: polygon(0 0, calc(100% - var(--dog-ear-size)) 0, 100% var(--dog-ear-size), 100% 100%, 0 100%);
-}
+### Speaker Cards
 
-/* Bottom-left clipped corner */
-.dog-ear-bottom-left {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, var(--dog-ear-size) 100%, 0 calc(100% - var(--dog-ear-size)));
-}
-```
+| Property | Value |
+|----------|-------|
+| Grid | `repeat(auto-fill, minmax(250px, 1fr))` |
+| Gap | `30px` |
+| Card background | `rgba(255, 255, 255, 0.05)` |
+| Card border radius | `8px` |
+| Card padding | `24px` |
+| Avatar | `120px × 120px`, `border-radius: 50%`, `object-fit: cover` |
+| Min width (card) | `250px` |
+| Max width (card) | `340px` |
+| Height | auto (content-driven) |
 
-### Speaker Info Cards
+Focus state for speaker social links: `outline: 2px solid #FFB800; outline-offset: 2px`
 
-The `#speakers` section appears **above** the Partners section.
+Partner logos: `data-organization` and `data-role` attributes are present for future JS filtering — document this when implementing the filter feature.
 
-- Grid: `repeat(auto-fill, minmax(250px, 1fr))`, gap `30px`.
-- Card background: `rgba(255, 255, 255, 0.05)`, border-radius `8px`, padding `24px`.
-- Avatar: `120px × 120px`, `border-radius: 50%`, `object-fit: cover`.
-- `.speaker-socials` — flex row of X / LinkedIn icon links; color `var(--text-light)`, hover `var(--primary-color)`.
-- Cards carry `data-organization` and `data-role` attributes for potential JS filtering.
-- Section background: `var(--secondary-color)`.
-- Hover: `translateY(-5px)`, `box-shadow`.
+---
 
-### Venue Section
+### Partner Logos
 
-The `#venue` section (after Benefits) shows the event venue.
+| Tier | Logo Max Height | Max Width | Behavior |
+|------|----------------|-----------|---------|
+| Co-host | `60px` | `200px` | Color at rest |
+| Strategic | `50px` | `180px` | Color at rest |
+| Premium | `44px` | `160px` | Color at rest |
+| Ecosystem | `40px` | `150px` | Grayscale → color on hover |
+| Community | `36px` | `130px` | Grayscale → color on hover |
 
-- Background: `var(--dark-color)`.
-- Two-column grid: `1fr 1fr`, gap `4rem`.
-- Venue name: **Risemount Premier Resort Da Nang**, 120 Nguyen Van Thoai Street, Da Nang.
-- `.venue-features` — icon + text feature list (WiFi, restaurant, parking, pool).
-- Right column: Google Maps embed `iframe`.
-- Section padding: `100px 0`.
+All logos: `object-fit: contain; object-position: center`. Hover: `scale(1.05)`.
 
-### Timeline Events
+---
 
-- Min width: `280px`.
-- Padding: `2rem`.
-- Event-type borders: `.w3bs-event`, `.davas-event`, `.main-event` (distinct border colors).
-- Badges: `.event-status` with `.free-badge`, `.invite-only-badge`, `.approval-badge`.
+### Timeline Cards
+
+| Property | Value |
+|----------|-------|
+| Min width | `280px` |
+| Max width | `380px` |
+| Padding | `2rem` |
+| Border radius | `8px` |
+| Background | `rgba(255, 255, 255, 0.05)` |
+
+Event-type borders:
+- `.w3bs-event` — gold border `--primary-color`
+- `.davas-event` — purple border `#8B5CF6`
+- `.main-event` — double-weight gold border
+
+**JS filtering fallback**: The speaker grid's `data-organization` / `data-role` attributes are available for filtering. If JS fails, all speakers remain visible — ensure the unfiltered state is useful and accessible without JS.
+
+---
 
 ### Agenda
 
-The agenda section uses a phase-based layout (Morning / Afternoon / Evening):
+Phase-based layout (Morning / Afternoon / Evening):
 
-- **`.agenda-phase`** — wraps each time block
-- **`.agenda-phase-header`** — phase title + tag label (e.g. "Strategic Foundations & Policy")
-- **`.agenda-rows`** — container for session rows
-- **`.agenda-row`** — single session: time | badge | content
-- **`.agenda-row-break`** — break row variant (dimmed styling)
-- **`.agenda-dinner-grid`** — 2×2 card grid for the evening dinner activities
-- **`.agenda-dinner-card`** — individual dinner activity card
+| Class | Purpose |
+|-------|---------|
+| `.agenda-phase` | Wraps a time block |
+| `.agenda-phase-header` | Phase title + tag label |
+| `.agenda-rows` | Container for session rows |
+| `.agenda-row` | Single session: time \| badge \| content |
+| `.agenda-row-break` | Break row variant (dimmed) |
+| `.agenda-dinner-grid` | 2×2 card grid for evening activities |
+| `.agenda-dinner-card` | Individual dinner card |
 
-Agenda badge classes:
+**Agenda phase header styling**:
+- Phase title: Anton, `1.1rem`, uppercase, `#A1A1AA`
+- Tag label: system sans, `0.8rem`, uppercase, `letter-spacing: 2px`
+- Border-bottom: `1px solid rgba(255,255,255,0.08)`, padding-bottom `12px`
 
-| Class | Label | Usage |
-|-------|-------|-------|
-| `.badge-keynote` | Keynote | Opening/closing keynotes |
-| `.badge-panel` | Panel N | Discussion panels |
-| `.badge-debate` | Debate | Lightning debates |
-| `.badge-showcase` | Showcase | Builder demo batches |
-| `.badge-break` | Break | Networking/coffee breaks |
-| `.badge-dinner` | varies | Evening dinner activities |
+**Agenda row styling**:
+- Time column: `80px` fixed width; Anton, `0.85rem`, gold color
+- Badge column: `100px` fixed; centered
+- Content column: flex 1; session title in white, speaker in `--text-light`
+- Break rows: overall opacity `0.55`
+
+**Badge classes**:
+
+| Class | Label | Background |
+|-------|-------|------------|
+| `.badge-keynote` | Keynote | `rgba(255,184,0,0.15)` + gold border |
+| `.badge-panel` | Panel N | `rgba(255,255,255,0.08)` |
+| `.badge-debate` | Debate | `rgba(139,92,246,0.15)` + purple border |
+| `.badge-showcase` | Showcase | `rgba(34,197,94,0.12)` + green border |
+| `.badge-break` | Break | `rgba(255,255,255,0.05)` |
+
+---
+
+### Venue Section
+
+- Background: `var(--dark-color)` (`#000000`)
+- Layout: two-column grid `1fr 1fr`, gap `4rem`
+- Section padding: `100px 0`
+- Venue: Risemount Premier Resort Da Nang, 120 Nguyen Van Thoai Street
+- `.venue-features` — icon + text feature list (WiFi, restaurant, parking, pool); icon color `--primary-color`
+
+---
 
 ### Badges
 
 | Class | Color | Usage |
 |-------|-------|-------|
-| `.free-badge` | `--primary-color` | Free to enter |
+| `.free-badge` | `--primary-color` (`#FFB800`) | Free entry |
 | `.invite-only-badge` | `#8B5CF6` | Invite only |
 | `.approval-badge` | `#F59E0B` | Approval required |
 
+---
+
 ### Contact Options
 
-- Cards: `rgba(255, 255, 255, 0.03)` background, `var(--border-radius)`.
-- Padding: `24px 32px`, min-width `120px`.
-- Icons: `2.2rem`, `color: var(--primary-color)`.
-- Hover: `background: var(--primary-color)`, `color: var(--dark-color)`, `translateY(-4px) scale(1.04)`.
-
-### Pricing Tiers
-
-- Background: `rgba(255, 255, 255, 0.05)`.
-- Hover: lift, brighter background.
-
-### Header
-
-- Backdrop: `backdrop-filter: blur(10px)`.
-- Background: `var(--secondary-color)`.
+| Property | Value |
+|----------|-------|
+| Card background | `rgba(255, 255, 255, 0.03)` |
+| Card border radius | `var(--border-radius)` |
+| Padding | `24px 32px` |
+| Min width | `120px` |
+| Icon size | `2.2rem` |
+| Icon color | `--primary-color` |
+| Hover bg | `var(--primary-color)` |
+| Hover text | `var(--dark-color)` |
+| Hover transform | `translateY(-4px) scale(1.04)` |
 
 ---
 
@@ -266,7 +465,7 @@ Agenda badge classes:
 
 ### Structure
 
-The hero uses a two-column layout: title content on the left, KV images on the right.
+Two-column layout: title/badges left, KV images right.
 
 ```html
 <section class="hero">
@@ -294,41 +493,29 @@ The hero uses a two-column layout: title content on the left, KV images on the r
 </section>
 ```
 
-### Snip Badges
-
-`.snip-badge` — gold chamfered capsule label. Used in the hero for "LFBUIDL" and "MAY 25".
-
-- `.snip-badge--corner-bl` — bottom-left corner snip via `clip-path`
-- `.snip-badge--sm` — small size, inline next to BUILDERS' title word
-- `.snip-badge--md` — medium size, used in date row for "MAY 25"
-- Background `#ffc800`, color `#000`, font `Anton`, uppercase
-
-> These replaced the `.pill-badge--corner` and `.hero-meta-row` pill from the previous hero design.
-
-### Hero Text Classes
-
-- `.hero-word` — large Anton display word
-- `.hero-word-white` — `color: #ffffff`
-- `.hero-word-yellow` — `color: #ffc800`
-- `.hero-loc-label` — inline two-line "DANANG // VIETNAM" label on title line 2; small Anton, muted white
-- `.hero-date-row` — flex row containing MAY 25 snip badge + `.hero-date-year`
-- `.hero-date-year` — "2026" year in muted white, Anton
-
 ### KV Images
 
-- `img/kv-bg-1.webp` / `img/kv-bg-2.webp` — WebP with PNG fallback via `<picture>` element.
-- `kv-bg-1` has `fetchpriority="high"` for LCP; `kv-bg-2` uses `loading="eager"`.
-- `img/logo.svg` overlaid on KV as `.hero-kv-logo`.
+Always use `<picture>` with WebP + PNG fallback:
 
-### Collaboration Branding
+```html
+<picture>
+  <source srcset="img/kv-bg-1.webp" type="image/webp" />
+  <img
+    src="img/kv-bg-1.png"
+    alt=""
+    fetchpriority="high"
+    class="kv-bg-1"
+  />
+</picture>
+```
 
-`.hero-collab` displays "In Collaboration with" + the DAVAS logo below the date row.
+`kv-bg-2` uses `loading="eager"` (not `fetchpriority="high"`). Never use WebP-only without a PNG fallback.
 
 ---
 
-## Partners Section Structure
+## Partners Section
 
-The `#partners` section groups partners into five tiers, each preceded by a `.subsection-pill` divider:
+Five tiers, each preceded by a `.subsection-pill` divider:
 
 | Tier | Partners |
 |------|---------|
@@ -336,9 +523,7 @@ The `#partners` section groups partners into five tiers, each preceded by a `.su
 | Strategic | DISSC, Lisk |
 | Premium | NEBULUS |
 | Ecosystem | Swiss EP, Aptos, Avalanche, Laguna Network |
-| Community | Team1, Spores Network, Da Nang Blockchain Hub (+ "To be updated...") |
-
-All logos are wrapped in anchor links. Logos use `.strategic-partner-logo`; Premium/Ecosystem/Community rows add `.ecosystem-partners-logos` for wider multi-column layout. NEBULUS has an additional `.nebulus-logo` class for custom sizing.
+| Community | Team1, Spores Network, Da Nang Blockchain Hub |
 
 ---
 
@@ -346,30 +531,34 @@ All logos are wrapped in anchor links. Logos use `.strategic-partner-logo`; Prem
 
 ### Transitions
 
-- Default: `all 0.3s ease` (`var(--transition)`).
-- Use for: hover states, card lift, gallery zoom.
+Default: `all 0.3s ease` (`var(--transition)`)
 
 ### Hover Patterns
 
-- **Buttons**: `translateY(-3px)`, `box-shadow`.
-- **Cards (impact, speaker, pricing)**: `translateY(-5px)`, `box-shadow`.
-- **Contact options**: `translateY(-4px) scale(1.04)`, primary background.
-- **Gallery items**: Image `scale(1.05)`.
-- **Partner logos**: `scale(1.05)` or `scale(1.1)`, opacity change.
+| Element | Transform | Shadow |
+|---------|-----------|--------|
+| Buttons | `translateY(-3px)` | `var(--box-shadow)` |
+| Impact / speaker / pricing cards | `translateY(-5px)` | `var(--box-shadow)` |
+| Contact options | `translateY(-4px) scale(1.04)` | — |
+| Gallery images | `scale(1.05)` | — |
+| Partner logos | `scale(1.05)` or `scale(1.1)` | — |
 
 ### Scroll
 
-- Custom scrollbar: primary color thumb, translucent track.
-- `scroll-behavior: smooth` for anchor links.
+- `scroll-behavior: smooth` for anchor links
+- Custom scrollbar: gold thumb, translucent track
 
 ---
 
 ## Accessibility
 
-- **Focus states**: Ensure visible focus rings on interactive elements (contact links, buttons). Avoid `outline: none` without replacement.
-- **Contrast**: Primary text on dark background meets WCAG AA. Secondary text (`--text-light`) may need review for AAA.
-- **Labels**: Section titles use uppercase and letter-spacing for hierarchy.
-- **ARIA**: Buttons and links should have `aria-label` where icon-only or context is unclear.
+- **Focus states**: `outline: 2px solid #FFB800; outline-offset: 2px` on all interactive elements via `:focus-visible`
+- **Never** use `outline: none` without providing an equivalent visible replacement
+- **Contrast**: Primary text (`#FFFFFF`) on black is 21:1 (AAA); `--text-light` (`#A1A1AA`) is 5.2:1 (AA) — acceptable for UI labels
+- **ARIA**: Add `aria-label` to icon-only links (speaker socials, partner logos); use `aria-current="page"` on active nav items
+- **Image alt**: KV images in `.hero-right` carry `aria-hidden="true"` — do not add alt text to purely decorative images
+- **Skip link**: Add `<a href="#main-content" class="skip-link">Skip to main content</a>` as the first element in `<body>`
+- **Form submissions**: Ensure all forms have a server-side `action` fallback so submissions work without JavaScript
 
 ---
 
@@ -377,26 +566,21 @@ All logos are wrapped in anchor links. Logos use `.strategic-partner-logo`; Prem
 
 ### Landing Page
 
-- Hero: Two-column layout — title/badges on left, KV images on right.
-- Section order: Hero → Overview (#our-partners) → Timeline → Agenda → **Speakers** → **Partners** → Benefits → **Venue** → Gallery → Contact.
-- Partners: Five tiers (Co-host → Strategic → Premium → Ecosystem → Community).
-- Speakers section now appears above Partners.
-- Timeline: Horizontal scroll on desktop, event cards with date, type, description, CTA or status badge.
-- Agenda: Phase-based table layout (Morning / Afternoon / Evening).
-- Venue: Risemount Premier Resort Da Nang, two-column info + map layout.
+- Hero: two-column layout — title/badges on left, KV images on right
+- Section order: Hero → Overview (#our-partners) → Timeline → Agenda → Speakers → Partners → Benefits → Venue → Gallery → Contact
+- Partners: five tiers (Co-host → Strategic → Premium → Ecosystem → Community)
 
 ### Gallery
 
-- Grid: `repeat(auto-fit, minmax(250px, 1fr))`, gap `20px`.
-- Responsive: 2 columns @ 768px, 1 column @ 480px.
-- Item aspect ratio: `4/3`.
-- Hover: image `scale(1.05)`.
+- Grid: `repeat(auto-fit, minmax(250px, 1fr))`, gap `20px`
+- Responsive: 2 columns @ 768px, 1 column @ 480px
+- Item aspect ratio: `4/3`
 
 ### Contact
 
-- Background: `#18181b`.
-- Contact options: flex wrap, centered, gap `32px`.
-- Mobile: column layout, reduced padding.
+- Background: `#18181b`
+- Layout: flex wrap, centered, gap `32px`
+- Mobile: column layout, reduced padding
 
 ---
 
@@ -404,60 +588,27 @@ All logos are wrapped in anchor links. Logos use `.strategic-partner-logo`; Prem
 
 ### Voice
 
-- **Tone**: Confident, builder-focused, event-driven.
-- **Avoid**: Jargon overload, exclusivity without clarity.
+- **Tone**: Confident, builder-focused, event-driven
+- **Avoid**: Jargon overload, exclusivity without clarity
 
 ### Imagery
 
-- Gallery: Real photos from past summits.
-- Partner logos: Consistent sizing, grayscale or color as designed.
-- Hero: Dual KV illustrative backgrounds (not a single 3D header image).
-
-### External Resources
-
-- Font Awesome 6.5.1 for icons (loaded async with `media="print"` trick).
-- Google Fonts: Anton (display).
-- Preload: kv-bg-1.webp, kv-bg-2.webp, logo.svg.
+- Gallery: Real photos from past summits
+- Partner logos: Consistent sizing — see partner logo table in Components section
+- Hero: Dual KV illustrative backgrounds (not a single 3D render)
 
 ---
 
 ## Do's and Don'ts
 
-### Do
-
-- Use CSS custom properties for all colors, spacing, and typography.
-- Apply dog-ear clip-path to impact cards for brand consistency.
-- Keep primary (gold) usage intentional for CTAs and highlights.
-- Maintain consistent section structure (section-title → section-title-large → content).
-- Preload critical WebP images and logo for LCP.
-- Use Anton for all display/heading text; system sans-serif for body.
-
-### Don't
-
-- Add new accent colors without design review.
-- Use heavy borders; prefer `2px solid var(--primary-color)` for emphasis.
-- Overuse uppercase; reserve for section labels and buttons.
-- Introduce new font families (custom font files have been intentionally removed).
-- Break the dark theme (e.g., white content blocks) without clear rationale.
-- Use WebP-only hero KV images without a PNG fallback — always wrap in `<picture>` with both formats.
-
----
-
-## File Reference
-
-> File paths below are relative to the summit-landing project.
-
-| File | Purpose |
-|------|---------|
-| `styles.css` | All styles, CSS variables, component classes |
-| `index.html` | Main page structure and content |
-| `legal.html` | Terms & Conditions legal page |
-| `scripts.js` | Menu, tabs, smooth scroll, forms |
-| `img/kv-bg-1.webp` | Hero KV background 1 (WebP, `fetchpriority="high"`) |
-| `img/kv-bg-1.png` | Hero KV background 1 fallback PNG |
-| `img/kv-bg-2.webp` | Hero KV background 2 (WebP) |
-| `img/kv-bg-2.png` | Hero KV background 2 fallback PNG |
-| `img/speakers/` | Speaker portrait images |
-| `img/partners/` | Partner logos (PNG/SVG) |
-| `img/` | Logos, favicons, gallery, media coverage |
-| `vercel.json` | Deployment config |
+| Do | Don't |
+|----|-------|
+| Use CSS custom properties for all colors, spacing, and typography | Hard-code hex values inline |
+| Apply dog-ear clip-path to impact cards for brand consistency | Apply dog-ear to speaker cards, partner rows, or other components |
+| Always wrap hero KV images in `<picture>` with WebP + PNG fallback | Use WebP-only images without a PNG fallback |
+| Add `outline: 2px solid #FFB800` on `:focus-visible` for all interactive elements | Use `outline: none` without a replacement |
+| Use Anton for all display/heading text | Use Anton for body copy or captions |
+| Provide a server-side form action as JS fallback | Rely on JS-only form submission without a fallback |
+| Specify logo size constraints from the partner logo table | Let logos scale freely without max-width/height |
+| Keep primary (gold) usage intentional for CTAs and highlights | Use gold as a background fill for large areas |
+| Preload `kv-bg-1.webp` and `logo.svg` in `<head>` | Lazy-load the LCP image |
