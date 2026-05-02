@@ -1,6 +1,11 @@
 ---
 design-system: "EMpower Founders Residency"
-version: "1.1.0"
+version: "1.2.0"
+brand:
+  figmaFile: "https://www.figma.com/design/fCGlJuUlZx3Em40ltPUUjv/EMpower-Founders-Residency"
+  logoVariants: ["logo-a-horizontal", "logo-a-square", "logo-b-horizontal", "logo-b-square"]
+  bannerVariants: ["banner-v1", "banner-v2"]
+  motif: "four-point sparkle (mint accent) anchored to the EM lockup"
 colors:
   canvas: "#f8f8f8"
   surface: "#ffffff"
@@ -15,6 +20,8 @@ colors:
   status-dot: "#4ade80"
   status-glow: "rgba(74, 222, 128, 0.6)"
   cta-hover-shadow: "rgba(174, 255, 200, 0.45)"
+  banner-gradient-from: "#aeffc8"
+  banner-gradient-to: "#0d2a1f"
 typography:
   heading:
     fontFamily: '"Instrument Sans Variable", system-ui, sans-serif'
@@ -90,6 +97,97 @@ A reference guide for the visual language, component patterns, and conventions u
 | Components | `src/components/` (one file per component, PascalCase) |
 | Assets — photos | `/public/gallery/`, `/public/space/` |
 | Assets — logos | `/public/logos/` |
+| Brand kit | `/public/brand/` (logo lockups, sparkle SVG, banners) |
+
+---
+
+## Brand Identity
+
+The brand is a typographic logo lockup defined in the Figma source: [EMpower Founders Residency](https://www.figma.com/design/fCGlJuUlZx3Em40ltPUUjv/EMpower-Founders-Residency). Two lockup configurations exist (Version A vertical, Version B horizontal), each with horizontal and 1000×1000 square framings, plus two banner treatments for social/OG use.
+
+### Logo Lockup Anatomy
+
+Three distinct typographic registers compose the wordmark — these are **decorative typefaces reserved for the logo and headline brand assets**, not for body UI (UI continues to use Instrument Sans):
+
+| Register | Role | Character |
+|----------|------|-----------|
+| `EM` | Lead mark | Tall decorative blackletter-influenced serif, condensed |
+| `POWER` | Display | Curvy 70s funk display, heavy weight, soft round counters |
+| `FOUNDERS RESIDENCY DANANG` / `BY LISK VENTURES & SQRDAO` | Tagline | Bold pixel/8-bit display, uppercase, wide tracking |
+
+> The exact font files live with the design assets — do **not** substitute. If a non-image rendering is needed (e.g., dynamic OG image), export the lockup as SVG with paths outlined. Never re-typeset the logo with a different typeface.
+
+### Sparkle Motif
+
+A four-point sparkle (asymmetric — vertical points are longer than horizontal) sits flush with the `EM` glyphs. Treat it as a load-bearing brand element:
+
+- **Color**: `var(--accent)` (`#aeffc8`)
+- **Anchor**: bottom-left of `EM` in Logo A; right edge of `POWER` in Logo B
+- **Solo use**: allowed as a small accent (e.g., section divider, CTA prefix), but never larger than 24px when separated from the wordmark
+- **SVG asset**: `/public/brand/sparkle.svg`
+- **Don't**: rotate, recolor outside the accent palette, or use as a bullet/list marker
+
+### Logo Variants
+
+| Variant | Use case | Frame size | File |
+|---------|----------|-----------|------|
+| Logo A — horizontal | Primary nav, footer, marketing headers | 964 × 425 | `/public/brand/logo-a.svg` |
+| Logo A — square | App icon, social avatar | 1000 × 1000 | `/public/brand/logo-a-square.svg` |
+| Logo B — horizontal | Compact contexts (sticky header on scroll, email signature) | 1451 × 387 | `/public/brand/logo-b.svg` |
+| Logo B — square | Square social tiles | 1000 × 1000 | `/public/brand/logo-b-square.svg` |
+
+**Clear space**: minimum padding around any lockup equals the height of the `M` glyph. **Minimum size**: 120px wide (horizontal) / 80px (square). Below that, use Logo B (more legible at small sizes) or the sparkle alone.
+
+### Logo Color Treatments
+
+| Treatment | When to use |
+|-----------|-------------|
+| Black wordmark + mint sparkle (default) | On `#f8f8f8` canvas, `#ffffff` surfaces |
+| White wordmark + mint sparkle | On `#1a1a1a` dark sections, banner gradients |
+| All-mint single-color | Watermarks, embossed contexts (avoid in primary positions) |
+
+Never apply gradients or photographic fills to the wordmark itself.
+
+### Banner Treatments
+
+Two banner variants exist for OG images, social headers, and event collateral:
+
+| Banner | Logo placement | Background |
+|--------|---------------|-----------|
+| `banner-v1` | Logo A, large, left-third | Teal radial gradient `#aeffc8 → #0d2a1f` with two overlapping ellipse glows |
+| `banner-v2` | Logo A, medium, left-quarter | Same gradient, smaller glow distribution |
+
+Banner spec:
+- Aspect ratio: **2177 × 1159** (≈1.88:1) — close to OG 1200×630, scaled up
+- Background: large mint ellipse (top-left) + smaller mint ellipse (bottom-right), overlaid on near-black `#0d2a1f`, with a `blur(120px)` radial glow on each
+- Wordmark: white (#ffffff), sparkle in `--accent` (#aeffc8)
+
+```css
+.brand-banner {
+  background: radial-gradient(
+      ellipse at 25% 35%,
+      var(--accent) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 80% 80%,
+      rgba(174, 255, 200, 0.6) 0%,
+      transparent 50%
+    ),
+    #0d2a1f;
+  aspect-ratio: 2177 / 1159;
+}
+```
+
+### Brand Asset Don'ts
+
+| Don't | Why |
+|-------|-----|
+| Re-typeset the wordmark in Instrument Sans (or any other font) | The decorative typefaces *are* the brand |
+| Place the wordmark on busy photographic backgrounds | Loses legibility; use a banner treatment instead |
+| Recolor the sparkle to a non-accent color | The mint sparkle is the brand's recognition cue |
+| Stretch, skew, or rotate the lockup | Lockup proportions are fixed |
+| Use Logo A — square at less than 256px | Subtitle text becomes unreadable below that size |
 
 ---
 
@@ -474,9 +572,11 @@ All animations and transitions are disabled under `prefers-reduced-motion: reduc
 |------|--------|----------|-------|
 | Photos | JPG | `/public/gallery/` | Lazy-loaded, 3-up carousel |
 | Space photos | JPG/JPEG | `/public/space/` | Carousel slides, `border-radius: 8px` |
-| Logos | SVG/PNG | `/public/logos/` | Alt text provided |
-| OG image | JPG | Root URL | `/bg.jpg` |
-| Favicon | Multi | `/public/favicon/` | ICO, PNG, Apple Touch, webmanifest |
+| Partner / ecosystem logos | SVG/PNG | `/public/logos/` | Alt text provided |
+| Brand wordmark + sparkle | SVG | `/public/brand/` | Outlined paths; never re-typeset |
+| Brand banners | PNG/JPG | `/public/brand/` | OG / social cards; export at 2× from Figma |
+| OG image | JPG | Root URL | `/bg.jpg` (use `banner-v1` export when refreshing) |
+| Favicon | Multi | `/public/favicon/` | ICO, PNG, Apple Touch, webmanifest — derived from Logo A square |
 
 No image optimization library — relies on native lazy loading and pre-optimized static assets. Carousels use `object-fit: contain` for slides, `object-fit: cover` for photo strips.
 
@@ -509,3 +609,6 @@ No image optimization library — relies on native lazy loading and pre-optimize
 | Add `aria-expanded` to burger/accordion toggle buttons | Omit state management from interactive disclosure elements |
 | Use `<button>` for interactive elements, `<a>` for navigation | Use `<div onClick>` without `role` and `tabindex` |
 | Pair focus ring with a dark outer stroke for light backgrounds | Rely solely on `#8ee8b0` outline (low contrast on white) |
+| Use the SVG wordmark from `/public/brand/` for the logo | Re-typeset the wordmark in Instrument Sans or any other font |
+| Keep the mint sparkle paired with the lockup or sized ≤ 24px when solo | Use the sparkle as a bullet, list marker, or oversized decoration |
+| Export OG / social images from the Figma banner frames at 2× | Generate banners by stretching the wordmark over a flat color |
