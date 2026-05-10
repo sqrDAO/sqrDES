@@ -1,6 +1,6 @@
 ---
 design-system: "EMpower Founders Residency"
-version: "1.2.0"
+version: "1.3.0"
 brand:
   figmaFile: "https://www.figma.com/design/fCGlJuUlZx3Em40ltPUUjv/EMpower-Founders-Residency"
   logoVariants: ["logo-a-horizontal", "logo-a-square", "logo-b-horizontal", "logo-b-square"]
@@ -22,6 +22,8 @@ colors:
   cta-hover-shadow: "rgba(174, 255, 200, 0.45)"
   banner-gradient-from: "#aeffc8"
   banner-gradient-to: "#0d2a1f"
+  ink: "#000000"
+  accent-line: "rgba(174, 255, 200, 0.25)"
 typography:
   heading:
     fontFamily: '"Instrument Sans Variable", system-ui, sans-serif'
@@ -40,6 +42,19 @@ typography:
     textTransform: "uppercase"
     letterSpacing: "0.1em"
     opacity: 0.55
+  display:
+    fontFamily: '"<pixel-display>", sans-serif'
+    fontWeight: 700
+    minSize: "96px"
+    note: "Replace <pixel-display> with the exact pixel/8-bit family name from the brand source. Do not substitute."
+  mono-italic:
+    fontFamily: '"Roboto Mono", ui-monospace, monospace'
+    fontStyle: "italic"
+    fontWeight: 500
+    fontSize: "0.7rem"
+    textTransform: "uppercase"
+    letterSpacing: "0.1em"
+    opacity: 1.0
 spacing:
   container-max: "72rem"
   section-v: "clamp(4rem, 10vw, 7rem)"
@@ -49,6 +64,12 @@ spacing:
 breakpoints:
   tablet: "768px"
   mobile: "640px"
+formats:
+  poster-square: "2600 × 2600"
+  poster-story: "1080 × 1920"
+  poster-card: "1200 × 630"
+  slide-16x9: "1920 × 1080"
+  banner-og: "2177 × 1159"
 components:
   button:
     radius: "4px"
@@ -135,8 +156,11 @@ A four-point sparkle (asymmetric — vertical points are longer than horizontal)
 | Logo A — square | App icon, social avatar | 1000 × 1000 | `/public/brand/logo-a-square.svg` |
 | Logo B — horizontal | Compact contexts (sticky header on scroll, email signature) | 1451 × 387 | `/public/brand/logo-b.svg` |
 | Logo B — square | Square social tiles | 1000 × 1000 | `/public/brand/logo-b-square.svg` |
+| Logo C — stacked | Square posters, social tiles, slide titles | 2000 × 2000 (typical) | `/public/brand/logo-c-stacked.svg` |
 
 **Clear space**: minimum padding around any lockup equals the height of the `M` glyph. **Minimum size**: 120px wide (horizontal) / 80px (square). Below that, use Logo B (more legible at small sizes) or the sparkle alone.
+
+**Stacked variant (Logo C):** Used when the lockup must occupy a square frame at large size (event posters, slide title cards). Composition: `EM` upper-left in the decorative serif; tagline (`FOUNDERS RESIDENCY DANANG / BY LISK VENTURES & SQRDAO`) upper-right in the pixel register, baseline-aligned to `EM`'s cap-height; `POWER` below in the funk display, optical-aligned to span the full lockup width; sparkle anchored bottom-left of the `P` of `POWER`. Clear-space and minimum-size rules from Logo A apply.
 
 ### Logo Color Treatments
 
@@ -214,6 +238,17 @@ Banner spec:
 | `#ffffff` | Headings in dark sections |
 | `#2d6a4f` | Icon color on accent backgrounds |
 
+### Event Collateral (poster / social / slides)
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--ink` | `#000000` | Event-poster canvas; social tiles; slide backgrounds. Reserved for off-web surfaces. |
+| `--accent-line` | `rgba(174, 255, 200, 0.25)` | Ambient mint decoration: topographic lines, divider hairlines, low-opacity glows. |
+
+> **Why three darks?** `--dark-surface` (`#1a1a1a`) is the *web* dark canvas (softer on monitors with poor black-point). `--ink` (`#000000`) is the *event-collateral* canvas (more punch on social, OLED-friendly). `banner-gradient-to` (`#0d2a1f`) is the banner-only base of the mint→dark gradient. **Never substitute one for another.**
+
+> **Why `--accent-line`?** The "accent for CTAs only" rule (see Do's and Don'ts) protects the mint as a CTA signal. `--accent-line` is the safety valve for ambient decoration — it's the same hue at low opacity, which keeps the accent rare at full strength.
+
 ### Status Colors
 
 | Color | Usage |
@@ -231,6 +266,7 @@ Banner spec:
 | `#2f2f2f` | `#aeffc8` | 9.4:1 | AAA | Dark text on accent backgrounds |
 | `#ffffff` | `#1a1a1a` | 16.1:1 | AAA | White on dark sections |
 | `#f0f0f0` | `#1a1a1a` | 13.8:1 | AAA | Off-white on dark sections |
+| `#ffffff` | `#000000` | 21:1 | AAA | White on event-poster ink |
 
 > **Note**: The `--accent-dark` focus ring (`#8ee8b0`) against `#f8f8f8` canvas has ~1.3:1 ratio — below WCAG 3:1 for non-text UI. Consider pairing the focus ring with a dark outline: `outline: 2px solid #2f2f2f; box-shadow: 0 0 0 4px #8ee8b0` for combined contrast.
 
@@ -245,6 +281,8 @@ Banner spec:
 | `--font-heading` | `"Instrument Sans Variable", system-ui, sans-serif` | Headings |
 | `--font-body` | `"Instrument Sans Variable", system-ui, sans-serif` | Body (same typeface) |
 | `--font-mono` | `"Roboto Mono", ui-monospace, monospace` | Labels, dates, nav, badges |
+| `--font-display` | `"<pixel-display>", sans-serif` | Event headlines (poster / slides only — see §3.5) |
+| `--font-mono-italic` | `"Roboto Mono", ui-monospace, monospace` (italic 500) | Event metadata: poster rails, panelist labels, taglines |
 
 Stylistic sets enabled globally: `font-feature-settings: "ss01" 1, "ss02" 1, "ss03" 1`
 
@@ -262,6 +300,28 @@ Stylistic sets enabled globally: `font-feature-settings: "ss01" 1, "ss02" 1, "ss
 | Small text | `0.62rem`–`0.85rem` | 400 | — | |
 
 Section labels feel like metadata — uppercase, monospace, reduced opacity distinguishes them from content.
+
+### Display & Event Typography
+
+The pixel/8-bit register that appears in the wordmark tagline (`FOUNDERS RESIDENCY DANANG / BY LISK VENTURES & SQRDAO`) doubles as the **event headline typeface** for posters, slides, and video lower-thirds. This is the only context in which a decorative typeface is allowed outside the wordmark.
+
+**Rules:**
+
+| Rule | Spec |
+|------|------|
+| Surface | Off-web only: posters, slides, social tiles, video. **Never** in the website body or chrome. |
+| Canvas | Dark only — `--ink` or `--dark-surface`. Never on light. |
+| Color | `#ffffff` for the primary headline word; `--accent` for at most ONE emphasized word per composition. |
+| Min size | 96px rendered. Below that, legibility breaks; use Instrument Sans 600 instead. |
+| Format | Outlined SVG paths only — never live text in production exports (preserves corner radii, prevents font-fallback rendering). |
+| Companions | May sit alongside Instrument Sans 600 *body copy*, but never alongside an Instrument Sans *display* size in the same composition (visual register conflict). |
+
+**Examples:**
+- ✅ "SEA GTM" set in display, white, 320px — primary poster headline
+- ✅ "WEB3" set in display, mint, 96px — single emphasized word
+- ❌ Display set on `--canvas` (light) — breaks the rule
+- ❌ Display used in a website hero — breaks the rule
+- ❌ Display + Instrument Sans both at display size in the same poster
 
 ---
 
@@ -370,6 +430,83 @@ EMpower uses a **surface-over-canvas** approach. The near-white canvas (`#f8f8f8
 | Dither texture | SVG fractal-noise background at 0.07 opacity |
 | Photo strip | 3-column edge-to-edge image grid (section divider) |
 | Scroll progress bar | 2px gradient bar at bottom of sticky header |
+| Portrait grid | Circular portraits with role hierarchy, flag chips, and dividers — see [Portrait](#portrait) |
+
+---
+
+### Portrait
+
+A circular portrait pattern used for panelists, mentors, and demo-day founders.
+
+| Spec | Value |
+|------|-------|
+| Shape | Perfect circle, no border, no drop shadow |
+| Default treatment | Color photo, **face centered** within the circle |
+| Hierarchy treatment | Grayscale = secondary role (e.g., moderator vs. panelists; host vs. guest) |
+| Caption chip | 2:3 country flag, full saturation, anchored bottom-right of the portrait, ~18% of portrait diameter |
+| Min size | 96px diameter (below this, omit the flag chip — illegible) |
+
+**Grids:**
+- 4-up or 5-up max per row (more becomes a thumbnail strip, not a portrait grid)
+- Primary and secondary groups separated by a 1px `--accent` (full opacity) vertical divider with `PANELISTS | MODERATOR`-style mono-italic labels above
+- Vertical spacing between rows: equal to portrait diameter
+
+**Don'ts:**
+- ❌ Square or rounded-rectangle crops (breaks recognition with circular pattern)
+- ❌ Drop shadows or borders (visual noise on dark canvas)
+- ❌ Flag chips on grayscale portraits (hierarchy already established by desaturation)
+
+---
+
+### Partner Row
+
+A horizontal lockup of partner logos at the top of any event collateral.
+
+**Slot order (left → right):**
+
+| Slot | Content | Example |
+|------|---------|---------|
+| 1 | Primary host | Lisk |
+| 2 | Secondary host | sqrDAO |
+| 3 | Venue / local partner | Blockchain Hub Danang (varies by event) |
+
+**Rules:**
+- Always white-knockout on dark canvas; black on light canvas
+- Optical-align cap-heights, **not** bounding boxes (logos with descenders or different x-heights look mis-aligned otherwise)
+- Spacing between logos: equal to the cap-height of the tallest logo
+- Order is fixed: hosts first (always Lisk → sqrDAO across the cohort), local partner last
+- Do not insert dividers, dots, or "x" between logos
+- Minimum logo height: 32px on web, 48px on poster; below that, drop the row
+
+**Don'ts:**
+- ❌ Re-ordering hosts by event (consistency builds recognition across cohort comms)
+- ❌ Mixing color and knockout treatments in the same row
+- ❌ Adding a fourth slot without brand-lead approval
+
+---
+
+### Topo Line Decoration
+
+Soft topographic / contour curves used as ambient background decoration on dark posters.
+
+| Spec | Value |
+|------|-------|
+| Asset | `/public/brand/topo-lines.svg` |
+| Color | `var(--accent-line)` (mint at 0.25 opacity) |
+| Stroke | 1.5px |
+| Density | ≤30% canvas coverage |
+| Pairs with | Mint ellipse glows (banner spec); never with the dither texture |
+
+**Rules:**
+- Lines must flow horizontally (slight angle ok, ±15°). Never vertical or diagonal at >45°.
+- Lines must NEVER cross primary copy (headline, wordmark, partner row). Mask out behind copy if needed.
+- Use only on `--ink` canvas; not on `--dark-surface` or `--canvas`.
+
+**Don'ts:**
+- ❌ Rotating to vertical (becomes a barcode, breaks the "landscape contour" feel)
+- ❌ Thickening stroke above 1.5px (becomes graphic, not ambient)
+- ❌ Recoloring (the mint at low opacity *is* the decoration)
+- ❌ Combining with dither texture (visual interference)
 
 ---
 
@@ -582,6 +719,23 @@ No image optimization library — relies on native lazy loading and pre-optimize
 
 ---
 
+## Surface Index
+
+Quick lookup for which tokens, type, and decoration apply to which surface.
+
+| Surface | Background | Primary type | Decoration | Component patterns |
+|---------|-----------|--------------|------------|---------------------|
+| Web (light, default) | `--canvas` (`#f8f8f8`) | Instrument Sans | Dither texture, sparkle | Hero, Manifesto, Tab strip, FAQ, Carousel |
+| Web (dark accent) | `--dark-surface` (`#1a1a1a`) | Instrument Sans | None | "Why Da Nang", manifesto pullquote |
+| Banner / OG | Gradient `--accent → #0d2a1f` | Wordmark only | Ellipse glows | banner-v1, banner-v2 |
+| Event poster (square) | `--ink` (`#000000`) | Display + Instrument Sans + mono-italic | Topo lines, ellipse glows, sparkle | Portrait, Partner Row, poster rail |
+| Slide (16:9) | `--ink` | Display + Instrument Sans | Topo lines (sparingly) | Partner Row |
+| Print | `--canvas` or `--ink` | Instrument Sans | Sparkle only | (TBD — separate doc) |
+
+**Surface boundaries are load-bearing.** A pattern documented for one surface (e.g., display typeface for poster) does not transfer to another (web) without explicit doc support. When in doubt: stay conservative, propose an addition.
+
+---
+
 ## Design Philosophy
 
 1. **Minimal palette, maximum clarity** — near-white canvas, single mint-green accent, dark text
@@ -612,3 +766,34 @@ No image optimization library — relies on native lazy loading and pre-optimize
 | Use the SVG wordmark from `/public/brand/` for the logo | Re-typeset the wordmark in Instrument Sans or any other font |
 | Keep the mint sparkle paired with the lockup or sized ≤ 24px when solo | Use the sparkle as a bullet, list marker, or oversized decoration |
 | Export OG / social images from the Figma banner frames at 2× | Generate banners by stretching the wordmark over a flat color |
+| Use `--ink` (`#000000`) for event-collateral canvas; `--dark-surface` for web dark sections | Substitute one for the other — they're tuned for different surfaces |
+| Use `--accent-line` for ambient mint decoration; `--accent` only for CTAs and one emphasized word | Use full-strength `--accent` as a fill for body words or large background areas |
+| Apply the display register (pixel/8-bit) only on dark canvas, off-web | Use the display register in the website or on a light canvas |
+| Always set the partner row in fixed Lisk → sqrDAO → local order | Re-shuffle partner logos by event |
+| Mask topo-line decoration behind primary copy | Let topo lines cross the headline or wordmark |
+| Pair grayscale-vs-color portraits with role hierarchy (moderator vs. panelist) | Use grayscale arbitrarily — it carries semantic weight |
+| Render display-register text as outlined SVG paths in production exports | Ship live-text display in environments without the embedded font (will fall back to a default sans, breaking the brand) |
+
+---
+
+## Changelog
+
+### 1.3.0 — 2026-05-10
+
+**Added**
+- Event-collateral tokens: `--ink`, `--accent-line`, `mono-italic`, `display`
+- Format catalog (poster-square, poster-story, poster-card, slide-16x9, banner-og)
+- Display & Event Typography section (§ in Typography)
+- Logo C (stacked) variant for square posters
+- Components: Portrait, Partner Row, Topo Line Decoration
+- Surface Index (lookup matrix)
+- Do's & Don'ts: 7 new rules covering event-collateral surfaces
+
+**Changed**
+- WCAG table now includes white-on-ink (21:1) row
+
+**Notes**
+- This release expands the system from web-only (1.2.0) to web + event collateral.
+  Slide-deck and print surfaces remain TBD.
+
+### 1.2.0 — (prior release; entry retained as-is)
