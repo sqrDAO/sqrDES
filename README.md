@@ -8,16 +8,21 @@ Central design guideline for the sqrDAO ecosystem. Use this repo as the single s
 
 ## Quick Reference
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| Background | `#0A0A0A` | Page background |
-| Accent | `#FFC700` | Buttons, links, highlights |
-| Primary Text | `#FFFFFF` | Headings, primary content |
-| Secondary Text | `#B3B3B3` | Body text, captions |
-| Card Surface | `#1A1A1A` | Card backgrounds |
-| Border | `#222222` | Borders, dividers |
+Two modes share one gold accent. Dark is canonical; light is a warm variant for print/proposals.
 
-**Typography:** Instrument Sans (primary), JetBrains Mono (monospace)
+| Token | Dark | Light | Usage |
+|-------|------|-------|-------|
+| Background | `#0A0A0A` | `#FAF9F6` | Page background |
+| Accent | `#FFC700` | `#FFC700` | Fills, links, highlights |
+| Accent Text | `#FFC700` | `#7A5E00` | Gold text / labels |
+| Primary Text | `#FFFFFF` | `#181818` | Headings, primary content |
+| Secondary Text | `#B3B3B3` | `#5C574C` | Body text, captions |
+| Card Surface | `#1A1A1A` | `#FFFFFF` | Card backgrounds |
+| Border | `#222222` | `#E4E0D6` | Borders, dividers |
+
+**Secondary accent:** `#3F7A6E` (teal, use sparingly)
+
+**Typography:** Instrument Sans (primary), IBM Plex Mono (labels), JetBrains Mono (code)
 
 ---
 

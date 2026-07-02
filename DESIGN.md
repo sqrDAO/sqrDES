@@ -1,6 +1,6 @@
 ---
 design-system: "sqrDAO"
-version: "1.1.0"
+version: "1.2.0"
 colors:
   background: "#0A0A0A"
   surface: "#1A1A1A"
@@ -17,6 +17,23 @@ colors:
   semantic-success: "#00CC00"
   semantic-warning: "#CCCC00"
   semantic-error: "#CC0000"
+colors-light:
+  # Warm light mode — from the W3EZ × SIZ × IFC (Light EN) deck.
+  # Neutrals are warm (off-white / taupe), NOT the cool grays of dark mode.
+  background: "#FAF9F6"
+  surface: "#FFFFFF"
+  surface-alt: "#E4E0D6"
+  border: "#E4E0D6"
+  text-primary: "#181818"
+  text-secondary: "#5C574C"
+  accent: "#FFC700"
+  accent-text: "#7A5E00"
+  accent-hover: "#E0B400"
+  accent-tint: "#FFEDAD"
+secondary-accent:
+  main: "#3F7A6E"
+  dark: "#2F665B"
+  tint: "#E9CF6A"
 typography:
   display:
     fontFamily: "'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
@@ -30,7 +47,7 @@ typography:
     fontSize: "1rem"
     lineHeight: 1.5
   label:
-    fontFamily: "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace"
+    fontFamily: "'IBM Plex Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace"
     fontWeight: 600
     fontSize: "0.85rem"
     letterSpacing: "0.1em"
@@ -90,6 +107,8 @@ Central design guideline for the sqrDAO ecosystem. A single source of truth for 
 ## Overview
 
 **Design philosophy**: Dark-first, minimal chrome, gold accent. The sqrDAO visual identity uses near-black surfaces with a single gold accent (`#FFC700`) to guide attention. Everything else recedes.
+
+**Modes**: The system ships two modes that share one gold accent. **Dark** (canonical) uses cool near-black surfaces and cool grays. **Light** — introduced by the W3EZ × SIZ × IFC deck for print, proposals, and light-surface contexts — uses *warm* neutrals (off-white `#FAF9F6`, taupe body text `#5C574C`) rather than a cool white/gray inversion. In light mode the gold is never used for text; a darkened gold (`#7A5E00`) carries labels and links so they stay legible. See [Light Mode](#light-mode).
 
 **Tech stack**: Next.js app router, MUI v5, globals.css for keyframes and utilities. No Tailwind.
 
@@ -195,6 +214,65 @@ Implementation tokens map to the official brand kit:
 
 ---
 
+## Light Mode
+
+The **W3EZ × SIZ × IFC** proposal deck (Light EN) is the reference implementation of sqrDAO's light mode. It is a *warm* light theme, not a mechanical inversion of dark mode: the background is a warm off-white and body text is a warm taupe, giving printed and light-surface material an editorial, paper-like feel while the gold accent stays constant across both modes.
+
+### Light Palette
+
+| Role | Token | Value | Usage |
+|------|-------|-------|-------|
+| Background | `light.background` | `#FAF9F6` | Page background (warm off-white) |
+| Surface | `light.surface` | `#FFFFFF` | Cards, elevated panels |
+| Surface / Border | `light.surface-alt` | `#E4E0D6` | Card borders, table cells, dividers, alt fills |
+| Primary text | `light.text-primary` | `#181818` | Headings, emphasis, data |
+| Secondary text | `light.text-secondary` | `#5C574C` | Body copy, captions (warm taupe) |
+| Accent | `light.accent` | `#FFC700` | Markers, rules, fills, active states |
+| Accent text | `light.accent-text` | `#7A5E00` | Section labels, links, gold text on light |
+| Accent hover | `light.accent-hover` | `#E0B400` | Hover on gold fills |
+| Accent tint | `light.accent-tint` | `#FFEDAD` | Subtle gold wash / highlight |
+
+### Dark → Light Token Mapping
+
+| Concept | Dark | Light |
+|---------|------|-------|
+| Background | `#0A0A0A` | `#FAF9F6` |
+| Card surface | `#1A1A1A` | `#FFFFFF` |
+| Border / alt surface | `#222222` | `#E4E0D6` |
+| Primary text | `#FFFFFF` | `#181818` |
+| Secondary text | `#B3B3B3` | `#5C574C` |
+| Accent (fills, markers) | `#FFC700` | `#FFC700` |
+| Accent **text / labels** | `#FFC700` | `#7A5E00` |
+| Accent hover | `#e6b800` | `#E0B400` |
+
+> **Key rule**: In dark mode gold (`#FFC700`) doubles as both fill *and* text color. In light mode gold has only ~1.5:1 contrast on the background, so it is **fill/decoration only** — all gold *text* (section labels, links, table headers) uses the darkened gold `#7A5E00`.
+
+### Light Mode WCAG Contrast Ratios
+
+| Foreground | Hex | On `#FAF9F6` | On `#E4E0D6` | Grade |
+|-----------|-----|--------------|--------------|-------|
+| Primary text | `#181818` | 16.9:1 | 13.5:1 | AAA |
+| Secondary text | `#5C574C` | 6.8:1 | 5.5:1 | AA |
+| Accent text | `#7A5E00` | 5.8:1 | 4.7:1 | AA |
+| Secondary accent | `#3F7A6E` | 4.7:1 | 3.8:1 | AA (≥18px / large) |
+| Gold (fill) | `#FFC700` | 1.5:1 | 1.2:1 | Decorative / large fills only |
+
+---
+
+## Secondary Accent (Teal)
+
+Alongside the primary gold, the deck introduces a **teal** secondary accent for supporting emphasis, corridors/flows, and to differentiate a second data series without competing with gold. Use sparingly — gold remains the primary accent in both modes.
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `secondary-accent.main` | `#3F7A6E` | Non-text emphasis only: flow/corridor lines, markers, chart series, large text (≥18px). Fails AA for small text on `#E4E0D6` (3.8:1) |
+| `secondary-accent.dark` | `#2F665B` | Teal **text** — all small/supporting teal labels use this (6.3:1 on `#FAF9F6`, 5.0:1 on `#E4E0D6`) |
+| `secondary-accent.tint` | `#E9CF6A` | Muted *gold* tint — intentionally warm, not teal-derived. Pairs with teal in charts/fills as the warm half of the warm/cool duo |
+
+> Gold and teal read as a warm/cool pair. Keep gold dominant (≈80/20); reach for teal only when a second accent is genuinely needed.
+
+---
+
 ## Typography
 
 ### Font Families
@@ -202,8 +280,10 @@ Implementation tokens map to the official brand kit:
 | Role | Stack | Usage |
 |------|-------|-------|
 | Primary | `'Instrument Sans', -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif` | All headings, body, UI |
-| Label | `ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace` | Section labels (uppercase) |
+| Label | `'IBM Plex Mono', ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace` | Section labels (uppercase), table headers, metadata |
 | Code | `'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace` | Code blocks |
+
+> **IBM Plex Mono** is the canonical label/metadata typeface (used throughout the W3EZ × SIZ × IFC deck for uppercase eyebrow labels and table headers). It renders as the darkened gold `#7A5E00` in light mode and `#FFC700` in dark mode. JetBrains Mono remains the typeface for actual code.
 
 **Font loading**: Instrument Sans is loaded via `next/font/google` in `layout.tsx` (weights 400, 500, 600, 700; `display: swap`). The CSS variable `--font-instrument-sans` is applied to `<html>`.
 
@@ -249,9 +329,10 @@ Implementation tokens map to the official brand kit:
 | Font weight | 600 |
 | Letter spacing | 0.1em |
 | Text transform | uppercase |
-| Color | #FFC700 |
+| Color (dark) | #FFC700 |
+| Color (light) | #7A5E00 |
 | Opacity | 0.85 |
-| Font family | Monospace label stack |
+| Font family | IBM Plex Mono label stack |
 
 ---
 
@@ -555,6 +636,9 @@ sqrDAO uses **moderate rounding** — sharp enough to feel technical, soft enoug
 |----|-------|
 | Use `#FFC700` for all primary interactive elements | Use gold for decorative backgrounds or large fills |
 | Use `#e6b800` for hover states on gold elements | Mix hover values — pick `#e6b800` everywhere |
+| In light mode, use warm neutrals (`#FAF9F6`, `#5C574C`) | Invert dark mode to cool white/gray for light mode |
+| In light mode, use `#7A5E00` for gold text and labels | Use `#FFC700` for text on light backgrounds (fails contrast) |
+| Keep gold dominant; use teal `#3F7A6E` sparingly | Give teal equal weight to gold or use it for primary CTAs |
 | Use `neutrals[300]` for secondary text | Use pure white for secondary text (too high contrast) |
 | Add `outline: 2px solid #FFC700` on `:focus-visible` | Remove outlines without providing an alternative |
 | Use `theme.spacing(n)` for all spacing | Hard-code arbitrary pixel values |
