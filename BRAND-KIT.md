@@ -43,14 +43,36 @@ Each sub-brand offers horizontal and/or vertical layouts in **DARK** (white on d
 
 ## Colors
 
+The system has two modes that share one gold accent. **Dark** is canonical; **Light** is a warm (not cool) variant for print, proposals, and light surfaces.
+
+### Dark (canonical)
+
 | Role | Hex | Usage |
 |------|-----|-------|
 | **Background** | `#0A0A0A` | Page background |
-| **Accent / Gold** | `#FFC700` | Buttons, links, highlights |
+| **Accent / Gold** | `#FFC700` | Buttons, links, highlights, gold text |
 | **Primary Text** | `#FFFFFF` | Headings, primary content |
 | **Secondary Text** | `#B3B3B3` | Body text, captions |
 | **Card Surface** | `#1A1A1A` | Card backgrounds |
 | **Border** | `#222222` | Borders, dividers |
+
+### Light (warm)
+
+| Role | Hex | Usage |
+|------|-----|-------|
+| **Background** | `#FAF9F6` | Page background (warm off-white) |
+| **Accent / Gold** | `#FFC700` | Fills, markers, rules (decoration only) |
+| **Accent Text / Gold** | `#7A5E00` | Gold text, labels, links (contrast-safe) |
+| **Primary Text** | `#181818` | Headings, primary content |
+| **Secondary Text** | `#5C574C` | Body text, captions (warm taupe) |
+| **Card Surface** | `#FFFFFF` | Card backgrounds |
+| **Border / Alt Surface** | `#E4E0D6` | Borders, dividers, table cells |
+
+### Secondary Accent
+
+| Role | Hex | Usage |
+|------|-----|-------|
+| **Teal** | `#3F7A6E` | Supporting accent — use sparingly, keep gold dominant |
 
 ---
 
@@ -59,7 +81,8 @@ Each sub-brand offers horizontal and/or vertical layouts in **DARK** (white on d
 | Role | Typeface | Usage |
 |------|----------|-------|
 | **Primary** | Instrument Sans | Headings, body, UI (weights: 400 Regular, 500 Medium, 600 SemiBold, 700 Bold) |
-| **Monospace** | JetBrains Mono | Code blocks, technical content |
+| **Label / Metadata** | IBM Plex Mono | Uppercase eyebrow labels, table headers, metadata |
+| **Monospace / Code** | JetBrains Mono | Code blocks, technical content |
 
 ---
 
