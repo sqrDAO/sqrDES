@@ -265,9 +265,9 @@ Alongside the primary gold, the deck introduces a **teal** secondary accent for 
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| `secondary-accent.main` | `#3F7A6E` | Secondary emphasis, flow/corridor lines, supporting labels |
-| `secondary-accent.dark` | `#2F665B` | Text-safe teal on light surfaces (6.3:1 on `#FAF9F6`) |
-| `secondary-accent.tint` | `#E9CF6A` | Muted gold-tint pairing for charts / fills |
+| `secondary-accent.main` | `#3F7A6E` | Non-text emphasis only: flow/corridor lines, markers, chart series, large text (≥18px). Fails AA for small text on `#E4E0D6` (3.8:1) |
+| `secondary-accent.dark` | `#2F665B` | Teal **text** — all small/supporting teal labels use this (6.3:1 on `#FAF9F6`, 5.0:1 on `#E4E0D6`) |
+| `secondary-accent.tint` | `#E9CF6A` | Muted *gold* tint — intentionally warm, not teal-derived. Pairs with teal in charts/fills as the warm half of the warm/cool duo |
 
 > Gold and teal read as a warm/cool pair. Keep gold dominant (≈80/20); reach for teal only when a second accent is genuinely needed.
 
