@@ -156,18 +156,33 @@ easily, so the set is closed and each member has one job:
 `badge-approval` (`#F59E0B`) is amber, not gold: it is a status colour that sits
 beside `badge-invite` purple, and it must not be used as an accent.
 
+`accent` also appears in translucent form, which a search for `#FFB800` will not
+find — `rgba(255, 184, 0, 0.10)` for card and speaker-card hover tints, and
+`rgba(255, 184, 0, 0.15)` for the `.badge-keynote` fill. These are the same
+colour, not additional ones, and changing `accent` means changing them too.
+Prefer `color-mix(in srgb, var(--primary-color) 10%, transparent)` in new code
+so the relationship is not lost again.
+
 **Do not introduce a fourth gold.** If a new element needs gold, it uses
 `accent`. Eyedropping a shade from a mockup is how this set grew in the first
 place.
 
 > **Open question — should `snip-badge` fold into `accent`?**
-> `#FFC800` and `#FFB800` differ only in the green channel (200 vs 184), a
-> perceptual distance of ΔE ≈ 9.5. That is above the just-noticeable threshold,
-> so the hero really does render two golds side by side, but it is far too close
-> to read as a deliberate distinction. No rationale for the split was ever
-> recorded. Collapsing `snip-badge` into `accent` would drop the set to two and
-> is a one-line change here plus a regenerate — but it repaints a shipped
-> component, so it needs a brand-owner's call rather than a tooling decision.
+> `#FFC800` and `#FFB800` differ only in the green channel (200 vs 184):
+> ΔE00 ≈ 5.6, or ΔE76 ≈ 9.5. Both are above the just-noticeable threshold, so
+> the hero genuinely renders two golds side by side rather than one.
+>
+> Distance alone is not the argument, though — `accent-hover` sits about the
+> same ΔE00 from `accent` (≈ 5.5) and is clearly legitimate. What separates them
+> is that `accent-hover` has a *defined relationship* to `accent`: it is that
+> colour's hover state, so it is derived and its existence is self-explaining.
+> `snip-badge` has no such relationship. It is a second base gold whose only
+> recorded justification is that the hero happens to use it, and no rationale
+> for the split survives anywhere in this document's history.
+>
+> Collapsing it into `accent` would drop the set to two and is a one-line
+> frontmatter change plus a regenerate — but it repaints a shipped component,
+> so it needs a brand-owner's call rather than a tooling decision.
 
 ### WCAG Contrast Ratios (on `#000000` background)
 
@@ -184,10 +199,13 @@ estimated.
 | Secondary text | `#A1A1AA` | 8.19:1 | AAA |
 | Invite badge | `#8B5CF6` | 4.96:1 | AA |
 
-The badge colours are fills carrying black text rather than text on black, so
-the same ratios apply to `#000000` on the badge. `badge-invite` purple is the
-one value that does not reach AAA; keep it to badge fills and do not use it for
-body text.
+Contrast is symmetric, so the badge rows read both ways: they are the ratio of
+the badge fill against the page, and equally of black text on that fill. The
+snip badge is specified as black-on-gold below; the invite and approval badges
+do not have a text colour recorded anywhere in this document, which is worth
+pinning down. `badge-invite` purple is the one value that does not reach AAA
+either way (4.96:1 against black, 4.23:1 against white); keep it to badge fills
+and do not use it for body text.
 
 ### Guidelines
 
@@ -690,7 +708,9 @@ Default: `all 0.3s ease` (`var(--transition)`)
 **Documentation**
 - Added **Colors > The Gold Set**, closing the palette at three golds with one
   documented job each, and recording the open question of whether `snip-badge`
-  (`#FFC800`, ΔE ≈ 9.5 from `accent`) should collapse into `accent`.
+  (`#FFC800`, ΔE00 ≈ 5.6 from `accent`) should collapse into `accent`.
+- Recorded that `accent` also ships in translucent `rgba(255, 184, 0, ...)` form
+  in three places, which a search for `#FFB800` does not find.
 - Noted that `badge-approval` amber is a status colour, not a fourth gold.
 - Recorded that the site's `--primary-color` naming and the generated
   `--color-accent` naming refer to the same value.
