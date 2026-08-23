@@ -111,7 +111,11 @@ done
 
 mkdir -p "$OUT_DIR"
 NEW="$STAGE/${SKILL_NAME}.skill"
-( cd "$STAGE" && zip -q -r -X "$NEW" "$SKILL_NAME" )
+# Feed zip an explicitly sorted file list rather than letting `zip -r` walk the
+# tree. Directory traversal order is filesystem-dependent (APFS and ext4 differ),
+# so `-r` produces a different byte stream per machine and --check would report a
+# perfectly good bundle as stale in CI.
+( cd "$STAGE" && /usr/bin/find "$SKILL_NAME" -type f | LC_ALL=C sort | zip -q -X "$NEW" -@ )
 
 if (( CHECK )); then
   [[ -f "$OUT" ]] || fail "$OUT does not exist. Run: tools/build_skill.sh"
