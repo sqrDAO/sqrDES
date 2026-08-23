@@ -1,6 +1,6 @@
 ---
 design-system: "EMpower Founders Residency"
-version: "1.3.0"
+version: "1.3.1"
 brand:
   figmaFile: "https://www.figma.com/design/fCGlJuUlZx3Em40ltPUUjv/EMpower-Founders-Residency"
   logoVariants: ["logo-a-horizontal", "logo-a-square", "logo-b-horizontal", "logo-b-square"]
@@ -12,6 +12,7 @@ colors:
   text-primary: "#2f2f2f"
   accent: "#aeffc8"
   accent-dark: "#8ee8b0"
+  logo-mint: "#87FABB"
   accent-icon: "#2d6a4f"
   dither-gray: "#e5e5e5"
   border: "rgba(47, 47, 47, 0.1)"
@@ -142,11 +143,14 @@ Three distinct typographic registers compose the wordmark — these are **decora
 
 A four-point sparkle (asymmetric — vertical points are longer than horizontal) sits flush with the `EM` glyphs. Treat it as a load-bearing brand element:
 
-- **Color**: `var(--accent)` (`#aeffc8`)
+- **Color**: `#87FABB` (`var(--logo-mint)`) inside the logo lockups. This is the mint carried by the Figma source and by the exported `logo-a.svg`. It is **not** the same value as the UI accent `--accent` (`#aeffc8`).
+- **Solo sparkle in UI** (divider, CTA prefix): use `var(--accent)` (`#aeffc8`) so it matches surrounding interactive elements.
 - **Anchor**: bottom-left of `EM` in Logo A; right edge of `POWER` in Logo B
 - **Solo use**: allowed as a small accent (e.g., section divider, CTA prefix), but never larger than 24px when separated from the wordmark
 - **SVG asset**: `/public/brand/sparkle.svg`
 - **Don't**: rotate, recolor outside the accent palette, or use as a bullet/list marker
+
+> **Open question — two mints.** The brand ships `#87FABB` (Figma / logo lockups) while the UI palette is built on `#aeffc8` (CTAs, gradients, the 9.4:1 contrast pairings below). They are visually close but not identical, and this doc previously claimed the sparkle was `#aeffc8`, which the exported SVGs contradict. Until the brand owner picks one, the rule above holds: `#87FABB` inside the lockup, `#aeffc8` everywhere in the UI. Do not recolor `logo-a.svg` to match the UI accent.
 
 ### Logo Variants
 
@@ -156,7 +160,9 @@ A four-point sparkle (asymmetric — vertical points are longer than horizontal)
 | Logo A — square | App icon, social avatar | 1000 × 1000 | `/public/brand/logo-a-square.svg` |
 | Logo B — horizontal | Compact contexts (sticky header on scroll, email signature) | 1451 × 387 | `/public/brand/logo-b.svg` |
 | Logo B — square | Square social tiles | 1000 × 1000 | `/public/brand/logo-b-square.svg` |
-| Logo C — stacked | Square posters, social tiles, slide titles | 2000 × 2000 (typical) | `/public/brand/logo-c-stacked.svg` |
+| Logo C — stacked | Square posters, social tiles, slide titles | 2000 × 2000 (typical) | **not yet available** (see [TODO-assets.md](TODO-assets.md)) |
+
+> **Asset availability.** Only `logo-a.svg` and `topo-lines.svg` are shipped today. `logo-a-square.svg`, `logo-b.svg`, `logo-b-square.svg`, `sparkle.svg`, and `logo-c-stacked.svg` are specified above but not yet exported, and the paths in this table will 404. Check [TODO-assets.md](TODO-assets.md) before referencing any of them in production code.
 
 **Clear space**: minimum padding around any lockup equals the height of the `M` glyph. **Minimum size**: 120px wide (horizontal) / 80px (square). Below that, use Logo B (more legible at small sizes) or the sparkle alone.
 
@@ -184,7 +190,7 @@ Two banner variants exist for OG images, social headers, and event collateral:
 Banner spec:
 - Aspect ratio: **2177 × 1159** (≈1.88:1) — close to OG 1200×630, scaled up
 - Background: large mint ellipse (top-left) + smaller mint ellipse (bottom-right), overlaid on near-black `#0d2a1f`, with a `blur(120px)` radial glow on each
-- Wordmark: white (#ffffff), sparkle in `--accent` (#aeffc8)
+- Wordmark: white (#ffffff), sparkle in `--logo-mint` (#87FABB), matching the lockup
 
 ```css
 .brand-banner {
@@ -226,6 +232,7 @@ Banner spec:
 | `--primary-text` | `#2f2f2f` | Body text, headings |
 | `--accent` | `#aeffc8` | CTAs, highlights, gradients |
 | `--accent-dark` | `#8ee8b0` | Darker accent variant, focus rings |
+| `--logo-mint` | `#87FABB` | Logo lockup sparkle only (see [Sparkle Motif](#sparkle-motif)); never for UI |
 | `--dither-gray` | `#e5e5e5` | SVG noise texture |
 | `--border` | `rgba(47, 47, 47, 0.1)` | Card and divider borders |
 

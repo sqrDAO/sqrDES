@@ -12,3 +12,6 @@ npm-debug.log*
 .vscode
 *.swp
 *.swo
+
+# Raw Figma exports (multi-MB, not for production; see empower-residency/design-source/README.md)
+**/design-source/*.svg

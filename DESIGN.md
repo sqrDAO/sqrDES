@@ -1,6 +1,6 @@
 ---
 design-system: "sqrDAO"
-version: "1.2.0"
+version: "1.2.1"
 colors:
   background: "#0A0A0A"
   surface: "#1A1A1A"
@@ -37,7 +37,7 @@ secondary-accent:
 typography:
   display:
     fontFamily: "'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    fontWeight: 900
+    fontWeight: 700
   heading:
     fontFamily: "'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
     fontWeight: 700
@@ -304,7 +304,7 @@ Alongside the primary gold, the deck introduces a **teal** secondary accent for 
 | fs32 | 2rem | 1.2 | 500 | Section headings |
 | fs36 | 2.25rem | 1.2 | 500 | — |
 | fs48 | 3rem | 1.2 | 500 | — |
-| fs50 | 3.125rem | 3.375rem | 500 | Title component (desktop) |
+| fs50 | 3.125rem | 3.375rem | 500 | Title component size (desktop); Title overrides weight to 700 |
 | fs64 | 4rem | 1.25 | 500 | — |
 | fs80 | 5rem | normal | 500 | Hero headings |
 | fs100 | 6.25rem | normal | 500 | Display/hero |
@@ -318,8 +318,10 @@ Alongside the primary gold, the deck introduces a **teal** secondary accent for 
 | Property | Mobile | Desktop |
 |----------|--------|---------|
 | Font size | 1.875rem | 3.125rem |
-| Font weight | 900 | 900 |
+| Font weight | 700 | 700 |
 | Color | #FFFFFF | #FFFFFF |
+
+> **700 is the maximum.** Instrument Sans is a variable font with a weight axis of 400-700; there is no 800 or 900. Requesting a heavier weight makes the browser either clamp to 700 or synthesise a faux-bold, which distorts the letterforms. Never specify a weight above 700 anywhere in this system.
 
 **Section Label** (above title):
 
