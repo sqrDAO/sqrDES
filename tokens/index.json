@@ -23,7 +23,7 @@
     {
       "slug": "summit",
       "name": "Web3 Builders' Summit",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "source": "summit/DESIGN.md",
       "json": "tokens/summit.json",
       "css": "tokens/summit.css"

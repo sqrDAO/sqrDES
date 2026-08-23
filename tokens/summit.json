@@ -6,19 +6,18 @@
     "warning": "Generated from DESIGN.md frontmatter. Do not edit by hand."
   },
   "design-system": "Web3 Builders' Summit",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "colors": {
     "background": "#000000",
     "surface": "#0D0D10",
-    "surface-alt": "#18181b",
+    "surface-alt": "#18181B",
     "text-primary": "#FFFFFF",
     "text-secondary": "#A1A1AA",
     "accent": "#FFB800",
     "accent-hover": "#FFC94D",
+    "snip-badge": "#FFC800",
     "badge-invite": "#8B5CF6",
-    "badge-approval": "#F59E0B",
-    "snip-badge": "#ffc800",
-    "construction": "#ffd700"
+    "badge-approval": "#F59E0B"
   },
   "typography": {
     "display": {
