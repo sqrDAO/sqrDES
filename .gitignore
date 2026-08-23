@@ -17,3 +17,6 @@ npm-debug.log*
 # Ignore every export format, not just SVG: Figma emits PNG/PDF/.fig just as readily.
 **/design-source/*
 !**/design-source/README.md
+
+# Built skill bundle (regenerate with tools/build_skill.sh)
+dist/

@@ -1,0 +1,84 @@
+{
+  "_meta": {
+    "generated_by": "tools/build_tokens.py",
+    "source": "danang-hub/DESIGN.md",
+    "slug": "danang-hub",
+    "warning": "Generated from DESIGN.md frontmatter. Do not edit by hand."
+  },
+  "design-system": "Da Nang Blockchain Hub",
+  "version": "1.2.0",
+  "colors": {
+    "background": "#231F20",
+    "surface": "#2F2B2C",
+    "surface-light": "#FFE6BB",
+    "text-primary": "#FFFFFF",
+    "text-primary-light": "#231F20",
+    "text-secondary": "#DCDCDC",
+    "text-secondary-light": "#5A5552",
+    "light-background": "#FFF2DD",
+    "light-surface": "#FFFFFF",
+    "border-light": "rgba(35, 31, 32, 0.08)",
+    "border-light-strong": "rgba(35, 31, 32, 0.16)",
+    "accent": "#FFA406",
+    "accent-secondary": "#FFE6BB",
+    "accent-cta": "#FF9100",
+    "accent-gradient": "linear-gradient(135deg, #FFA406, #FFE6BB)",
+    "accent-empower": "#A8E6C9",
+    "semantic-success": "#4ade80",
+    "semantic-error": "#f87171"
+  },
+  "typography": {
+    "display": {
+      "fontFamily": "'Wolgen', 'Arial Black', 'Impact', sans-serif",
+      "fontWeight": 700,
+      "letterSpacing": "-0.02em"
+    },
+    "body": {
+      "fontFamily": "'Helvetica Neue', Helvetica, Arial, sans-serif",
+      "fontWeight": 400,
+      "fontSize": "1rem",
+      "lineHeight": 1.6
+    },
+    "body-light": {
+      "fontFamily": "'Helvetica Neue', Helvetica, Arial, sans-serif",
+      "fontWeight": 300,
+      "fontSize": "0.9rem"
+    }
+  },
+  "spacing": {
+    "sm": "0.5rem",
+    "md": "1rem",
+    "lg": "2rem",
+    "xl": "3rem",
+    "2xl": "4rem"
+  },
+  "breakpoints": {
+    "mobile": "768px",
+    "tablet": "1024px",
+    "desktop": "1025px"
+  },
+  "components": {
+    "container": {
+      "maxWidth": "1280px",
+      "paddingX": "2rem"
+    },
+    "button-primary": {
+      "background": "linear-gradient(135deg, #FFA406, #FFE6BB)",
+      "color": "#231F20",
+      "hoverTransform": "translateY(-2px)",
+      "hoverShadow": "0 4px 20px rgba(255, 164, 6, 0.3)",
+      "transition": "all 0.3s ease"
+    },
+    "card": {
+      "background": "rgba(255, 255, 255, 0.03)",
+      "backdropFilter": "blur(10px)",
+      "border": "1px solid rgba(255, 164, 6, 0.12)",
+      "borderRadius": "var(--border-radius)",
+      "hoverTransform": "translateY(-5px)"
+    },
+    "focus": {
+      "outline": "2px solid #FFA406",
+      "outlineOffset": "2px"
+    }
+  }
+}
