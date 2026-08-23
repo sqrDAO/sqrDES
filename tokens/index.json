@@ -1,0 +1,48 @@
+{
+  "_meta": {
+    "generated_by": "tools/build_tokens.py",
+    "warning": "Generated from DESIGN.md frontmatter. Do not edit by hand."
+  },
+  "systems": [
+    {
+      "slug": "sqrdao",
+      "name": "sqrDAO",
+      "version": "1.2.1",
+      "source": "DESIGN.md",
+      "json": "tokens/sqrdao.json",
+      "css": "tokens/sqrdao.css"
+    },
+    {
+      "slug": "youai",
+      "name": "YouAI",
+      "version": "1.1.0",
+      "source": "youai/DESIGN.md",
+      "json": "tokens/youai.json",
+      "css": "tokens/youai.css"
+    },
+    {
+      "slug": "summit",
+      "name": "Web3 Builders' Summit",
+      "version": "1.1.0",
+      "source": "summit/DESIGN.md",
+      "json": "tokens/summit.json",
+      "css": "tokens/summit.css"
+    },
+    {
+      "slug": "danang-hub",
+      "name": "Da Nang Blockchain Hub",
+      "version": "1.2.0",
+      "source": "danang-hub/DESIGN.md",
+      "json": "tokens/danang-hub.json",
+      "css": "tokens/danang-hub.css"
+    },
+    {
+      "slug": "empower-residency",
+      "name": "EMpower Founders Residency",
+      "version": "1.3.1",
+      "source": "empower-residency/DESIGN.md",
+      "json": "tokens/empower-residency.json",
+      "css": "tokens/empower-residency.css"
+    }
+  ]
+}

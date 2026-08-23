@@ -1,0 +1,97 @@
+{
+  "_meta": {
+    "generated_by": "tools/build_tokens.py",
+    "source": "youai/DESIGN.md",
+    "slug": "youai",
+    "warning": "Generated from DESIGN.md frontmatter. Do not edit by hand."
+  },
+  "design-system": "YouAI",
+  "version": "1.1.0",
+  "colors": {
+    "background": "#08090D",
+    "surface": "#0E1520",
+    "elevation-1": "#141D2B",
+    "elevation-2": "#1C2535",
+    "text-primary": "#E8EDF5",
+    "text-secondary": "rgba(160, 175, 200, 0.75)",
+    "text-disabled": "rgba(120, 140, 165, 0.4)",
+    "accent": "#FF6820",
+    "accent-light": "#FF8F54",
+    "accent-dark": "#CC5210",
+    "secondary": "#00C4FF",
+    "secondary-light": "#40D4FF",
+    "secondary-dark": "#0099CC",
+    "semantic-success": "#22c55e",
+    "semantic-error": "#f97373",
+    "semantic-warning": "#eab308",
+    "semantic-info": "#00C4FF",
+    "light-background": "#F5F1EB",
+    "light-surface": "#FFFFFF"
+  },
+  "typography": {
+    "display": {
+      "fontFamily": "'Chakra Petch', sans-serif",
+      "fontWeight": 700,
+      "textTransform": "uppercase",
+      "letterSpacing": "-0.02em"
+    },
+    "body": {
+      "fontFamily": "'IBM Plex Sans', system-ui, sans-serif",
+      "fontWeight": 400,
+      "fontSize": "1rem",
+      "lineHeight": 1.6
+    },
+    "ui": {
+      "fontFamily": "'JetBrains Mono', 'SF Mono', Menlo, monospace",
+      "fontWeight": 400,
+      "textTransform": "uppercase",
+      "letterSpacing": "0.08em",
+      "fontSize": "0.85rem"
+    }
+  },
+  "spacing": {
+    "base": "8px",
+    "xs": "4px",
+    "sm": "8px",
+    "md": "16px",
+    "lg": "24px",
+    "xl": "32px",
+    "xxl": "48px"
+  },
+  "breakpoints": {
+    "xs": "0px",
+    "sm": "600px",
+    "md": "960px",
+    "lg": "1280px",
+    "xl": "1920px"
+  },
+  "components": {
+    "button": {
+      "radius": "4px",
+      "fontFamily": "'JetBrains Mono', monospace",
+      "fontWeight": 400,
+      "textTransform": "uppercase",
+      "letterSpacing": "0.08em",
+      "fontSize": "0.85rem",
+      "transition": "all 0.2s ease"
+    },
+    "card": {
+      "radius": "6px",
+      "background": "#0E1520",
+      "border": "1px solid rgba(255, 104, 32, 0.15)",
+      "hoverBorder": "rgba(255, 104, 32, 0.40)",
+      "hoverShadow": "4px 0 20px rgba(255, 104, 32, 0.12)"
+    },
+    "input": {
+      "radius": "4px",
+      "fontFamily": "'JetBrains Mono', monospace",
+      "focusBorder": "#FF6820",
+      "focusGlow": "0 0 0 2px rgba(255, 104, 32, 0.25)"
+    },
+    "focus": {
+      "outline": "2px solid #FF6820",
+      "outlineOffset": "2px",
+      "glow": "0 0 0 2px rgba(255, 104, 32, 0.25)"
+    }
+  }
+}
