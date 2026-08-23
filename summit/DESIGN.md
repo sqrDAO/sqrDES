@@ -1,18 +1,19 @@
 ---
 design-system: "Web3 Builders' Summit"
-version: "1.1.0"
+version: "1.2.0"
 colors:
   background: "#000000"
   surface: "#0D0D10"
-  surface-alt: "#18181b"
+  surface-alt: "#18181B"
   text-primary: "#FFFFFF"
   text-secondary: "#A1A1AA"
+  # Three golds, each with one job — see Colors > The Gold Set. Do not add a
+  # fourth, and do not substitute one for another.
   accent: "#FFB800"
   accent-hover: "#FFC94D"
+  snip-badge: "#FFC800"
   badge-invite: "#8B5CF6"
   badge-approval: "#F59E0B"
-  snip-badge: "#ffc800"
-  construction: "#ffd700"
 typography:
   display:
     fontFamily: "'Anton', sans-serif"
@@ -126,6 +127,11 @@ Design principles, aesthetics, and guidelines for the Web3 Builders' Summit land
 }
 ```
 
+These are the names the site's own `styles.css` uses. The generated
+[`tokens/summit.css`](../tokens/summit.css) emits the frontmatter under a
+`--color-` namespace instead, so `--primary-color` there is `--color-accent`.
+The values are identical and generated from this file; only the names differ.
+
 ### Semantic / Badge Colors
 
 | Context | Value | Usage |
@@ -133,22 +139,82 @@ Design principles, aesthetics, and guidelines for the Web3 Builders' Summit land
 | Button hover | `#FFC94D` | Primary button hover state |
 | Invite-only badge | `#8B5CF6` | Purple — invite-only events |
 | Approval badge | `#F59E0B` | Amber — approval required |
-| Contact section bg | `#18181b` | Slightly lighter than page bg |
-| Snip badge | `#ffc800` | Hero LFBUIDL / MAY 25 labels |
+| Contact section bg | `#18181B` | Slightly lighter than page bg |
+| Snip badge | `#FFC800` | Hero LFBUIDL / MAY 25 labels |
+
+### The Gold Set
+
+Gold is the brand. Because it is used so heavily, near-identical shades creep in
+easily, so the set is closed and each member has one job:
+
+| Token | Hex | Job |
+|-------|-----|-----|
+| `accent` | `#FFB800` | Everything interactive — CTAs, borders, focus rings, highlights |
+| `accent-hover` | `#FFC94D` | The hover state of `accent`, and nothing else |
+| `snip-badge` | `#FFC800` | Hero snip badges only (`.snip-badge`) |
+
+`badge-approval` (`#F59E0B`) is amber, not gold: it is a status colour that sits
+beside `badge-invite` purple, and it must not be used as an accent.
+
+`accent` also appears in translucent form, which a search for `#FFB800` will not
+find — `rgba(255, 184, 0, 0.10)` for card and speaker-card hover tints, and
+`rgba(255, 184, 0, 0.15)` for the `.badge-keynote` fill. These are the same
+colour, not additional ones, and changing `accent` means changing them too.
+Prefer `color-mix(in srgb, var(--primary-color) 10%, transparent)` in new code
+so the relationship is not lost again.
+
+**Do not introduce a fourth gold.** If a new element needs gold, it uses
+`accent`. Eyedropping a shade from a mockup is how this set grew in the first
+place.
+
+> **Open question — should `snip-badge` fold into `accent`?**
+> `#FFC800` and `#FFB800` differ only in the green channel (200 vs 184):
+> ΔE00 ≈ 5.6, or ΔE76 ≈ 9.5. Both are above the just-noticeable threshold, so
+> the hero genuinely renders two golds side by side rather than one.
+>
+> Distance alone is not the argument, though — `accent-hover` sits about the
+> same ΔE00 from `accent` (≈ 5.5) and is clearly legitimate. What separates them
+> is that `accent-hover` has a *defined relationship* to `accent`: it is that
+> colour's hover state, so it is derived and its existence is self-explaining.
+> `snip-badge` has no such relationship. It is a second base gold whose only
+> recorded justification is that the hero happens to use it, and no rationale
+> for the split survives anywhere in this document's history.
+>
+> Collapsing it into `accent` would drop the set to two and is a one-line
+> frontmatter change plus a regenerate — but it repaints a shipped component,
+> so it needs a brand-owner's call rather than a tooling decision.
 
 ### WCAG Contrast Ratios (on `#000000` background)
 
+All ratios below are computed against the page background `#000000`, not
+estimated.
+
 | Color | Hex | Ratio | Grade |
 |-------|-----|-------|-------|
-| Primary text | `#FFFFFF` | 21:1 | AAA |
-| Gold accent | `#FFB800` | 11.1:1 | AAA |
-| Secondary text | `#A1A1AA` | 5.2:1 | AA |
+| Primary text | `#FFFFFF` | 21.00:1 | AAA |
+| Gold accent | `#FFB800` | 12.11:1 | AAA |
+| Gold hover | `#FFC94D` | 13.71:1 | AAA |
+| Snip badge | `#FFC800` | 13.51:1 | AAA |
+| Approval badge | `#F59E0B` | 9.78:1 | AAA |
+| Secondary text | `#A1A1AA` | 8.19:1 | AAA |
+| Invite badge | `#8B5CF6` | 4.96:1 | AA |
+
+Contrast is symmetric, so the badge rows read both ways: they are the ratio of
+the badge fill against the page, and equally of black text on that fill. The
+snip badge is specified as black-on-gold below; the invite and approval badges
+do not have a text colour recorded anywhere in this document, which is worth
+pinning down. `badge-invite` purple is the one value that does not reach AAA
+either way (4.96:1 against black, 4.23:1 against white); keep it to badge fills
+and do not use it for body text.
 
 ### Guidelines
 
 - Use `--primary-color` for all interactive elements and CTAs.
 - Reserve semantic badge colors for event status (invite-only, approval required, free entry).
 - Avoid introducing new accent colors; extend the palette only when semantically necessary.
+- Never eyedrop a colour from a mockup. Take hexes from the frontmatter above or
+  from [`tokens/summit.json`](../tokens/summit.json), both of which are the
+  single source for this system.
 
 ---
 
@@ -227,7 +293,7 @@ The summit uses a **flat-translucent** approach — surfaces are dark semi-trans
 | Header | `var(--secondary-color)` + `backdrop-filter: blur(10px)` | Sticky, blurred |
 | Cards / surfaces | `rgba(255, 255, 255, 0.05)` | Translucent overlay on black |
 | Card hover | `rgba(255, 184, 0, 0.10)` | Gold-tinted warm hover |
-| Contact section | `#18181b` | Slightly warmer than page |
+| Contact section | `#18181B` | Slightly warmer than page |
 
 ---
 
@@ -320,7 +386,7 @@ Hover: `translateY(-3px); box-shadow: var(--box-shadow)`
 - `.snip-badge--corner-bl` — bottom-left corner snip via clip-path
 - `.snip-badge--sm` — small; inline next to "BUILDERS'" word
 - `.snip-badge--md` — medium; used in date row ("MAY 25")
-- Background `#ffc800`, color `#000000`, font Anton, uppercase
+- Background `#FFC800` (`snip-badge`), color `#000000`, font Anton, uppercase
 
 ---
 
@@ -578,7 +644,7 @@ Default: `all 0.3s ease` (`var(--transition)`)
 
 ### Contact
 
-- Background: `#18181b`
+- Background: `#18181B`
 - Layout: flex wrap, centered, gap `32px`
 - Mobile: column layout, reduced padding
 
@@ -611,4 +677,40 @@ Default: `all 0.3s ease` (`var(--transition)`)
 | Provide a server-side form action as JS fallback | Rely on JS-only form submission without a fallback |
 | Specify logo size constraints from the partner logo table | Let logos scale freely without max-width/height |
 | Keep primary (gold) usage intentional for CTAs and highlights | Use gold as a background fill for large areas |
+| Reach for `accent` when an element needs gold | Add a fourth gold, or swap `snip-badge` and `accent` for each other |
 | Preload `kv-bg-1.webp` and `logo.svg` in `<head>` | Lazy-load the LCP image |
+
+---
+
+## Changelog
+
+### 1.2.0 — 2026-08-23
+
+**Removed**
+- `construction` (`#ffd700`). The 1.1.0 restructure dropped the body line that
+  defined it ("**Construction banner**: `#ffd700` (banner background)") but left
+  the token in the frontmatter, so it reached `tokens/summit.css` as
+  `--color-construction` with no component, no usage guidance and no way for a
+  consumer to know what it was for. The banner it belonged to is no longer part
+  of this design system. Recorded here rather than silently dropped, in case the
+  banner returns.
+
+**Fixed**
+- WCAG contrast ratios were wrong in both directions and appear to have been
+  estimated rather than measured. Gold accent was listed as 11.1:1 (actually
+  12.11:1) and secondary text as 5.2:1 (actually 8.19:1, which is AAA, not AA).
+  All values are now computed against `#000000` and the table covers every
+  palette colour.
+- Hex casing normalised to uppercase: `snip-badge` and `surface-alt`. The file
+  had been mixing `#ffc800` and `#FFB800` styles, which defeats plain-text
+  search for a colour.
+
+**Documentation**
+- Added **Colors > The Gold Set**, closing the palette at three golds with one
+  documented job each, and recording the open question of whether `snip-badge`
+  (`#FFC800`, ΔE00 ≈ 5.6 from `accent`) should collapse into `accent`.
+- Recorded that `accent` also ships in translucent `rgba(255, 184, 0, ...)` form
+  in three places, which a search for `#FFB800` does not find.
+- Noted that `badge-approval` amber is a status colour, not a fourth gold.
+- Recorded that the site's `--primary-color` naming and the generated
+  `--color-accent` naming refer to the same value.
