@@ -55,7 +55,7 @@ The system ships **two modes** sharing one gold accent. **Dark is canonical** (t
 | Accent text | `#181818` | Label sitting on a gold fill |
 | Accent hover | `#e6b800` | The one canonical hover for gold (use everywhere) |
 
-Semantic colors use the 700 shade as canonical (meets WCAG AA on `#0A0A0A`): info `#0066CC`, success `#009900`, warning `#999900`, error `#990000`. Full neutral and semantic ramps are in `references/sqrdao.md`.
+Semantic colors use the 700 shade as canonical: info `#0066CC`, success `#009900`, warning `#999900`, error `#990000`. **These are fill values, not text values** (badge fills, status dots, alert borders, chart series). Do not repeat the old claim that 700 meets AA on `#0A0A0A`; it does not, and the reasoning was backwards, since darker shades lose contrast on a near-black canvas. Error 700 is 2.2:1 there and Info 700 is 3.6:1. For semantic **text in dark mode always use the 300 shade** (info `#66B7FF`, success `#66FF66`, warning `#FFFF66`, error `#FF6666`, all 6.9:1 or better); in light mode use 700 for info and error, 900 for success (`#006600`) and warning (`#666600`). Full ramps and the measured ratio table are in `references/sqrdao.md`.
 
 **Light mode (warm) key tokens:** background `#FAF9F6`, card `#FFFFFF`, border/alt `#E4E0D6`, primary text `#181818`, secondary text `#5C574C` (warm taupe), accent hover `#E0B400`, accent tint `#FFEDAD`. The one rule that trips people up: gold `#FFC700` is ~1.5:1 on the light background, so in light mode it is **fill/decoration only**; all gold *text* (labels, links, table headers) uses darkened gold `#7A5E00`.
 

@@ -6,7 +6,7 @@
     "warning": "Generated from DESIGN.md frontmatter. Do not edit by hand."
   },
   "design-system": "sqrDAO",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "colors": {
     "background": "#0A0A0A",
     "surface": "#1A1A1A",
@@ -19,10 +19,14 @@
     "accent-hover": "#e6b800",
     "black": "#000000",
     "white": "#FFFFFF",
-    "semantic-info": "#0087FF",
-    "semantic-success": "#00CC00",
-    "semantic-warning": "#CCCC00",
-    "semantic-error": "#CC0000"
+    "semantic-info": "#0066CC",
+    "semantic-success": "#009900",
+    "semantic-warning": "#999900",
+    "semantic-error": "#990000",
+    "semantic-info-text-dark": "#66B7FF",
+    "semantic-success-text-dark": "#66FF66",
+    "semantic-warning-text-dark": "#FFFF66",
+    "semantic-error-text-dark": "#FF6666"
   },
   "colors-light": {
     "background": "#FAF9F6",
