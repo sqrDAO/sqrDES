@@ -104,8 +104,13 @@ for pair in "${REFERENCES[@]}"; do
   cmp -s "$src" "$BUILD/references/$dst" || fail "reference drift: $dst"
 done
 
-# Fixed mtimes make the zip byte-reproducible, so --check can compare hashes.
+# Normalise everything the zip format records about a file, so the archive is a
+# pure function of its contents. mtime and permission bits are both stored in the
+# entry header, and this repo can live on a volume that reports modes a normal
+# clone does not, which otherwise changes the bytes without changing the content.
 /usr/bin/find "$BUILD" -exec touch -t 202001010000 {} +
+/usr/bin/find "$BUILD" -type f -exec chmod 644 {} +
+/usr/bin/find "$BUILD" -type d -exec chmod 755 {} +
 
 # --------------------------------------------------------------------- emit --
 
