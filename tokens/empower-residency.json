@@ -10,12 +10,17 @@
   "brand": {
     "figmaFile": "https://www.figma.com/design/fCGlJuUlZx3Em40ltPUUjv/EMpower-Founders-Residency",
     "logoVariants": [
-      "logo-a-horizontal",
+      "logo-a-horizontal"
+    ],
+    "logoVariantsPending": [
       "logo-a-square",
       "logo-b-horizontal",
-      "logo-b-square"
+      "logo-b-square",
+      "logo-c-stacked",
+      "sparkle"
     ],
-    "bannerVariants": [
+    "bannerVariants": [],
+    "bannerVariantsPending": [
       "banner-v1",
       "banner-v2"
     ],
