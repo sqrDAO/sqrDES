@@ -1,6 +1,6 @@
 # TODO — Queued Brand Assets
 
-These assets are referenced in DESIGN.md v1.3.1 but have not been exported. **Do not reference these paths in production code until the files exist** — they will 404.
+Tracking for EMpower brand assets. The **Pending exports** table below lists paths that DESIGN.md v1.3.1 specifies but that have never been exported: **do not reference those in production code until the files exist**, they will 404. The **Shipped** assets directly below are ready to use.
 
 ## Shipped
 
@@ -13,11 +13,13 @@ These assets are referenced in DESIGN.md v1.3.1 but have not been exported. **Do
 
 | Asset | Target path | Figma source | Notes |
 |-------|------------|--------------|-------|
-| Logo C — stacked | `public/brand/logo-c-stacked.svg` | File `NJPTBXCZlaweWduouOhu27` — stacked lockup selection | **Does not exist yet in Figma.** A placeholder (glow gradient only, no wordmark) was previously committed at this path and has been removed to prevent accidental use. Needs to be designed, then exported with paths outlined. |
+| Logo C — stacked | `public/brand/logo-c-stacked.svg` | File `NJPTBXCZlaweWduouOhu27` (note: **not** the canonical EMpower brand file `fCGlJuUlZx3Em40ltPUUjv` used everywhere else in this repo; confirm which is correct before exporting) | **Does not exist yet in Figma.** A placeholder (glow gradient only, no wordmark) was previously committed at this path and has been removed to prevent accidental use. Needs to be designed, then exported with paths outlined. |
 | Logo A — square | `public/brand/logo-a-square.svg` | EMpower Figma, 1000 × 1000 framing | Specified in DESIGN.md "Logo Variants"; never exported. |
 | Logo B — horizontal | `public/brand/logo-b.svg` | EMpower Figma, 1451 × 387 framing | Specified in DESIGN.md "Logo Variants"; never exported. |
 | Logo B — square | `public/brand/logo-b-square.svg` | EMpower Figma, 1000 × 1000 framing | Specified in DESIGN.md "Logo Variants"; never exported. |
-| Sparkle (solo) | `public/brand/sparkle.svg` | EMpower Figma, four-point sparkle glyph | Referenced by DESIGN.md "Sparkle Motif"; never exported. Export in `#87FABB`; recolor to `--accent` via CSS for solo UI use. |
+| Sparkle (solo) | `public/brand/sparkle.svg` | EMpower Figma, four-point sparkle glyph | Referenced by DESIGN.md "Sparkle Motif"; never exported. Export with `fill="currentColor"`, the same way `topo-lines.svg` handles its stroke. A hardcoded `fill="#87FABB"` could not satisfy the documented solo-UI use (`var(--accent)`), because an SVG referenced via `<img>` or `background-image` cannot be recoloured by the host page's CSS. Callers set `#87FABB` at the lockup and `#aeffc8` in UI. |
+| Logo A — black wordmark | `public/brand/logo-a-dark-ink.svg` | EMpower Figma, Logo A with black wordmark | **Blocks the default colour treatment.** The shipped `logo-a.svg` is `fill="white"`, usable only on dark surfaces, but DESIGN.md's default treatment is a black wordmark on the `#f8f8f8` canvas and this system is light-first. Export the dark-ink lockup, or change the documented default. |
+| Banner v1 / v2 | `public/brand/banner-v1.svg`, `banner-v2.svg` | EMpower Figma, banner boards | Specified in DESIGN.md "Banner Treatments" (2177 × 1159) and used for OG images; never exported. |
 
 ## Export checklist
 

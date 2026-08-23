@@ -3,8 +3,13 @@ design-system: "EMpower Founders Residency"
 version: "1.3.1"
 brand:
   figmaFile: "https://www.figma.com/design/fCGlJuUlZx3Em40ltPUUjv/EMpower-Founders-Residency"
-  logoVariants: ["logo-a-horizontal", "logo-a-square", "logo-b-horizontal", "logo-b-square"]
-  bannerVariants: ["banner-v1", "banner-v2"]
+  # Shipped assets only. Anything specified in this document but not exported yet
+  # lives in logoVariantsPending / bannerVariantsPending so tooling reading this
+  # frontmatter cannot emit a path that 404s. See TODO-assets.md.
+  logoVariants: ["logo-a-horizontal"]
+  logoVariantsPending: ["logo-a-square", "logo-b-horizontal", "logo-b-square", "logo-c-stacked", "sparkle"]
+  bannerVariants: []
+  bannerVariantsPending: ["banner-v1", "banner-v2"]
   motif: "four-point sparkle (mint accent) anchored to the EM lockup"
 colors:
   canvas: "#f8f8f8"
@@ -147,7 +152,7 @@ A four-point sparkle (asymmetric — vertical points are longer than horizontal)
 - **Solo sparkle in UI** (divider, CTA prefix): use `var(--accent)` (`#aeffc8`) so it matches surrounding interactive elements.
 - **Anchor**: bottom-left of `EM` in Logo A; right edge of `POWER` in Logo B
 - **Solo use**: allowed as a small accent (e.g., section divider, CTA prefix), but never larger than 24px when separated from the wordmark
-- **SVG asset**: `/public/brand/sparkle.svg`
+- **SVG asset**: `/public/brand/sparkle.svg` — **not yet exported** (see [TODO-assets.md](TODO-assets.md))
 - **Don't**: rotate, recolor outside the accent palette, or use as a bullet/list marker
 
 > **Open question — two mints.** The brand ships `#87FABB` (Figma / logo lockups) while the UI palette is built on `#aeffc8` (CTAs, gradients, the 9.4:1 contrast pairings below). They are visually close but not identical, and this doc previously claimed the sparkle was `#aeffc8`, which the exported SVGs contradict. Until the brand owner picks one, the rule above holds: `#87FABB` inside the lockup, `#aeffc8` everywhere in the UI. Do not recolor `logo-a.svg` to match the UI accent.
@@ -162,7 +167,9 @@ A four-point sparkle (asymmetric — vertical points are longer than horizontal)
 | Logo B — square | Square social tiles | 1000 × 1000 | `/public/brand/logo-b-square.svg` |
 | Logo C — stacked | Square posters, social tiles, slide titles | 2000 × 2000 (typical) | **not yet available** (see [TODO-assets.md](TODO-assets.md)) |
 
-> **Asset availability.** Only `logo-a.svg` and `topo-lines.svg` are shipped today. `logo-a-square.svg`, `logo-b.svg`, `logo-b-square.svg`, `sparkle.svg`, and `logo-c-stacked.svg` are specified above but not yet exported, and the paths in this table will 404. Check [TODO-assets.md](TODO-assets.md) before referencing any of them in production code.
+> **Asset availability.** Only `logo-a.svg` and `topo-lines.svg` are shipped today. `logo-a-square.svg`, `logo-b.svg`, `logo-b-square.svg`, `sparkle.svg`, `logo-c-stacked.svg`, and both banner variants are specified in this document but not yet exported. Check [TODO-assets.md](TODO-assets.md) before referencing any of them in production code.
+>
+> **The shipped `logo-a.svg` is the dark-background variant only.** All nine wordmark paths are `fill="white"`. That means the *default* colour treatment below (black wordmark on the `#f8f8f8` canvas) has **no asset**, even though this system is light-first: dropping `logo-a.svg` on the default canvas gives white on near-white. Until a black-wordmark export ships, either place the lockup on a `#1a1a1a` surface or a banner gradient, or hold the space.
 
 **Clear space**: minimum padding around any lockup equals the height of the `M` glyph. **Minimum size**: 120px wide (horizontal) / 80px (square). Below that, use Logo B (more legible at small sizes) or the sparkle alone.
 
@@ -784,6 +791,19 @@ Quick lookup for which tokens, type, and decoration apply to which surface.
 ---
 
 ## Changelog
+
+### 1.3.1 — 2026-08-23
+
+**Fixed**
+- Sparkle colour: this document claimed the sparkle is `--accent` (`#aeffc8`), but the Figma source and the exported `logo-a.svg` both use `#87FABB`. Added `--logo-mint` (`#87FABB`) as a named token scoped to the logo lockup, and corrected the Sparkle Motif and banner specs. The two mints are not yet reconciled; see the note in Sparkle Motif.
+- Corrected the Da Nang Hub logo naming convention referenced from `assets/README.md`: the `Dark`/`Light` suffix names the ink, not the canvas.
+
+**Removed**
+- Logo C (stacked): withdrawn. The 1.3.0 entry below lists it as added, but no such asset was ever exported from Figma. A placeholder holding only a glow gradient had been committed at `public/brand/logo-c-stacked.svg`; it has been deleted so it cannot be imported by mistake.
+
+**Documentation**
+- Added an asset-availability note recording that only `logo-a.svg` and `topo-lines.svg` exist, that `logo-a.svg` is the white/dark-background variant only (so the default light-canvas treatment has no asset), and that the Logo A/B square and horizontal variants, `sparkle.svg` and both banners are still unexported.
+- Frontmatter `logoVariants` / `bannerVariants` now list shipped assets only, with unexported ones moved to `*Pending` keys so tooling cannot emit a 404 path.
 
 ### 1.3.0 — 2026-05-10
 

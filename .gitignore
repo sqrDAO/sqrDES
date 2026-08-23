@@ -13,5 +13,7 @@ npm-debug.log*
 *.swp
 *.swo
 
-# Raw Figma exports (multi-MB, not for production; see empower-residency/design-source/README.md)
-**/design-source/*.svg
+# Raw Figma exports (multi-MB, not for production; see empower-residency/design-source/README.md).
+# Ignore every export format, not just SVG: Figma emits PNG/PDF/.fig just as readily.
+**/design-source/*
+!**/design-source/README.md
