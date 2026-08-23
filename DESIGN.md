@@ -1,6 +1,6 @@
 ---
 design-system: "sqrDAO"
-version: "1.2.0"
+version: "1.2.2"
 colors:
   background: "#0A0A0A"
   surface: "#1A1A1A"
@@ -13,10 +13,16 @@ colors:
   accent-hover: "#e6b800"
   black: "#000000"
   white: "#FFFFFF"
-  semantic-info: "#0087FF"
-  semantic-success: "#00CC00"
-  semantic-warning: "#CCCC00"
-  semantic-error: "#CC0000"
+  # Canonical semantic values are the 700 shades. These are fill/badge/border
+  # values; semantic *text* uses a different shade per mode, see Semantic Colors.
+  semantic-info: "#0066CC"
+  semantic-success: "#009900"
+  semantic-warning: "#999900"
+  semantic-error: "#990000"
+  semantic-info-text-dark: "#66B7FF"
+  semantic-success-text-dark: "#66FF66"
+  semantic-warning-text-dark: "#FFFF66"
+  semantic-error-text-dark: "#FF6666"
 colors-light:
   # Warm light mode — from the W3EZ × SIZ × IFC (Light EN) deck.
   # Neutrals are warm (off-white / taupe), NOT the cool grays of dark mode.
@@ -37,7 +43,7 @@ secondary-accent:
 typography:
   display:
     fontFamily: "'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    fontWeight: 900
+    fontWeight: 700
   heading:
     fontFamily: "'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
     fontWeight: 700
@@ -186,14 +192,29 @@ Implementation tokens map to the official brand kit:
 
 ### Semantic Colors
 
-| Semantic | 50 | 300 | 500 (canonical) | 700 | 900 |
-|----------|----|-----|-----------------|-----|-----|
+| Semantic | 50 | 300 | 500 | 700 (canonical) | 900 |
+|----------|----|-----|-----|-----------------|-----|
 | Info | `#E6F3FF` | `#66B7FF` | `#0087FF` | `#0066CC` | `#004499` |
 | Success | `#E6FFE6` | `#66FF66` | `#00CC00` | `#009900` | `#006600` |
 | Warning | `#FFFFE6` | `#FFFF66` | `#CCCC00` | `#999900` | `#666600` |
 | Error | `#FFE6E6` | `#FF6666` | `#CC0000` | `#990000` | `#660000` |
 
-> Canonical semantic value is the 700 shade (not 500) — it meets WCAG AA against `#0A0A0A` background.
+**The canonical semantic value is the 700 shade.** It is the token you reach for by default: badge and pill fills, status dots, left borders on alert strips, chart series, icon fills.
+
+> **700 is a fill value, not a text value.** An earlier version of this document justified 700 by claiming it "meets WCAG AA against `#0A0A0A`". That is not true, and the reasoning was backwards: on a near-black background the *darker* shades have *less* contrast, not more. Measured against `#0A0A0A`, Error 700 (`#990000`) is **2.2:1**, which fails even the 3:1 threshold for large text and UI components, and Info 700 (`#0066CC`) is **3.6:1**, large-text only. Neither is legible as body-sized text on the dark canvas.
+
+Use the 700 shade for fills, and switch shade for semantic **text**:
+
+| Semantic | Canonical fill (700) | Text on dark `#0A0A0A` | Text on light `#FAF9F6` |
+|----------|----------------------|------------------------|-------------------------|
+| Info | `#0066CC` (3.6:1 dark, 5.3:1 light) | **300** `#66B7FF` 9.2:1 | **700** `#0066CC` 5.3:1 |
+| Success | `#009900` (5.2:1 dark, 3.6:1 light) | **300** `#66FF66` 15.1:1 | **900** `#006600` 6.9:1 |
+| Warning | `#999900` (6.5:1 dark, 2.9:1 light) | **300** `#FFFF66` 18.6:1 | **900** `#666600` 5.8:1 |
+| Error | `#990000` (2.2:1 dark, 8.5:1 light) | **300** `#FF6666` 6.9:1 | **700** `#990000` 8.5:1 |
+
+The simple rule: **dark mode semantic text is always the 300 shade** (all four clear AA comfortably), and light mode semantic text is 700 for Info and Error, 900 for Success and Warning. A 700 fill with dark text on top of it is fine in either mode; the constraint is only on 700 used *as* text.
+
+All ratios above are computed, not estimated. Re-check any change to this ramp before shipping it.
 
 ### Status Badge Colors
 
@@ -211,6 +232,8 @@ Implementation tokens map to the official brand kit:
 | Accent | `#FFC700` | 12.6:1 | AAA |
 | Secondary text | `#B3B3B3` | 7.4:1 | AA |
 | Border | `#222222` | 1.5:1 | Decorative only |
+| Semantic 700 (fills) | `#0066CC` / `#009900` / `#999900` / `#990000` | 3.6 / 5.2 / 6.5 / 2.2 | Fill only, see [Semantic Colors](#semantic-colors) |
+| Semantic 300 (dark-mode text) | `#66B7FF` / `#66FF66` / `#FFFF66` / `#FF6666` | 9.2 / 15.1 / 18.6 / 6.9 | AA |
 
 ---
 
@@ -304,7 +327,7 @@ Alongside the primary gold, the deck introduces a **teal** secondary accent for 
 | fs32 | 2rem | 1.2 | 500 | Section headings |
 | fs36 | 2.25rem | 1.2 | 500 | — |
 | fs48 | 3rem | 1.2 | 500 | — |
-| fs50 | 3.125rem | 3.375rem | 500 | Title component (desktop) |
+| fs50 | 3.125rem | 3.375rem | 500 | Title component size (desktop); Title overrides weight to 700 |
 | fs64 | 4rem | 1.25 | 500 | — |
 | fs80 | 5rem | normal | 500 | Hero headings |
 | fs100 | 6.25rem | normal | 500 | Display/hero |
@@ -318,8 +341,10 @@ Alongside the primary gold, the deck introduces a **teal** secondary accent for 
 | Property | Mobile | Desktop |
 |----------|--------|---------|
 | Font size | 1.875rem | 3.125rem |
-| Font weight | 900 | 900 |
+| Font weight | 700 | 700 |
 | Color | #FFFFFF | #FFFFFF |
+
+> **700 is the maximum.** Instrument Sans is a variable font with a weight axis of 400-700; there is no 800 or 900. Requesting a heavier weight makes the browser either clamp to 700 or synthesise a faux-bold, which distorts the letterforms. Never specify a weight above 700 anywhere in this system.
 
 **Section Label** (above title):
 
