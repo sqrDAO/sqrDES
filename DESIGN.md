@@ -1,6 +1,6 @@
 ---
 design-system: "sqrDAO"
-version: "1.2.2"
+version: "1.3.0"
 colors:
   background: "#0A0A0A"
   surface: "#1A1A1A"
@@ -9,7 +9,12 @@ colors:
   text-primary: "#FFFFFF"
   text-secondary: "#B3B3B3"
   accent: "#FFC700"
-  accent-text: "#181818"
+  # Two roles, two tokens, deliberately. `on-accent` is the ink that sits ON a
+  # gold fill; the fill is the same gold in both modes, so the ink does not
+  # change. `gold-ink` is gold-coloured *text* on the page background, which has
+  # to darken in light mode. One token cannot carry both — see Light Mode.
+  on-accent: "#181818"
+  gold-ink: "#FFC700"
   accent-hover: "#e6b800"
   black: "#000000"
   white: "#FFFFFF"
@@ -33,7 +38,8 @@ colors-light:
   text-primary: "#181818"
   text-secondary: "#5C574C"
   accent: "#FFC700"
-  accent-text: "#7A5E00"
+  on-accent: "#181818"
+  gold-ink: "#7A5E00"
   accent-hover: "#E0B400"
   accent-tint: "#FFEDAD"
 secondary-accent:
@@ -102,6 +108,20 @@ components:
   focus:
     outline: "2px solid #FFC700"
     outlineOffset: "2px"
+# Component values that hard-code a palette colour must be re-pointed here too,
+# or the alias stays frozen at its dark value while the page around it turns
+# light. Overrides only; anything absent inherits the :root value. The build
+# warns for every component hex that light mode re-points and this block misses.
+components-light:
+  card:
+    background: "#FFFFFF"
+    border: "1px solid #E4E0D6"
+  tooltip:
+    background: "#FFFFFF"
+    border: "1px solid #E4E0D6"
+  chip:
+    background: "#FAF9F6"
+    border: "1px solid #E4E0D6"
 ---
 
 # sqrDAO Design Reference
@@ -167,8 +187,18 @@ Implementation tokens map to the official brand kit:
 | Token | Value | Usage |
 |-------|-------|-------|
 | `accent.main` | `#FFC700` | Buttons, links, highlights |
-| `accent.contrastText` | `#181818` | Button label on accent bg |
+| `accent.contrastText` (`on-accent`) | `#181818` | Ink on a gold fill — **same in both modes** |
+| `gold-ink` | `#FFC700` | Gold *text* on the page background — darkens to `#7A5E00` in light |
 | Accent hover | `#e6b800` | Canonical hover state — use this everywhere |
+
+> **`on-accent` vs `gold-ink`.** These are opposite directions and must never
+> share a token. `on-accent` is what you write *on* gold (`#181818`, unchanged
+> across modes, because the gold fill is unchanged). `gold-ink` is gold text
+> *on* the page (`#FFC700` dark, `#7A5E00` light). A button styled
+> `background: var(--color-accent); color: var(--color-on-accent)` is correct in
+> both modes; the same button reading `--color-gold-ink` is gold-on-gold in
+> light. Before v1.3.0 both roles shared one `accent-text` token, which made one
+> of the two wrong in every mode — see [CSS Custom Properties](#css-custom-properties).
 
 > **Resolved**: The codebase previously had two hover values (`#e6b800` in MUI theme, `#FFD740` in CustomButton). `#e6b800` is the canonical value — update CustomButton to match.
 
@@ -251,7 +281,8 @@ The **W3EZ × SIZ × IFC** proposal deck (Light EN) is the reference implementat
 | Primary text | `light.text-primary` | `#181818` | Headings, emphasis, data |
 | Secondary text | `light.text-secondary` | `#5C574C` | Body copy, captions (warm taupe) |
 | Accent | `light.accent` | `#FFC700` | Markers, rules, fills, active states |
-| Accent text | `light.accent-text` | `#7A5E00` | Section labels, links, gold text on light |
+| Ink on accent | `light.on-accent` | `#181818` | Label on a gold fill (identical to dark) |
+| Gold ink | `light.gold-ink` | `#7A5E00` | Section labels, links, gold text on light |
 | Accent hover | `light.accent-hover` | `#E0B400` | Hover on gold fills |
 | Accent tint | `light.accent-tint` | `#FFEDAD` | Subtle gold wash / highlight |
 
@@ -265,10 +296,19 @@ The **W3EZ × SIZ × IFC** proposal deck (Light EN) is the reference implementat
 | Primary text | `#FFFFFF` | `#181818` |
 | Secondary text | `#B3B3B3` | `#5C574C` |
 | Accent (fills, markers) | `#FFC700` | `#FFC700` |
-| Accent **text / labels** | `#FFC700` | `#7A5E00` |
+| Gold **text / labels** (`gold-ink`) | `#FFC700` | `#7A5E00` |
+| Ink **on** a gold fill (`on-accent`) | `#181818` | `#181818` |
 | Accent hover | `#e6b800` | `#E0B400` |
+| Card / tooltip surface (`component.card.background`) | `#1A1A1A` | `#FFFFFF` |
+| Card / tooltip border | `#222222` | `#E4E0D6` |
+| Chip fill / border | `#0A0A0A` / `#1A1A1A` | `#FAF9F6` / `#E4E0D6` |
 
-> **Key rule**: In dark mode gold (`#FFC700`) doubles as both fill *and* text color. In light mode gold has only ~1.5:1 contrast on the background, so it is **fill/decoration only** — all gold *text* (section labels, links, table headers) uses the darkened gold `#7A5E00`.
+> **Key rule**: In dark mode gold (`#FFC700`) doubles as both fill *and* text color. In light mode gold has only ~1.5:1 contrast on the background, so it is **fill/decoration only** — all gold *text* (section labels, links, table headers) uses the darkened gold `#7A5E00` (`gold-ink`). The ink written *on* a gold fill is `#181818` (`on-accent`) in both modes, and does not follow this rule.
+
+> **Component surfaces move too.** The card, tooltip and chip values under
+> `components:` are dark-mode surfaces; light mode re-points them in
+> `components-light:`. Build against the tokens rather than the frontmatter
+> literals and this is handled for you: `tokens/sqrdao.css` carries both blocks.
 
 ### Light Mode WCAG Contrast Ratios
 
@@ -276,7 +316,7 @@ The **W3EZ × SIZ × IFC** proposal deck (Light EN) is the reference implementat
 |-----------|-----|--------------|--------------|-------|
 | Primary text | `#181818` | 16.9:1 | 13.5:1 | AAA |
 | Secondary text | `#5C574C` | 6.8:1 | 5.5:1 | AA |
-| Accent text | `#7A5E00` | 5.8:1 | 4.7:1 | AA |
+| Gold ink (`gold-ink`) | `#7A5E00` | 5.8:1 | 4.7:1 | AA |
 | Secondary accent | `#3F7A6E` | 4.7:1 | 3.8:1 | AA (≥18px / large) |
 | Gold (fill) | `#FFC700` | 1.5:1 | 1.2:1 | Decorative / large fills only |
 
@@ -446,8 +486,8 @@ sqrDAO uses **moderate rounding** — sharp enough to feel technical, soft enoug
 
 | Property | Value |
 |----------|-------|
-| Background | `#FFC700` |
-| Text | `#181818` |
+| Background | `#FFC700` (`--color-accent`) |
+| Text | `#181818` (`--color-on-accent`, both modes — never `gold-ink`) |
 | Border radius | 8px |
 | Font weight | 700 |
 | Font size | 1rem |
@@ -463,10 +503,10 @@ sqrDAO uses **moderate rounding** — sharp enough to feel technical, soft enoug
 | Property | Value |
 |----------|-------|
 | Border | 1px solid `#FFC700` |
-| Text | `#FFC700` |
+| Text | `#FFC700` dark / `#7A5E00` light (`--color-gold-ink`) |
 | Background | transparent |
 | Hover background | `#FFC700` |
-| Hover text | `#181818` |
+| Hover text | `#181818` (`--color-on-accent`) |
 
 #### Button States
 
@@ -489,16 +529,16 @@ sqrDAO uses **moderate rounding** — sharp enough to feel technical, soft enoug
 
 ### Cards
 
-| Property | Value |
-|----------|-------|
-| Background | `#1A1A1A` |
-| Border | 1px solid `#222222` |
-| Border radius | 16px |
-| Box shadow | none |
-| **Hover transform** | `translateY(-8px)` |
-| **Hover shadow** | `0 2px 8px 0 rgba(255, 199, 0, 0.10)` |
-| **Hover border** | `#FFC700` (where applicable) |
-| Transition | transform 0.3s ease-in-out |
+| Property | Dark | Light |
+|----------|------|-------|
+| Background | `#1A1A1A` | `#FFFFFF` |
+| Border | 1px solid `#222222` | 1px solid `#E4E0D6` |
+| Border radius | 16px | 16px |
+| Box shadow | none | none |
+| **Hover transform** | `translateY(-8px)` | `translateY(-8px)` |
+| **Hover shadow** | `0 2px 8px 0 rgba(255, 199, 0, 0.10)` | same (gold wash reads faintly on white) |
+| **Hover border** | `#FFC700` (where applicable) | `#FFC700` |
+| Transition | transform 0.3s ease-in-out | transform 0.3s ease-in-out |
 
 #### Card Accent Stripe (`.card-accent-stripe`)
 
@@ -522,11 +562,11 @@ sqrDAO uses **moderate rounding** — sharp enough to feel technical, soft enoug
 
 ### Chips
 
-| Property | Value |
-|----------|-------|
-| Background | `neutrals[800]` |
-| Border | 1px solid `neutrals[700]` |
-| Font weight | 500 |
+| Property | Dark | Light |
+|----------|------|-------|
+| Background | `neutrals[800]` (`#0A0A0A`) | `#FAF9F6` |
+| Border | 1px solid `neutrals[700]` (`#1A1A1A`) | 1px solid `#E4E0D6` |
+| Font weight | 500 | 500 |
 
 ---
 
@@ -550,10 +590,10 @@ sqrDAO uses **moderate rounding** — sharp enough to feel technical, soft enoug
 | Property | Value |
 |----------|-------|
 | Font size | 14px |
-| Background | `neutrals[800]` |
+| Background | `#1A1A1A` dark / `#FFFFFF` light |
 | Padding | `theme.spacing(3)` |
 | Border radius | 8px |
-| Border | 1px solid `neutrals[700]` |
+| Border | 1px solid `#222222` dark / `#E4E0D6` light |
 | Box shadow | `0 4px 20px rgba(0,0,0,0.3)` |
 
 ---
@@ -653,6 +693,24 @@ sqrDAO uses **moderate rounding** — sharp enough to feel technical, soft enoug
 | `--font-main` | `var(--font-instrument-sans), system fallback` | Applied to body |
 | `--reveal-delay` | Set inline per element | Stagger scroll reveals |
 
+The generated `tokens/sqrdao.css` carries the whole palette, type scale, spacing,
+breakpoints and component values as custom properties, with a `[data-theme="light"]`
+block that re-points everything mode-dependent — colours *and* component surfaces.
+Import it rather than transcribing hexes. See [`tokens/README.md`](tokens/README.md).
+
+### Renamed in v1.3.0
+
+| Removed | Replacement | Why |
+|---------|-------------|-----|
+| `--color-accent-text` | `--color-on-accent` (ink on a gold fill) | One token carried two opposite roles: `#181818` in dark, `#7A5E00` in light. Anything reading it for one role was wrong in one of the two modes. |
+| `--color-accent-text` | `--color-gold-ink` (gold text on the page) | As above, split by role. Gold text is what darkens in light mode; ink on gold is not. |
+
+`--component-card-*`, `--component-tooltip-*` and `--component-chip-*` were also
+dark-only until v1.3.0: the light block re-pointed `--color-*` alone, so a card
+built on those aliases stayed `#1A1A1A` on a `#FAF9F6` page. They now have light
+values, and the token build warns whenever a component hard-codes a colour that
+light mode re-points without supplying an override.
+
 ---
 
 ## Do's and Don'ts
@@ -662,7 +720,9 @@ sqrDAO uses **moderate rounding** — sharp enough to feel technical, soft enoug
 | Use `#FFC700` for all primary interactive elements | Use gold for decorative backgrounds or large fills |
 | Use `#e6b800` for hover states on gold elements | Mix hover values — pick `#e6b800` everywhere |
 | In light mode, use warm neutrals (`#FAF9F6`, `#5C574C`) | Invert dark mode to cool white/gray for light mode |
-| In light mode, use `#7A5E00` for gold text and labels | Use `#FFC700` for text on light backgrounds (fails contrast) |
+| In light mode, use `#7A5E00` (`gold-ink`) for gold text and labels | Use `#FFC700` for text on light backgrounds (fails contrast) |
+| Use `on-accent` for a label on a gold fill, `gold-ink` for gold text | Reach for one "accent text" colour and hope it fits both |
+| Read component surfaces from the tokens so light mode re-points them | Hard-code `#1A1A1A` cards and then wonder why light mode is blank |
 | Keep gold dominant; use teal `#3F7A6E` sparingly | Give teal equal weight to gold or use it for primary CTAs |
 | Use `neutrals[300]` for secondary text | Use pure white for secondary text (too high contrast) |
 | Add `outline: 2px solid #FFC700` on `:focus-visible` | Remove outlines without providing an alternative |

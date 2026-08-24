@@ -39,7 +39,7 @@ Always read the matching reference file before producing detailed work. The inli
 
 Design philosophy: **dark-first, minimal chrome, gold accent.** Near-black surfaces with a single gold accent to guide attention. Everything else recedes. Moderate rounding (technical but approachable). Flat at rest, elevation only on hover or for floating elements.
 
-The system ships **two modes** sharing one gold accent. **Dark is canonical** (tokens below). **Light is a warm variant** for print, proposals, and light surfaces: warm off-white and taupe neutrals, never a cool white/gray inversion. Full light palette, dark-to-light token mapping, and the teal secondary accent are in `references/sqrdao.md` (v1.2.0).
+The system ships **two modes** sharing one gold accent. **Dark is canonical** (tokens below). **Light is a warm variant** for print, proposals, and light surfaces: warm off-white and taupe neutrals, never a cool white/gray inversion. Full light palette, dark-to-light token mapping, and the teal secondary accent are in `references/sqrdao.md` (v1.3.0).
 
 ### Colors
 
@@ -52,12 +52,13 @@ The system ships **two modes** sharing one gold accent. **Dark is canonical** (t
 | Primary text | `#FFFFFF` | Headings, primary content |
 | Secondary text | `#B3B3B3` | Body copy, captions (do not use white here) |
 | Accent / gold | `#FFC700` | Buttons, links, highlights, focus ring |
-| Accent text | `#181818` | Label sitting on a gold fill |
+| On accent | `#181818` | Ink sitting **on** a gold fill — same value in light mode |
+| Gold ink | `#FFC700` | Gold-coloured **text** on the page — becomes `#7A5E00` in light |
 | Accent hover | `#e6b800` | The one canonical hover for gold (use everywhere) |
 
 Semantic colors use the 700 shade as canonical: info `#0066CC`, success `#009900`, warning `#999900`, error `#990000`. **These are fill values, not text values** (badge fills, status dots, alert borders, chart series). Do not repeat the old claim that 700 meets AA on `#0A0A0A`; it does not, and the reasoning was backwards, since darker shades lose contrast on a near-black canvas. Error 700 is 2.2:1 there and Info 700 is 3.6:1. For semantic **text in dark mode always use the 300 shade** (info `#66B7FF`, success `#66FF66`, warning `#FFFF66`, error `#FF6666`, all 6.9:1 or better); in light mode use 700 for info and error, 900 for success (`#006600`) and warning (`#666600`). Full ramps and the measured ratio table are in `references/sqrdao.md`.
 
-**Light mode (warm) key tokens:** background `#FAF9F6`, card `#FFFFFF`, border/alt `#E4E0D6`, primary text `#181818`, secondary text `#5C574C` (warm taupe), accent hover `#E0B400`, accent tint `#FFEDAD`. The one rule that trips people up: gold `#FFC700` is ~1.5:1 on the light background, so in light mode it is **fill/decoration only**; all gold *text* (labels, links, table headers) uses darkened gold `#7A5E00`.
+**Light mode (warm) key tokens:** background `#FAF9F6`, card `#FFFFFF`, border/alt `#E4E0D6`, primary text `#181818`, secondary text `#5C574C` (warm taupe), accent hover `#E0B400`, accent tint `#FFEDAD`, chip fill `#FAF9F6` on a `#E4E0D6` border. The one rule that trips people up: gold `#FFC700` is ~1.5:1 on the light background, so in light mode it is **fill/decoration only**; all gold *text* (labels, links, table headers) uses darkened gold `#7A5E00`. The ink written *on* a gold fill is the exception and stays `#181818` in both modes: that is `on-accent`, a different token from `gold-ink`. Switching a page to light means moving card, tooltip and chip surfaces too, not just the palette.
 
 **Secondary accent (teal):** `#3F7A6E` for non-text emphasis (flows, markers, second chart series, large text); `#2F665B` for small teal text; `#E9CF6A` is its warm gold tint pairing. Use sparingly, gold stays dominant (about 80/20). Never use teal for primary CTAs.
 
@@ -70,9 +71,9 @@ Semantic colors use the 700 shade as canonical: info `#0066CC`, success `#009900
 
 ### Key components
 
-- **Primary button:** gold `#FFC700` bg, `#181818` text, radius 8px, weight 700, no text-transform, flat (no shadow at rest), hover bg `#e6b800`. Transition `all 0.2s ease-in-out`.
+- **Primary button:** gold `#FFC700` bg, `#181818` text (`on-accent`, both modes), radius 8px, weight 700, no text-transform, flat (no shadow at rest), hover bg `#e6b800`. Transition `all 0.2s ease-in-out`.
 - **Secondary button:** transparent bg, 1px `#FFC700` border, gold text; on hover fill gold and switch text to `#181818`.
-- **Card:** `#1A1A1A` bg, 1px `#222222` border, radius 16px, flat at rest. Hover: `translateY(-8px)` + gold-tinted shadow `0 2px 8px 0 rgba(255,199,0,0.10)` (+ optional gold border). Transition `transform 0.3s ease-in-out`.
+- **Card:** `#1A1A1A` bg, 1px `#222222` border (light mode: `#FFFFFF` on `#E4E0D6`), radius 16px, flat at rest. Hover: `translateY(-8px)` + gold-tinted shadow `0 2px 8px 0 rgba(255,199,0,0.10)` (+ optional gold border). Transition `transform 0.3s ease-in-out`.
 - **Focus (all interactive elements):** `outline: 2px solid #FFC700; outline-offset: 2px` on `:focus-visible`.
 - Spacing scale is 8px-based (xs 4 / sm 8 / md 16 / lg 24 / xl 32 / xxl 48). Container max width 1440px.
 
@@ -146,7 +147,9 @@ Keep IDs stable across runs (same issue keeps the same ID); add new ones for new
 | Use semantic HTML and ARIA on icon-only buttons | Nest clickable `<div>`s without roles |
 | Commit to one system per artifact | Mix sqrDAO with a sub-brand's palette/type |
 | In light mode, use warm neutrals (`#FAF9F6`, `#5C574C`) | Invert dark mode to cool white/gray for light mode |
-| In light mode, use `#7A5E00` for gold text and labels | Use `#FFC700` for text on light backgrounds (fails contrast) |
+| In light mode, use `#7A5E00` (`gold-ink`) for gold text and labels | Use `#FFC700` for text on light backgrounds (fails contrast) |
+| Use `on-accent` on a gold fill and `gold-ink` for gold text | Use one "accent text" colour for both and break one mode |
+| Re-point card/tooltip/chip surfaces when you go light | Leave `#1A1A1A` cards on a `#FAF9F6` page |
 | Keep gold dominant; use teal `#3F7A6E` sparingly | Give teal equal weight to gold or use it for primary CTAs |
 
 The full do/don't tables (per system) are in each reference file. When you need anything beyond the fast path above, read the relevant `references/*.md` before producing the work.

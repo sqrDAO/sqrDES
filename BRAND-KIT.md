@@ -62,7 +62,8 @@ The system has two modes that share one gold accent. **Dark** is canonical; **Li
 |------|-----|-------|
 | **Background** | `#FAF9F6` | Page background (warm off-white) |
 | **Accent / Gold** | `#FFC700` | Fills, markers, rules (decoration only) |
-| **Accent Text / Gold** | `#7A5E00` | Gold text, labels, links (contrast-safe) |
+| **Gold Ink** | `#7A5E00` | Gold *text*, labels, links (contrast-safe) |
+| **On Accent** | `#181818` | Label sitting on a gold fill (same as dark mode) |
 | **Primary Text** | `#181818` | Headings, primary content |
 | **Secondary Text** | `#5C574C` | Body text, captions (warm taupe) |
 | **Card Surface** | `#FFFFFF` | Card backgrounds |
