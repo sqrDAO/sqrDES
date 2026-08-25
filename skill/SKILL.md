@@ -54,7 +54,7 @@ The system ships **two modes** sharing one gold accent. **Dark is canonical** (t
 | Accent / gold | `#FFC700` | Buttons, links, highlights, focus ring |
 | On accent | `#181818` | Ink sitting **on** a gold fill — same value in light mode |
 | Gold ink | `#FFC700` | Gold-coloured **text** on the page — becomes `#7A5E00` in light |
-| Accent hover | `#e6b800` | The one canonical hover for gold (use everywhere) |
+| Accent hover | `#e6b800` | Hover on a gold fill — becomes `#E0B400` in light (`--color-accent-hover`) |
 
 Semantic colors use the 700 shade as canonical: info `#0066CC`, success `#009900`, warning `#999900`, error `#990000`. **These are fill values, not text values** (badge fills, status dots, alert borders, chart series). Do not repeat the old claim that 700 meets AA on `#0A0A0A`; it does not, and the reasoning was backwards, since darker shades lose contrast on a near-black canvas. Error 700 is 2.2:1 there and Info 700 is 3.6:1. For semantic **text in dark mode always use the 300 shade** (info `#66B7FF`, success `#66FF66`, warning `#FFFF66`, error `#FF6666`, all 6.9:1 or better); in light mode use 700 for info and error, 900 for success (`#006600`) and warning (`#666600`). Full ramps and the measured ratio table are in `references/sqrdao.md`.
 
@@ -71,7 +71,7 @@ Semantic colors use the 700 shade as canonical: info `#0066CC`, success `#009900
 
 ### Key components
 
-- **Primary button:** gold `#FFC700` bg, `#181818` text (`on-accent`, both modes), radius 8px, weight 700, no text-transform, flat (no shadow at rest), hover bg `#e6b800`. Transition `all 0.2s ease-in-out`.
+- **Primary button:** gold `#FFC700` bg, `#181818` text (`on-accent`, both modes), radius 8px, weight 700, no text-transform, flat (no shadow at rest), hover bg `#e6b800` dark / `#E0B400` light (`--color-accent-hover`). Transition `all 0.2s ease-in-out`.
 - **Secondary button:** transparent bg, 1px `#FFC700` border, gold text (`gold-ink`: `#FFC700` dark, `#7A5E00` light — gold is 1.5:1 on the light background); on hover fill gold and switch text to `#181818` (`on-accent`, both modes).
 - **Card:** `#1A1A1A` bg, 1px `#222222` border (light mode: `#FFFFFF` on `#E4E0D6`), radius 16px, flat at rest. Hover: `translateY(-8px)` + gold-tinted shadow `0 2px 8px 0 rgba(255,199,0,0.10)` (+ optional gold border). Transition `transform 0.3s ease-in-out`.
 - **Focus (all interactive elements):** `outline: 2px solid #FFC700` dark / `#7A5E00` light (`--component-focus-outline`), `outline-offset: 2px`, on `:focus-visible`.
@@ -126,7 +126,7 @@ When the user asks you to **audit, review, or check conformance** of an existing
   "location": "hero CTA button",
   "found": "#FFD740",
   "expected": "#e6b800",
-  "rule": "Canonical gold hover is #e6b800; do not use alternate hover values.",
+  "rule": "Gold hover is #e6b800 in dark mode, #E0B400 in light; do not use alternate hover values.",
   "fix": "Replace the hover background with #e6b800."
 }
 ```
@@ -138,7 +138,7 @@ Keep IDs stable across runs (same issue keeps the same ID); add new ones for new
 | Do | Don't |
 |---|---|
 | Use `#FFC700` for primary interactive elements only | Use gold for decorative backgrounds or large fills |
-| Use `#e6b800` as the single gold hover everywhere | Mix hover values (no `#FFD740`, etc.) |
+| Read gold hover from `--color-accent-hover` (`#e6b800` dark, `#E0B400` light) | Mix hover values (no `#FFD740`), or reuse the dark hover in light mode |
 | Use secondary text `#B3B3B3` for body/captions | Use pure white for secondary text |
 | Read the focus ring from `--component-focus-outline` on `:focus-visible` | Strip focus outlines, or hard-code a gold ring that is 1.5:1 in light mode |
 | Use `theme.spacing(n)` / the 8px scale | Hard-code arbitrary pixel values |

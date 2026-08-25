@@ -54,14 +54,12 @@ CSS_SECTIONS = {
     "components": "component",
 }
 
-# Emitted into the light-mode block rather than :root. Every section that has a
-# mode-dependent counterpart belongs here: a section listed in CSS_SECTIONS but
-# not here can only ever hold dark values, and a light-mode consumer reading one
-# of its variables silently gets the dark value.
-CSS_LIGHT_SECTIONS = {
-    "colors-light": "color",
-    "components-light": "component",
-}
+# Emitted into the light-mode block rather than :root: one `<section>-light` key
+# per emitted section, derived rather than hand-listed. A hand-maintained list is
+# the same trap the frozen-at-dark guard exists to catch — a new
+# `typography-light` would be dropped on the floor and a light-mode consumer
+# reading one of its variables would silently get the dark value.
+CSS_LIGHT_SECTIONS = {f"{key}-light": prefix for key, prefix in CSS_SECTIONS.items()}
 
 # Prose fields that document a token for a human. They belong in the JSON and in
 # DESIGN.md, never in a stylesheet.
@@ -183,6 +181,16 @@ def render_css(slug: str, src: str, data: dict, warnings: list[str]) -> str:
     lines.append(":root {")
     emit(lines, root, warnings, slug)
     lines.append("}")
+
+    # A `*-light` key that is not the counterpart of an emitted section (a typo,
+    # or a section CSS_SECTIONS does not carry) reaches no stylesheet at all.
+    # Silence there reads as "the override took".
+    for key in data:
+        if str(key).endswith("-light") and key not in CSS_LIGHT_SECTIONS:
+            warnings.append(
+                f"{slug}: frontmatter section {key} is not the light-mode "
+                f"counterpart of any emitted section and reaches no stylesheet"
+            )
 
     light = css_pairs(data, CSS_LIGHT_SECTIONS)
     frozen_at_dark(root, light, slug, warnings)

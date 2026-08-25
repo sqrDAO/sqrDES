@@ -193,7 +193,7 @@ Implementation tokens map to the official brand kit:
 | `accent.main` | `#FFC700` | Buttons, links, highlights |
 | `accent.contrastText` (`on-accent`) | `#181818` | Ink on a gold fill — **same in both modes** |
 | `gold-ink` | `#FFC700` | Gold *text* on the page background — darkens to `#7A5E00` in light |
-| Accent hover | `#e6b800` | Canonical hover state — use this everywhere |
+| Accent hover | `#e6b800` | Hover on a gold fill in dark mode; light mode re-points `--color-accent-hover` to `#E0B400` |
 
 > **`on-accent` vs `gold-ink`.** These are opposite directions and must never
 > share a token. `on-accent` is what you write *on* gold (`#181818`, unchanged
@@ -204,7 +204,9 @@ Implementation tokens map to the official brand kit:
 > light. Before v1.3.0 both roles shared one `accent-text` token, which made one
 > of the two wrong in every mode — see [CSS Custom Properties](#css-custom-properties).
 
-> **Resolved**: The codebase previously had two hover values (`#e6b800` in MUI theme, `#FFD740` in CustomButton). `#e6b800` is the canonical value — update CustomButton to match.
+<!-- -->
+
+> **Resolved**: The codebase previously had two hover values (`#e6b800` in MUI theme, `#FFD740` in CustomButton). `#e6b800` is the canonical dark-mode value — update CustomButton to match. (Light mode re-points it to `#E0B400`; read `--color-accent-hover` rather than hard-coding either.)
 
 ### Neutrals
 
@@ -309,6 +311,8 @@ The **W3EZ × SIZ × IFC** proposal deck (Light EN) is the reference implementat
 | Focus ring (`component.focus.outline`) | `2px solid #FFC700` | `2px solid #7A5E00` |
 
 > **Key rule**: In dark mode gold (`#FFC700`) doubles as both fill *and* text color. In light mode gold has only ~1.5:1 contrast on the background, so it is **fill/decoration only** — all gold *text* (section labels, links, table headers), plus any gold *mark* that has to be seen rather than merely decorate — the focus ring — uses the darkened gold `#7A5E00` (`gold-ink`). The ink written *on* a gold fill is `#181818` (`on-accent`) in both modes, and does not follow this rule.
+
+<!-- -->
 
 > **Component surfaces move too.** The card, tooltip and chip values under
 > `components:` are dark-mode surfaces; light mode re-points them in
@@ -500,7 +504,7 @@ sqrDAO uses **moderate rounding** — sharp enough to feel technical, soft enoug
 | Text transform | none |
 | Box shadow | none |
 | Transition | all 0.2s ease-in-out |
-| **Hover bg** | **`#e6b800`** |
+| **Hover bg** | **`#e6b800`** dark / **`#E0B400`** light (`--color-accent-hover`) |
 | Hover shadow | 0 4px 12px rgba(255,199,0,0.2) |
 
 #### Secondary / Outlined
@@ -517,7 +521,7 @@ sqrDAO uses **moderate rounding** — sharp enough to feel technical, soft enoug
 
 | State | Visual |
 |-------|--------|
-| Hover | Bg darkens to `#e6b800`; subtle shadow |
+| Hover | Bg darkens to `#e6b800` dark / `#E0B400` light (`--color-accent-hover`); subtle shadow |
 | Focus | `outline: 2px solid #FFC700` dark / `#7A5E00` light; `outline-offset: 2px` (`--component-focus-outline`) |
 | Disabled | Opacity 0.38; cursor not-allowed; no hover effect |
 | Loading | Replace label with spinner (16px); pointer-events none |
@@ -558,7 +562,7 @@ sqrDAO uses **moderate rounding** — sharp enough to feel technical, soft enoug
 
 | State | Visual |
 |-------|--------|
-| Default | Flat; no shadow; dark border |
+| Default | Flat; no shadow; 1px `--component-card-border` (`#222222` dark / `#E4E0D6` light) |
 | Hover | translateY(-8px); gold shadow; optional gold border |
 | Focus (keyboard) | `outline: 2px solid #FFC700` dark / `#7A5E00` light; `outline-offset: 2px` (`--component-focus-outline`) |
 | Loading | Skeleton shimmer overlay using `shimmer` keyframe |
@@ -723,7 +727,7 @@ light mode re-points without supplying an override.
 | Do | Don't |
 |----|-------|
 | Use `#FFC700` for all primary interactive elements | Use gold for decorative backgrounds or large fills |
-| Use `#e6b800` for hover states on gold elements | Mix hover values — pick `#e6b800` everywhere |
+| Read gold hover from `--color-accent-hover` (`#e6b800` dark, `#E0B400` light) | Mix hover values, or hard-code the dark hover into light mode |
 | In light mode, use warm neutrals (`#FAF9F6`, `#5C574C`) | Invert dark mode to cool white/gray for light mode |
 | In light mode, use `#7A5E00` (`gold-ink`) for gold text and labels | Use `#FFC700` for text on light backgrounds (fails contrast) |
 | Use `on-accent` for a label on a gold fill, `gold-ink` for gold text | Reach for one "accent text" colour and hope it fits both |
