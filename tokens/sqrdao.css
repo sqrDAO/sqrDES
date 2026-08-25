@@ -94,4 +94,5 @@
   --component-tooltip-border: 1px solid #E4E0D6;
   --component-chip-background: #FAF9F6;
   --component-chip-border: 1px solid #E4E0D6;
+  --component-focus-outline: 2px solid #7A5E00;
 }

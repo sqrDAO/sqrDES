@@ -146,17 +146,19 @@ def frozen_at_dark(
     if not light:
         return
     light_values = dict(light)
-    # dark hex -> the palette variables that carry it, and which of those the
-    # light block re-points. A hex is only unsafe if *every* palette variable
-    # holding it moves in light mode; #FFC700 is both --color-accent (constant)
-    # and --color-gold-ink (darkens), so a gold focus ring is still correct.
-    carriers: dict[str, list[str]] = {}
+    # dark hex -> the palette variables that carry it that light mode re-points.
+    # One hex can serve several roles: #FFC700 is both --color-accent (constant)
+    # and --color-gold-ink (darkens), #181818 both --color-on-accent (constant)
+    # and --color-surface-alt (moves). A hard-coded hex names none of them, so
+    # the build cannot tell which role was meant — if *any* carrier moves, the
+    # alias may be frozen at dark and is reported. Silencing it is a one-line
+    # `components-light` override, which is also the answer when the role that
+    # moves is the one intended.
     moved: dict[str, list[str]] = {}
     for name, value in root:
         if not name.startswith("--color-") or not HEX.fullmatch(value.strip()):
             continue
         key = value.strip().lower()
-        carriers.setdefault(key, []).append(name)
         replacement = light_values.get(name)
         if replacement and replacement.strip().lower() != key:
             moved.setdefault(key, []).append(name)
@@ -165,11 +167,10 @@ def frozen_at_dark(
         if name.startswith("--color-") or name in light_values:
             continue
         for found in HEX.findall(value):
-            key = found.lower()
-            if key in carriers and len(moved.get(key, [])) == len(carriers[key]):
+            if found.lower() in moved:
                 warnings.append(
                     f"{slug}: {name} hard-codes {found} "
-                    f"({', '.join(moved[key])} re-points it in light mode) "
+                    f"({', '.join(moved[found.lower()])} re-points it in light mode) "
                     f"but has no light-mode override"
                 )
                 break

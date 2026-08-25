@@ -135,6 +135,9 @@
     "chip": {
       "background": "#FAF9F6",
       "border": "1px solid #E4E0D6"
+    },
+    "focus": {
+      "outline": "2px solid #7A5E00"
     }
   }
 }

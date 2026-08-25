@@ -13,7 +13,7 @@ Two modes share one gold accent. Dark is canonical; light is a warm variant for 
 | Token | Dark | Light | Usage |
 |-------|------|-------|-------|
 | Background | `#0A0A0A` | `#FAF9F6` | Page background |
-| Accent | `#FFC700` | `#FFC700` | Fills, links, highlights |
+| Accent | `#FFC700` | `#FFC700` | Fills, markers, rules (decoration only) |
 | Gold Ink | `#FFC700` | `#7A5E00` | Gold *text* / labels on the page |
 | On Accent | `#181818` | `#181818` | Ink written *on* a gold fill |
 | Primary Text | `#FFFFFF` | `#181818` | Headings, primary content |

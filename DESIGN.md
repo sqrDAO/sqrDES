@@ -122,6 +122,10 @@ components-light:
   chip:
     background: "#FAF9F6"
     border: "1px solid #E4E0D6"
+  focus:
+    # Gold is 1.5:1 on #FAF9F6 — below the 3:1 WCAG 1.4.11 minimum for a
+    # non-text indicator. The light focus ring uses gold-ink (5.8:1).
+    outline: "2px solid #7A5E00"
 ---
 
 # sqrDAO Design Reference
@@ -302,8 +306,9 @@ The **W3EZ × SIZ × IFC** proposal deck (Light EN) is the reference implementat
 | Card / tooltip surface (`component.card.background`) | `#1A1A1A` | `#FFFFFF` |
 | Card / tooltip border | `#222222` | `#E4E0D6` |
 | Chip fill / border | `#0A0A0A` / `#1A1A1A` | `#FAF9F6` / `#E4E0D6` |
+| Focus ring (`component.focus.outline`) | `2px solid #FFC700` | `2px solid #7A5E00` |
 
-> **Key rule**: In dark mode gold (`#FFC700`) doubles as both fill *and* text color. In light mode gold has only ~1.5:1 contrast on the background, so it is **fill/decoration only** — all gold *text* (section labels, links, table headers) uses the darkened gold `#7A5E00` (`gold-ink`). The ink written *on* a gold fill is `#181818` (`on-accent`) in both modes, and does not follow this rule.
+> **Key rule**: In dark mode gold (`#FFC700`) doubles as both fill *and* text color. In light mode gold has only ~1.5:1 contrast on the background, so it is **fill/decoration only** — all gold *text* (section labels, links, table headers), plus any gold *mark* that has to be seen rather than merely decorate — the focus ring — uses the darkened gold `#7A5E00` (`gold-ink`). The ink written *on* a gold fill is `#181818` (`on-accent`) in both modes, and does not follow this rule.
 
 > **Component surfaces move too.** The card, tooltip and chip values under
 > `components:` are dark-mode surfaces; light mode re-points them in
@@ -513,7 +518,7 @@ sqrDAO uses **moderate rounding** — sharp enough to feel technical, soft enoug
 | State | Visual |
 |-------|--------|
 | Hover | Bg darkens to `#e6b800`; subtle shadow |
-| Focus | `outline: 2px solid #FFC700; outline-offset: 2px` |
+| Focus | `outline: 2px solid #FFC700` dark / `#7A5E00` light; `outline-offset: 2px` (`--component-focus-outline`) |
 | Disabled | Opacity 0.38; cursor not-allowed; no hover effect |
 | Loading | Replace label with spinner (16px); pointer-events none |
 
@@ -555,7 +560,7 @@ sqrDAO uses **moderate rounding** — sharp enough to feel technical, soft enoug
 |-------|--------|
 | Default | Flat; no shadow; dark border |
 | Hover | translateY(-8px); gold shadow; optional gold border |
-| Focus (keyboard) | `outline: 2px solid #FFC700; outline-offset: 2px` |
+| Focus (keyboard) | `outline: 2px solid #FFC700` dark / `#7A5E00` light; `outline-offset: 2px` (`--component-focus-outline`) |
 | Loading | Skeleton shimmer overlay using `shimmer` keyframe |
 
 ---
@@ -564,8 +569,8 @@ sqrDAO uses **moderate rounding** — sharp enough to feel technical, soft enoug
 
 | Property | Dark | Light |
 |----------|------|-------|
-| Background | `neutrals[800]` (`#0A0A0A`) | `#FAF9F6` |
-| Border | 1px solid `neutrals[700]` (`#1A1A1A`) | 1px solid `#E4E0D6` |
+| Background | `neutrals[900]` (`#0A0A0A`) | `#FAF9F6` |
+| Border | 1px solid `neutrals[800]` (`#1A1A1A`) | 1px solid `#E4E0D6` |
 | Font weight | 500 | 500 |
 
 ---
@@ -621,7 +626,7 @@ sqrDAO uses **moderate rounding** — sharp enough to feel technical, soft enoug
 
 ### Accessibility
 
-- **Focus ring**: `outline: 2px solid #FFC700; outline-offset: 2px` on all interactive elements via `:focus-visible`
+- **Focus ring**: `--component-focus-outline` (`2px solid #FFC700` dark / `#7A5E00` light) + `outline-offset: 2px` on all interactive elements via `:focus-visible`. Gold is 1.5:1 on the light background, so the light ring darkens like any other gold *mark* that has to be seen.
 - **Reduced motion**: `prefers-reduced-motion: reduce` disables scroll-reveal animations and card accent stripe transitions
 - **Skip link**: Include `<a href="#main-content">Skip to main content</a>` as the first focusable element
 - **Semantic HTML**: Use `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>` appropriately; avoid `<div>` soup
@@ -725,7 +730,7 @@ light mode re-points without supplying an override.
 | Read component surfaces from the tokens so light mode re-points them | Hard-code `#1A1A1A` cards and then wonder why light mode is blank |
 | Keep gold dominant; use teal `#3F7A6E` sparingly | Give teal equal weight to gold or use it for primary CTAs |
 | Use `neutrals[300]` for secondary text | Use pure white for secondary text (too high contrast) |
-| Add `outline: 2px solid #FFC700` on `:focus-visible` | Remove outlines without providing an alternative |
+| Read the focus ring from `--component-focus-outline` on `:focus-visible` | Hard-code a gold ring and leave it at 1.5:1 in light mode |
 | Use `theme.spacing(n)` for all spacing | Hard-code arbitrary pixel values |
 | Wrap MUI overrides in `create-components.ts` | Override MUI styles inline in component `sx` props |
 | Respect `prefers-reduced-motion` | Run animation unconditionally |

@@ -84,7 +84,8 @@ Three things the generator does deliberately:
   font stack, so the line is commented out and the build prints a warning. Resolve it in the
   DESIGN.md frontmatter to make it real.
 - **Aliases frozen at dark values are reported.** If a `--component-*` value hard-codes a
-  hex that the light block re-points — and every palette token holding that hex moves in
-  light mode — the build warns unless a `components-light` override exists. Without this,
-  a card alias silently keeps its dark surface on a light page. A colour that some palette
-  token keeps unchanged (gold `#FFC700` in a focus ring) is not flagged.
+  hex that any palette token re-points in light mode, the build warns unless a
+  `components-light` override exists. Without this, a card alias silently keeps its dark
+  surface on a light page. A hard-coded hex names no token, so the build cannot tell which
+  role was meant — `#FFC700` is both `accent` (constant) and `gold-ink` (darkens) — and it
+  reports rather than guesses. Silencing it is a one-line `components-light` override.
