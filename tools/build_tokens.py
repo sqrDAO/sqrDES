@@ -54,12 +54,20 @@ CSS_SECTIONS = {
     "components": "component",
 }
 
-# Emitted into the light-mode block rather than :root.
-CSS_LIGHT_SECTION = ("colors-light", "color")
+# Emitted into the light-mode block rather than :root: one `<section>-light` key
+# per emitted section, derived rather than hand-listed. A hand-maintained list is
+# the same trap the frozen-at-dark guard exists to catch — a new
+# `typography-light` would be dropped on the floor and a light-mode consumer
+# reading one of its variables would silently get the dark value.
+CSS_LIGHT_SECTIONS = {f"{key}-light": prefix for key, prefix in CSS_SECTIONS.items()}
 
 # Prose fields that document a token for a human. They belong in the JSON and in
 # DESIGN.md, never in a stylesheet.
 PROSE_KEYS = {"note", "notes", "description", "comment"}
+
+# Hex literals inside any emitted value, so the build can tell when a component
+# alias has hard-coded a colour that light mode re-points.
+HEX = re.compile(r"#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b")
 
 # A value like "<pixel-display>" is a placeholder the brand has not resolved yet.
 # Emitting it live would hand consumers a silently broken font stack, so it ships
@@ -120,17 +128,73 @@ def emit(lines: list[str], pairs: list[tuple[str, str]], warnings: list[str], sl
             lines.append(f"  {name}: {value};")
 
 
+def frozen_at_dark(
+    root: list[tuple[str, str]],
+    light: list[tuple[str, str]],
+    slug: str,
+    warnings: list[str],
+) -> None:
+    """Warn about aliases that light mode cannot reach.
+
+    A `--component-*` value that hard-codes a hex the light block re-points is a
+    dark-only value: the light block never mentions that variable, so a consumer
+    in light mode gets the dark colour. That is how a #1A1A1A card ended up on a
+    #FAF9F6 page. The fix is a `components-light` override, not a doc note.
+    """
+    if not light:
+        return
+    light_values = dict(light)
+    # dark hex -> the palette variables that carry it that light mode re-points.
+    # One hex can serve several roles: #FFC700 is both --color-accent (constant)
+    # and --color-gold-ink (darkens), #181818 both --color-on-accent (constant)
+    # and --color-surface-alt (moves). A hard-coded hex names none of them, so
+    # the build cannot tell which role was meant — if *any* carrier moves, the
+    # alias may be frozen at dark and is reported. Silencing it is a one-line
+    # `components-light` override, which is also the answer when the role that
+    # moves is the one intended.
+    moved: dict[str, list[str]] = {}
+    for name, value in root:
+        if not name.startswith("--color-") or not HEX.fullmatch(value.strip()):
+            continue
+        key = value.strip().lower()
+        replacement = light_values.get(name)
+        if replacement and replacement.strip().lower() != key:
+            moved.setdefault(key, []).append(name)
+
+    for name, value in root:
+        if name.startswith("--color-") or name in light_values:
+            continue
+        for found in HEX.findall(value):
+            if found.lower() in moved:
+                warnings.append(
+                    f"{slug}: {name} hard-codes {found} "
+                    f"({', '.join(moved[found.lower()])} re-points it in light mode) "
+                    f"but has no light-mode override"
+                )
+                break
+
+
 def render_css(slug: str, src: str, data: dict, warnings: list[str]) -> str:
     lines = [BANNER.format(src=src), ""]
     lines.append(f"/* {data.get('design-system', slug)} v{data.get('version', '?')} */")
+    root = css_pairs(data, CSS_SECTIONS)
     lines.append(":root {")
-    emit(lines, css_pairs(data, CSS_SECTIONS), warnings, slug)
+    emit(lines, root, warnings, slug)
     lines.append("}")
 
-    light_key, light_prefix = CSS_LIGHT_SECTION
-    if light_key in data:
-        light: list[tuple[str, str]] = []
-        flatten(f"--{light_prefix}", data[light_key], light)
+    # A `*-light` key that is not the counterpart of an emitted section (a typo,
+    # or a section CSS_SECTIONS does not carry) reaches no stylesheet at all.
+    # Silence there reads as "the override took".
+    for key in data:
+        if str(key).endswith("-light") and key not in CSS_LIGHT_SECTIONS:
+            warnings.append(
+                f"{slug}: frontmatter section {key} is not the light-mode "
+                f"counterpart of any emitted section and reaches no stylesheet"
+            )
+
+    light = css_pairs(data, CSS_LIGHT_SECTIONS)
+    frozen_at_dark(root, light, slug, warnings)
+    if light:
         lines.append("")
         lines.append("/* Light mode. Warm neutrals, not a cool inversion of dark mode. */")
         lines.append('[data-theme="light"] {')

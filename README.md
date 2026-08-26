@@ -13,8 +13,9 @@ Two modes share one gold accent. Dark is canonical; light is a warm variant for 
 | Token | Dark | Light | Usage |
 |-------|------|-------|-------|
 | Background | `#0A0A0A` | `#FAF9F6` | Page background |
-| Accent | `#FFC700` | `#FFC700` | Fills, links, highlights |
-| Accent Text | `#FFC700` | `#7A5E00` | Gold text / labels |
+| Accent | `#FFC700` | `#FFC700` | Fills, markers, rules (decoration only) |
+| Gold Ink | `#FFC700` | `#7A5E00` | Gold *text* / labels on the page |
+| On Accent | `#181818` | `#181818` | Ink written *on* a gold fill |
 | Primary Text | `#FFFFFF` | `#181818` | Headings, primary content |
 | Secondary Text | `#B3B3B3` | `#5C574C` | Body text, captions |
 | Card Surface | `#1A1A1A` | `#FFFFFF` | Card backgrounds |
@@ -47,7 +48,8 @@ straight from each `DESIGN.md`'s frontmatter.
 
 ```css
 @import "tokens/sqrdao.css";
-.cta { background: var(--color-accent); color: var(--color-accent-text); }
+.cta { background: var(--color-accent); color: var(--color-on-accent); }
+.eyebrow { color: var(--color-gold-ink); }   /* gold *text*: darkens in light mode */
 ```
 
 See [tokens/README.md](tokens/README.md) for naming conventions and the full file list.

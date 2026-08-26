@@ -30,14 +30,30 @@ Import the CSS and read the custom properties, rather than pasting hexes into a 
 
 .cta {
   background: var(--color-accent);
-  color: var(--color-accent-text);
+  color: var(--color-on-accent);          /* ink ON gold — same in both modes */
   border-radius: var(--component-button-radius);
+}
+
+.eyebrow {
+  color: var(--color-gold-ink);           /* gold TEXT — darkens in light mode */
 }
 ```
 
 sqrDAO ships a light mode as a `[data-theme="light"]` block in the same file, so setting
-`data-theme="light"` on a container re-points the same variables. Remember that gold is
-fill-only in light mode: use `var(--color-accent-text)` for gold *text*.
+`data-theme="light"` on a container re-points the same variables — the palette *and* the
+component surfaces (`--component-card-*`, `--component-tooltip-*`, `--component-chip-*`).
+
+Two tokens carry gold-adjacent text and they are not interchangeable:
+
+| Token | Dark | Light | Use for |
+|-------|------|-------|---------|
+| `--color-on-accent` | `#181818` | `#181818` | A label sitting **on** a gold fill (button text) |
+| `--color-gold-ink` | `#FFC700` | `#7A5E00` | Gold-coloured **text** on the page (eyebrows, links) |
+
+They replaced the single `--color-accent-text` in sqrDAO v1.3.0. That token held
+`#181818` in dark and `#7A5E00` in light — opposite roles under one name — so a gold
+button reading it was correct in dark and gold-on-gold in light. If you are migrating,
+pick by role rather than by mode.
 
 For JS/TS consumers, import the JSON directly.
 
@@ -52,11 +68,14 @@ CSS custom properties are namespaced by the frontmatter section they come from:
 | `spacing` | `--spacing-` | `--spacing-md` |
 | `breakpoints` | `--breakpoint-` | `--breakpoint-md` |
 | `typography` | `--font-` | `--font-label-letter-spacing` |
-| `components` | `--component-` | `--component-card-radius` |
+| `components` / `components-light` | `--component-` | `--component-card-radius` |
 
 Sections not listed (`brand`, `formats`) are metadata and appear only in the JSON.
 
-Two things the generator does deliberately:
+`*-light` sections are emitted into the `[data-theme="light"]` block instead of `:root`,
+and hold overrides only: anything they omit keeps its `:root` value.
+
+Three things the generator does deliberately:
 
 - **Prose fields are dropped from CSS.** Keys named `note`, `description`, or `comment`
   document a token for a human; they are kept in the JSON and never emitted as a property.
@@ -64,3 +83,9 @@ Two things the generator does deliberately:
   brand has not settled that token. Emitting it live would hand consumers a silently broken
   font stack, so the line is commented out and the build prints a warning. Resolve it in the
   DESIGN.md frontmatter to make it real.
+- **Aliases frozen at dark values are reported.** If a `--component-*` value hard-codes a
+  hex that any palette token re-points in light mode, the build warns unless a
+  `components-light` override exists. Without this, a card alias silently keeps its dark
+  surface on a light page. A hard-coded hex names no token, so the build cannot tell which
+  role was meant — `#FFC700` is both `accent` (constant) and `gold-ink` (darkens) — and it
+  reports rather than guesses. Silencing it is a one-line `components-light` override.
