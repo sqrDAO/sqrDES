@@ -33,7 +33,7 @@ Two modes share one gold accent. Dark is canonical; light is a warm variant for 
 |----------|-------------|
 | [BRAND-KIT.md](BRAND-KIT.md) | Brand assets, logo usage, sub-brands, Do/Don't guidelines |
 | [DESIGN.md](DESIGN.md) | sqrDAO full design reference: colors, typography, layout, components, animations |
-| [youai/DESIGN.md](youai/DESIGN.md) | YouAI "Precision Claw" design system — dark, electric orange, sharp geometry |
+| [youai/DESIGN.md](youai/DESIGN.md) | YouAI "Precision Gold" design system — the master palette and type on YouAI's sharp geometry and mono chrome |
 | [danang-hub/DESIGN.md](danang-hub/DESIGN.md) | Da Nang Blockchain Hub design system |
 | [empower-residency/DESIGN.md](empower-residency/DESIGN.md) | Empower Residency design system — 3‑week, fully funded founder residency in Da Nang (May 4–29, 2026) with mentorship, investor demo day, and content production |
 | [summit/DESIGN.md](summit/DESIGN.md) | Web3 Builders' Summit (LFBUIDL) design system |

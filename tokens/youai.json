@@ -6,47 +6,77 @@
     "warning": "Generated from DESIGN.md frontmatter. Do not edit by hand."
   },
   "design-system": "YouAI",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "colors": {
-    "background": "#08090D",
-    "surface": "#0E1520",
-    "elevation-1": "#141D2B",
-    "elevation-2": "#1C2535",
-    "text-primary": "#E8EDF5",
-    "text-secondary": "rgba(160, 175, 200, 0.75)",
-    "text-disabled": "rgba(120, 140, 165, 0.4)",
-    "accent": "#FF6820",
-    "accent-light": "#FF8F54",
-    "accent-dark": "#CC5210",
-    "secondary": "#00C4FF",
-    "secondary-light": "#40D4FF",
-    "secondary-dark": "#0099CC",
-    "semantic-success": "#22c55e",
-    "semantic-error": "#f97373",
-    "semantic-warning": "#eab308",
-    "semantic-info": "#00C4FF",
-    "light-background": "#F5F1EB",
-    "light-surface": "#FFFFFF"
+    "background": "#0A0A0A",
+    "surface": "#1A1A1A",
+    "surface-alt": "#181818",
+    "elevation-1": "#141414",
+    "elevation-2": "#1A1A1A",
+    "border": "#222222",
+    "text-primary": "#FFFFFF",
+    "text-secondary": "#B3B3B3",
+    "text-muted": "#666666",
+    "text-disabled": "rgba(179, 179, 179, 0.4)",
+    "accent": "#FFC700",
+    "accent-hover": "#e6b800",
+    "on-accent": "#181818",
+    "gold-ink": "#FFC700",
+    "grid": "rgba(255, 199, 0, 0.05)",
+    "semantic-info": "#0066CC",
+    "semantic-success": "#009900",
+    "semantic-warning": "#999900",
+    "semantic-error": "#990000",
+    "semantic-info-text-dark": "#66B7FF",
+    "semantic-success-text-dark": "#66FF66",
+    "semantic-warning-text-dark": "#FFFF66",
+    "semantic-error-text-dark": "#FF6666"
+  },
+  "colors-light": {
+    "background": "#FAF9F6",
+    "surface": "#FFFFFF",
+    "surface-alt": "#F2F0EA",
+    "elevation-1": "#F2F0EA",
+    "elevation-2": "#E9E6DE",
+    "border": "#E4E0D6",
+    "text-primary": "#181818",
+    "text-secondary": "#5C574C",
+    "text-muted": "#8A8474",
+    "text-disabled": "rgba(92, 87, 76, 0.4)",
+    "accent": "#FFC700",
+    "accent-hover": "#E0B400",
+    "on-accent": "#181818",
+    "gold-ink": "#7A5E00",
+    "grid": "rgba(122, 94, 0, 0.06)"
+  },
+  "secondary-accent": {
+    "main": "#3F7A6E",
+    "light-on-dark": "#5A9488",
+    "dark": "#2F665B"
   },
   "typography": {
     "display": {
-      "fontFamily": "'Chakra Petch', sans-serif",
+      "fontFamily": "'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       "fontWeight": 700,
-      "textTransform": "uppercase",
       "letterSpacing": "-0.02em"
     },
     "body": {
-      "fontFamily": "'IBM Plex Sans', system-ui, sans-serif",
+      "fontFamily": "'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       "fontWeight": 400,
       "fontSize": "1rem",
       "lineHeight": 1.6
     },
     "ui": {
-      "fontFamily": "'JetBrains Mono', 'SF Mono', Menlo, monospace",
-      "fontWeight": 400,
+      "fontFamily": "'IBM Plex Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace",
+      "fontWeight": 600,
       "textTransform": "uppercase",
       "letterSpacing": "0.08em",
-      "fontSize": "0.85rem"
+      "fontSize": "0.75rem"
+    },
+    "code": {
+      "fontFamily": "'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace",
+      "fontWeight": 400,
+      "fontSize": "0.875rem"
     }
   },
   "spacing": {
@@ -61,37 +91,127 @@
   "breakpoints": {
     "xs": "0px",
     "sm": "600px",
-    "md": "960px",
-    "lg": "1280px",
-    "xl": "1920px"
+    "md": "900px",
+    "lg": "1200px",
+    "xl": "1536px"
   },
   "components": {
     "button": {
       "radius": "4px",
-      "fontFamily": "'JetBrains Mono', monospace",
-      "fontWeight": 400,
+      "fontFamily": "'IBM Plex Mono', monospace",
+      "fontWeight": 600,
       "textTransform": "uppercase",
       "letterSpacing": "0.08em",
-      "fontSize": "0.85rem",
-      "transition": "all 0.2s ease"
+      "fontSize": "0.75rem",
+      "transition": "all 0.2s ease",
+      "background": "#FFC700",
+      "color": "#181818",
+      "hoverBackground": "#e6b800",
+      "hoverGlow": "0 0 20px rgba(255, 199, 0, 0.28)",
+      "outlinedBorder": "1px solid #FFC700",
+      "outlinedColor": "#FFC700",
+      "outlinedHoverFill": "rgba(255, 199, 0, 0.08)",
+      "quietBorder": "1px solid #222222",
+      "quietColor": "#B3B3B3"
     },
     "card": {
       "radius": "6px",
-      "background": "#0E1520",
-      "border": "1px solid rgba(255, 104, 32, 0.15)",
-      "hoverBorder": "rgba(255, 104, 32, 0.40)",
-      "hoverShadow": "4px 0 20px rgba(255, 104, 32, 0.12)"
+      "background": "#1A1A1A",
+      "border": "1px solid #222222",
+      "accentStripe": "2px solid #FFC700",
+      "hoverBorder": "rgba(255, 199, 0, 0.40)",
+      "hoverShadow": "0 2px 8px 0 rgba(255, 199, 0, 0.10)",
+      "selectedFill": "rgba(255, 199, 0, 0.06)",
+      "transition": "all 0.3s ease"
     },
     "input": {
       "radius": "4px",
-      "fontFamily": "'JetBrains Mono', monospace",
-      "focusBorder": "#FF6820",
-      "focusGlow": "0 0 0 2px rgba(255, 104, 32, 0.25)"
+      "fontFamily": "'IBM Plex Mono', monospace",
+      "background": "rgba(255, 199, 0, 0.04)",
+      "border": "1px solid #222222",
+      "focusBorder": "#FFC700",
+      "focusGlow": "0 0 0 2px rgba(255, 199, 0, 0.25)"
+    },
+    "chip": {
+      "radius": "4px",
+      "fontSize": "0.6875rem",
+      "background": "rgba(255, 199, 0, 0.12)",
+      "color": "#FFC700",
+      "neutralBackground": "#0A0A0A",
+      "neutralBorder": "1px solid #222222",
+      "neutralColor": "#B3B3B3"
+    },
+    "tab": {
+      "fontSize": "0.6875rem",
+      "letterSpacing": "0.1em",
+      "activeIndicator": "2px solid #FFC700",
+      "activeColor": "#FFFFFF",
+      "inactiveColor": "#B3B3B3"
+    },
+    "dialog": {
+      "radius": "8px",
+      "background": "#1A1A1A",
+      "border": "1px solid rgba(255, 199, 0, 0.25)",
+      "glow": "0 0 20px rgba(255, 199, 0, 0.20)",
+      "overlay": "rgba(0, 0, 0, 0.85)",
+      "overlayBlur": "blur(8px)"
+    },
+    "scrollbar": {
+      "width": "6px",
+      "radius": "3px",
+      "track": "#0A0A0A",
+      "thumb": "#222222",
+      "thumbHover": "#B3B3B3"
     },
     "focus": {
-      "outline": "2px solid #FF6820",
+      "outline": "2px solid #FFC700",
       "outlineOffset": "2px",
-      "glow": "0 0 0 2px rgba(255, 104, 32, 0.25)"
+      "glow": "0 0 0 2px rgba(255, 199, 0, 0.25)"
+    }
+  },
+  "components-light": {
+    "button": {
+      "background": "#FFC700",
+      "color": "#181818",
+      "hoverBackground": "#E0B400",
+      "outlinedBorder": "1px solid #FFC700",
+      "outlinedColor": "#7A5E00",
+      "quietBorder": "1px solid #E4E0D6",
+      "quietColor": "#5C574C"
+    },
+    "card": {
+      "background": "#FFFFFF",
+      "border": "1px solid #E4E0D6",
+      "accentStripe": "2px solid #FFC700"
+    },
+    "input": {
+      "border": "1px solid #E4E0D6",
+      "focusBorder": "#7A5E00"
+    },
+    "chip": {
+      "color": "#7A5E00",
+      "neutralBackground": "#FAF9F6",
+      "neutralBorder": "1px solid #E4E0D6",
+      "neutralColor": "#5C574C"
+    },
+    "tab": {
+      "activeIndicator": "2px solid #FFC700",
+      "activeColor": "#181818",
+      "inactiveColor": "#5C574C"
+    },
+    "dialog": {
+      "background": "#FFFFFF",
+      "border": "1px solid #E4E0D6",
+      "glow": "none",
+      "overlay": "rgba(24, 24, 24, 0.45)"
+    },
+    "scrollbar": {
+      "track": "#FAF9F6",
+      "thumb": "#E4E0D6",
+      "thumbHover": "#8A8474"
+    },
+    "focus": {
+      "outline": "2px solid #7A5E00"
     }
   }
 }
