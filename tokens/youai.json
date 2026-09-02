@@ -30,7 +30,11 @@
     "semantic-info-text-dark": "#66B7FF",
     "semantic-success-text-dark": "#66FF66",
     "semantic-warning-text-dark": "#FFFF66",
-    "semantic-error-text-dark": "#FF6666"
+    "semantic-error-text-dark": "#FF6666",
+    "semantic-info-text-light": "#0066CC",
+    "semantic-success-text-light": "#006600",
+    "semantic-warning-text-light": "#666600",
+    "semantic-error-text-light": "#990000"
   },
   "colors-light": {
     "background": "#FAF9F6",

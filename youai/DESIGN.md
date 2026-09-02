@@ -31,10 +31,17 @@ colors:
   semantic-success: "#009900"
   semantic-warning: "#999900"
   semantic-error: "#990000"
+  # Semantic *text* is named by the mode it is legible in, not left to the
+  # light block to re-point: 300 on the dark canvas, 700/900 on the warm ground.
+  # Both sets live in :root so either mode can be resolved explicitly.
   semantic-info-text-dark: "#66B7FF"
   semantic-success-text-dark: "#66FF66"
   semantic-warning-text-dark: "#FFFF66"
   semantic-error-text-dark: "#FF6666"
+  semantic-info-text-light: "#0066CC"
+  semantic-success-text-light: "#006600"
+  semantic-warning-text-light: "#666600"
+  semantic-error-text-light: "#990000"
 colors-light:
   # The sqrDAO master warm light palette. Warm off-white and taupe, never a cool
   # inversion of the dark ramp.
@@ -363,8 +370,16 @@ ink (4.7:1, 5.8:1); error `#990000` and info `#0066CC` carry white (8.9:1, 5.6:1
 shades are fill values and are not legible as text on the dark canvas — error 700 is 2.2:1
 there. This replaces v1's `#eab308` + white, which measured 1.9:1.
 
-In light mode semantic text switches again: 700 for info and error, 900 for success
-(`#006600`) and warning (`#666600`).
+In light mode semantic text switches again — 700 for info and error, 900 for success and
+warning — and has its own tokens rather than being re-pointed by the light block, so either
+mode can be resolved explicitly:
+
+| Semantic | Dark text (`*-text-dark`) | Light text (`*-text-light`) |
+|----------|---------------------------|------------------------------|
+| Info | `#66B7FF` (9.2:1) | `#0066CC` (5.3:1) |
+| Success | `#66FF66` (15.1:1) | `#006600` (6.9:1) |
+| Warning | `#FFFF66` (18.6:1) | `#666600` (5.8:1) |
+| Error | `#FF6666` (6.9:1) | `#990000` (8.5:1) |
 
 ### WCAG contrast ratios (dark, on `#0A0A0A`)
 
@@ -776,5 +791,6 @@ reported by the build rather than shipped.
 | Keep the dot-grid on the canvas only | Put texture on cards or modals |
 | Stop at font-weight 700 | Request 800/900 from Instrument Sans |
 | Pair every status colour with a text label | Let a coloured dot or chip carry state alone |
+| Read `semantic-*-text-dark` / `-text-light` for status text | Use a 700 fill as text — error 700 is 2.2:1 on the canvas |
 | Keep a third-party brand hex inside its glyph | Let a channel colour reach a label, border or button |
 | Let a stat card hold a number or nothing | Put an emoji where an icon belongs |

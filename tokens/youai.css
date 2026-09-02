@@ -25,6 +25,10 @@
   --color-semantic-success-text-dark: #66FF66;
   --color-semantic-warning-text-dark: #FFFF66;
   --color-semantic-error-text-dark: #FF6666;
+  --color-semantic-info-text-light: #0066CC;
+  --color-semantic-success-text-light: #006600;
+  --color-semantic-warning-text-light: #666600;
+  --color-semantic-error-text-light: #990000;
   --secondary-accent-main: #3F7A6E;
   --secondary-accent-light-on-dark: #5A9488;
   --secondary-accent-dark: #2F665B;
